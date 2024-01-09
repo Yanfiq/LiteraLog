@@ -41,6 +41,10 @@ public class AccessDB{
         }
     }
 
+    public static Connection getConnection(){
+        return connection;
+    }
+
     public static void displayData(String query){
         try {
             Statement statement = connection.createStatement();
