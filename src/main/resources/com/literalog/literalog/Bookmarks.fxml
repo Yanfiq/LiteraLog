@@ -25,7 +25,7 @@
                 <RowConstraints maxHeight="654.3333371480306" minHeight="10.0" prefHeight="608.9999974568685" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <TableView fx:id="bookmarksTable" prefHeight="619.0" prefWidth="1075.0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
+                <TableView fx:id="bookmarksTable" editable="true" prefHeight="619.0" prefWidth="1075.0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
                     <columns>
                         <TableColumn fx:id="isbnColumn" prefWidth="150.0" text="ISBN" />
                         <TableColumn fx:id="titleColumn" prefWidth="150.0" text="Title" />
@@ -38,8 +38,8 @@
                 </TableView>
             <GridPane>
               <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="529.3333129882812" minWidth="10.0" prefWidth="60.99997965494792" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="1015.0000000000001" minWidth="10.0" prefWidth="1013.6666870117189" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="529.3333129882812" minWidth="10.0" prefWidth="69.33333333333334" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="1015.0000000000001" minWidth="10.0" prefWidth="1005.9999999999999" />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -47,12 +47,12 @@
                <children>
                   <TextField GridPane.columnIndex="1">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="Segoe UI Semibold" size="16.0" />
                      </font>
                   </TextField>
                   <Label text="Keyword">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="Segoe UI Semibold" size="16.0" />
                      </font>
                   </Label>
                </children>
