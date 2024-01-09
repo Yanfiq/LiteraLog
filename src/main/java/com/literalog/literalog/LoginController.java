@@ -1,2 +1,4 @@
-package com.literalog.literalog;public class LoginController {
+package com.literalog.literalog;
+
+public class LoginController {
 }

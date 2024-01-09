@@ -27,11 +27,11 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Button fx:id="dashboardButton" mnemonicParsing="false" prefHeight="66.0" prefWidth="198.0" style="-fx-background-color: transparent; -fx-border-radius: 0;" text="Dashboard" textFill="WHITE" GridPane.rowIndex="0">
+            <Button fx:id="dashboardButton" mnemonicParsing="false" onAction="#onDashboardButtonClick" prefHeight="66.0" prefWidth="198.0" style="-fx-background-color: transparent; -fx-border-radius: 0;" text="Dashboard" textFill="WHITE" GridPane.rowIndex="0">
                <font>
                   <Font name="Segoe UI Semibold" size="18.0" />
                </font></Button>
-            <Button fx:id="collectionButton" mnemonicParsing="false" prefHeight="125.0" prefWidth="245.0" style="-fx-background-color: transparent; -fx-background-radius: 0;" text="Collection" textFill="WHITE" GridPane.rowIndex="1">
+            <Button fx:id="collectionButton" mnemonicParsing="false" onAction="#onCollectionButtonClick" prefHeight="125.0" prefWidth="245.0" style="-fx-background-color: transparent; -fx-background-radius: 0;" text="Collection" textFill="WHITE" GridPane.rowIndex="1">
                <font>
                   <Font name="Segoe UI Semibold" size="18.0" />
                </font></Button>
@@ -39,11 +39,11 @@
                <font>
                   <Font name="Segoe UI Semibold" size="18.0" />
                </font></Button>
-            <Button fx:id="loginButton" mnemonicParsing="false" prefHeight="141.0" prefWidth="165.0" style="-fx-background-radius: 0; -fx-background-color: transparent;" text="Login" textFill="WHITE" GridPane.rowIndex="10">
+            <Button fx:id="loginButton" mnemonicParsing="false" onAction="#onLoginButtonClick" prefHeight="141.0" prefWidth="165.0" style="-fx-background-radius: 0; -fx-background-color: transparent;" text="Login" textFill="WHITE" GridPane.rowIndex="10">
                <font>
                   <Font name="Segoe UI Semibold" size="18.0" />
                </font></Button>
-            <Button fx:id="bookmarksButton" mnemonicParsing="false" prefHeight="109.0" prefWidth="276.0" style="-fx-background-color: transparent; -fx-background-radius: 0;" text="Bookmarks" textFill="WHITE" GridPane.rowIndex="3">
+            <Button fx:id="bookmarksButton" mnemonicParsing="false" onAction="#onBookmarksButtonClick" prefHeight="109.0" prefWidth="276.0" style="-fx-background-color: transparent; -fx-background-radius: 0;" text="Bookmarks" textFill="WHITE" GridPane.rowIndex="3">
                <font>
                   <Font name="Segoe UI Semibold" size="18.0" />
                </font></Button>

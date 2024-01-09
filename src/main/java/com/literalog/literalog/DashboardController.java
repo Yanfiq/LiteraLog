@@ -1,2 +1,4 @@
-package com.literalog.literalog;public class DashboardController {
+package com.literalog.literalog;
+
+public class DashboardController {
 }
