@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<?import javafx.scene.layout.StackPane?>
+<StackPane prefHeight="720.0" prefWidth="1115.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="331.0" layoutY="272.0" prefHeight="176.0" prefWidth="405.0" text="ini wishlist">
+         <font>
+            <Font size="64.0" />
+         </font>
+      </Label>
+   </children>
+</StackPane>
