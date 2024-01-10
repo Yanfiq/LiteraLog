@@ -21,14 +21,16 @@ public class LoginController {
     private TextField portField;
     @FXML
     private Label messageText;
-    public boolean loginState;
+    public static boolean loginState;
 
 
     @FXML
     private void onLoginButtonClick(){
-        if(AccessDB.openConnection(serverNameField.getText(), instanceNameField.getText(), portField.getText(), usernameField.getText(), passwordField.getText())){
-            loginState = true;
-            messageText.setText("Connected to the database");
+        if(!loginState){
+            if(AccessDB.openConnection(serverNameField.getText(), instanceNameField.getText(), portField.getText(), usernameField.getText(), passwordField.getText())){
+                loginState = true;
+                messageText.setText("Connected to the database");
+            }
         }
     }
 }

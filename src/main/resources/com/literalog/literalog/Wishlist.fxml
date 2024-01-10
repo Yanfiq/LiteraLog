@@ -26,84 +26,119 @@
           <RowConstraints maxHeight="654.3333371480306" minHeight="10.0" prefHeight="608.9999974568685" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <TableView fx:id="wishlistTable" prefHeight="619.0" prefWidth="1075.0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
+            <TableView fx:id="wishlistTable" prefHeight="619.0" prefWidth="1075.0" style="-fx-font-family: 'Segoe UI Semibold'; -fx-font-size: 16px;" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
               <columns>
-                <TableColumn fx:id="isbnColumn" prefWidth="150.0" text="ISBN" />
-                <TableColumn fx:id="titleColumn" prefWidth="150.0" text="Title" />
-                <TableColumn fx:id="authorColumn" prefWidth="150.0" text="Author" />
-                <TableColumn fx:id="publisherColumn" prefWidth="150.0" text="Publisher" />
-                <TableColumn fx:id="yearColumn" prefWidth="150.0" text="Year" />
-                <TableColumn fx:id="priceColumn" prefWidth="150.0" text="Price" />
-                <TableColumn fx:id="actionColumn" prefWidth="150.0" text="Action" />
+                <TableColumn fx:id="isbnColumn" prefWidth="130.0" text="ISBN" />
+                <TableColumn fx:id="titleColumn" prefWidth="130.0" text="Title" />
+                <TableColumn fx:id="authorColumn" prefWidth="130.0" text="Author" />
+                  <TableColumn fx:id="totalPageColumn" prefWidth="130.0" text="Total Page" />
+                <TableColumn fx:id="publisherColumn" prefWidth="130.0" text="Publisher" />
+                <TableColumn fx:id="yearColumn" prefWidth="130.0" text="Year" />
+                <TableColumn fx:id="priceColumn" prefWidth="130.0" text="Price" />
+                <TableColumn fx:id="actionColumn" prefWidth="130.0" text="Action" />
               </columns>
             </TableView>
-            <GridPane hgap="5.0" prefHeight="52.0" prefWidth="906.0" GridPane.halignment="CENTER">
+            <GridPane>
               <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="172.66668701171875" minWidth="0.0" prefWidth="110.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="172.66668701171875" minWidth="0.0" prefWidth="110.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="172.66668701171875" minWidth="0.0" prefWidth="110.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="172.66668701171875" minWidth="0.0" prefWidth="110.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="172.66668701171875" minWidth="0.0" prefWidth="110.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="172.66668701171875" minWidth="0.0" prefWidth="110.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="172.66668701171875" minWidth="0.0" prefWidth="110.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="1031.3334350585938" minWidth="10.0" prefWidth="976.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="532.0" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="wishlistButton" mnemonicParsing="false" onAction="#addWishlist" prefHeight="28.0" prefWidth="92.0" text="Wishlist" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                  <GridPane hgap="5.0" prefHeight="52.0" prefWidth="906.0" GridPane.halignment="CENTER">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="172.66668701171875" minWidth="0.0" prefWidth="110.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="172.66668701171875" minWidth="0.0" prefWidth="110.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="172.66668701171875" minWidth="0.0" prefWidth="110.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="172.66668701171875" minWidth="10.0" prefWidth="110.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="172.66668701171875" minWidth="0.0" prefWidth="110.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="172.66668701171875" minWidth="0.0" prefWidth="110.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="172.66668701171875" minWidth="0.0" prefWidth="110.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label text="ISBN" GridPane.halignment="CENTER">
+                           <font>
+                              <Font name="Segoe UI Semibold" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label text="Title" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+                           <font>
+                              <Font name="Segoe UI Semibold" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label text="Author" GridPane.columnIndex="2" GridPane.halignment="CENTER">
+                           <font>
+                              <Font name="Segoe UI Semibold" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label text="Publisher" GridPane.columnIndex="4" GridPane.halignment="CENTER">
+                           <font>
+                              <Font name="Segoe UI Semibold" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label text="Year" GridPane.columnIndex="5" GridPane.halignment="CENTER">
+                           <font>
+                              <Font name="Segoe UI Semibold" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label text="Price" GridPane.columnIndex="6" GridPane.halignment="CENTER">
+                           <font>
+                              <Font name="Segoe UI Semibold" size="16.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="isbnInput" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="Segoe UI Semibold" size="16.0" />
+                           </font>
+                        </TextField>
+                        <TextField fx:id="titleInput" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="Segoe UI Semibold" size="16.0" />
+                           </font>
+                        </TextField>
+                        <TextField fx:id="authorInput" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="Segoe UI Semibold" size="16.0" />
+                           </font>
+                        </TextField>
+                        <TextField fx:id="publisherInput" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="Segoe UI Semibold" size="16.0" />
+                           </font>
+                        </TextField>
+                        <TextField fx:id="yearInput" GridPane.columnIndex="5" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="Segoe UI Semibold" size="16.0" />
+                           </font>
+                        </TextField>
+                        <TextField fx:id="priceInput" GridPane.columnIndex="6" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="Segoe UI Semibold" size="16.0" />
+                           </font>
+                        </TextField>
+                        <Label text="Total Page" GridPane.columnIndex="3" GridPane.halignment="CENTER">
+                           <font>
+                              <Font name="Segoe UI Semibold" size="16.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="totalPageInput" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="Segoe UI Semibold" size="16.0" />
+                           </font>
+                        </TextField>
+                     </children>
+                  </GridPane>
+                  <Button fx:id="wishlistButton" mnemonicParsing="false" onAction="#addWishlist" prefHeight="28.0" prefWidth="92.0" text="Wishlist" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
                      <font>
                         <Font name="Segoe UI Semibold" size="16.0" />
-                     </font></Button>
-                  <Label text="ISBN" GridPane.halignment="CENTER">
-                     <font>
-                        <Font name="Segoe UI Semibold" size="16.0" />
-                     </font></Label>
-                  <Label text="Title" GridPane.columnIndex="1" GridPane.halignment="CENTER">
-                     <font>
-                        <Font name="Segoe UI Semibold" size="16.0" />
-                     </font></Label>
-                  <Label text="Author" GridPane.columnIndex="2" GridPane.halignment="CENTER">
-                     <font>
-                        <Font name="Segoe UI Semibold" size="16.0" />
-                     </font></Label>
-                  <Label text="Publisher" GridPane.columnIndex="3" GridPane.halignment="CENTER">
-                     <font>
-                        <Font name="Segoe UI Semibold" size="16.0" />
-                     </font></Label>
-                  <Label text="Year" GridPane.columnIndex="4" GridPane.halignment="CENTER">
-                     <font>
-                        <Font name="Segoe UI Semibold" size="16.0" />
-                     </font></Label>
-                  <Label text="Price" GridPane.columnIndex="5" GridPane.halignment="CENTER">
-                     <font>
-                        <Font name="Segoe UI Semibold" size="16.0" />
-                     </font></Label>
-                  <TextField fx:id="isbnInput" GridPane.rowIndex="1">
-                     <font>
-                        <Font name="Segoe UI Semibold" size="16.0" />
-                     </font></TextField>
-                  <TextField fx:id="titleInput" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                     <font>
-                        <Font name="Segoe UI Semibold" size="16.0" />
-                     </font></TextField>
-                  <TextField fx:id="authorInput" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                     <font>
-                        <Font name="Segoe UI Semibold" size="16.0" />
-                     </font></TextField>
-                  <TextField fx:id="publisherInput" GridPane.columnIndex="3" GridPane.rowIndex="1">
-                     <font>
-                        <Font name="Segoe UI Semibold" size="16.0" />
-                     </font></TextField>
-                  <TextField fx:id="yearInput" GridPane.columnIndex="4" GridPane.rowIndex="1">
-                     <font>
-                        <Font name="Segoe UI Semibold" size="16.0" />
-                     </font></TextField>
-                  <TextField fx:id="priceInput" GridPane.columnIndex="5" GridPane.rowIndex="1">
-                     <font>
-                        <Font name="Segoe UI Semibold" size="16.0" />
-                     </font></TextField>
+                     </font>
+                  </Button>
                </children>
             </GridPane>
          </children>

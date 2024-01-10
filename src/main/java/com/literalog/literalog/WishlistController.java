@@ -11,10 +11,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 
 import javax.security.auth.callback.Callback;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.Statement;
+import java.sql.*;
 
 public class WishlistController {
     @FXML
@@ -23,6 +20,8 @@ public class WishlistController {
     private TextField titleInput;
     @FXML
     private TextField authorInput;
+    @FXML
+    private TextField totalPageInput;
     @FXML
     private TextField publisherInput;
     @FXML
@@ -41,6 +40,8 @@ public class WishlistController {
     @FXML
     private TableColumn<Book, String> authorColumn;
     @FXML
+    private TableColumn<Book, Integer> totalPageColumn;
+    @FXML
     private TableColumn<Book, String> publisherColumn;
     @FXML
     private TableColumn<Book, Integer> yearColumn;
@@ -54,6 +55,7 @@ public class WishlistController {
         isbnColumn.setCellValueFactory(cellData -> cellData.getValue().isbn);
         titleColumn.setCellValueFactory(cellData -> cellData.getValue().title);
         authorColumn.setCellValueFactory(cellData -> cellData.getValue().author);
+        totalPageColumn.setCellValueFactory(celldata -> new SimpleIntegerProperty(celldata.getValue().totalPage.get()).asObject());
         publisherColumn.setCellValueFactory(cellData -> cellData.getValue().publisher);
         yearColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().year.get()).asObject());
         priceColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().price.get()).asObject());
@@ -91,13 +93,13 @@ public class WishlistController {
             try {
                 Connection connection = AccessDB.getConnection();
                 Statement statement = connection.createStatement();
-                ResultSet resultSet = statement.executeQuery("SELECT * FROM [Wishlist]");
+                ResultSet resultSet = statement.executeQuery("SELECT * FROM [BOOKS] WHERE [ISBN] IN (SELECT * FROM [WISHLIST]);");
 
                 ResultSetMetaData metaData = resultSet.getMetaData();
                 int columnCount = metaData.getColumnCount();
                 while (resultSet.next()) {
                     String ISBN = null, Title = null, Author = null, Publisher = null;
-                    int Year = 0, Price = 0;
+                    int Year = 0, Price = 0, TotalPage = 0;
 
                     for (int i = 1; i <= columnCount; i++) {
                         String columnName = metaData.getColumnName(i);
@@ -107,12 +109,13 @@ public class WishlistController {
                             case "ISBN": ISBN = columnValue.toString(); break;
                             case "Title": Title = columnValue.toString(); break;
                             case "Author": Author = columnValue.toString(); break;
+                            case "TotalPage": TotalPage = Integer.parseInt(columnValue.toString()); break;
                             case "Publisher": Publisher = columnValue.toString(); break;
                             case "Year": Year = Integer.parseInt(columnValue.toString()); break;
                             case "Price": Price = Integer.parseInt(columnValue.toString()); break;
                         }
                     }
-                    Book book = new Book(ISBN, Title, Author, Publisher, Year, Price);
+                    Book book = new Book(ISBN, Title, Author, TotalPage, Publisher, Year, Price);
                     ObservableList<Book> bookList = wishlistTable.getItems();
                     bookList.add(book);
                     wishlistTable.setItems(bookList);
@@ -124,9 +127,30 @@ public class WishlistController {
     }
     @FXML
     private void addWishlist(){
-        Book book = new Book(isbnInput.getText(), titleInput.getText(), authorInput.getText(), publisherInput.getText(), Integer.parseInt(yearInput.getText()), Integer.parseInt(priceInput.getText()));
+        String isbn = isbnInput.getText();
+        String title = titleInput.getText();
+        String author = authorInput.getText();
+        int totalPage = Integer.parseInt(totalPageInput.getText());
+        String publisher = publisherInput.getText();
+        int year = Integer.parseInt(yearInput.getText());
+        int price = Integer.parseInt(priceInput.getText());
+        Book book = new Book(isbn, title, author, totalPage, publisher, year, price);
         ObservableList<Book> bookList = wishlistTable.getItems();
         bookList.add(book);
         wishlistTable.setItems(bookList);
+
+        if(AccessDB.getConnection() != null){
+            String query_book = "INSERT INTO [BOOKS] VALUES "+String.format("('%s', '%s' ,'%s' ,%d ,'%s' ,%d ,%d)", isbn, title, author, totalPage, publisher, year, price);
+            String query_wishlist = "INSERT INTO [WISHLIST] VALUES "+isbn;
+            try {
+                Connection connection = AccessDB.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(query_book);
+                preparedStatement.executeUpdate();
+                preparedStatement = connection.prepareStatement(query_wishlist);
+                preparedStatement.executeUpdate();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
