@@ -1,11 +1,8 @@
 package com.literalog.literalog;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.binding.DoubleBinding;
+import javafx.beans.property.*;
+
 import java.time.LocalDateTime;
 
 public class Book {
@@ -19,8 +16,6 @@ public class Book {
     public IntegerProperty lastPage = new SimpleIntegerProperty();
     public ObjectProperty<LocalDateTime> lastTimeRead = new SimpleObjectProperty<>();
 
-
-
     public Book(String isbn, String title, String author, int totalPage, String publisher, int year, int price) {
         this.isbn.set(isbn);
         this.title.set(title);
@@ -30,6 +25,10 @@ public class Book {
         this.year.set(year);
         this.price.set(price);
         this.lastPage.set(0);
-        this.lastTimeRead.set(null);
+        this.lastTimeRead.set(LocalDateTime.now());
+    }
+
+    public DoubleProperty getProgress(){
+        return new SimpleDoubleProperty(lastPage.doubleValue()/totalPage.doubleValue());
     }
 }
