@@ -26,15 +26,15 @@
           <RowConstraints maxHeight="654.3333371480306" minHeight="10.0" prefHeight="608.9999974568685" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <TableView fx:id="wishlistTable" prefHeight="619.0" prefWidth="1075.0" style="-fx-font-family: 'Segoe UI Semibold'; -fx-font-size: 16px;" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
+            <TableView fx:id="wishlistTable" prefHeight="619.0" prefWidth="1075.0" style="-fx-font-family: 'Segoe UI Semibold'; -fx-font-size: 14px;" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
               <columns>
                 <TableColumn fx:id="isbnColumn" prefWidth="130.0" text="ISBN" />
                 <TableColumn fx:id="titleColumn" prefWidth="130.0" text="Title" />
                 <TableColumn fx:id="authorColumn" prefWidth="130.0" text="Author" />
-                  <TableColumn fx:id="totalPageColumn" prefWidth="130.0" text="Total Page" />
+                <TableColumn fx:id="totalPageColumn" prefWidth="130.0" text="Total Page" />
                 <TableColumn fx:id="publisherColumn" prefWidth="130.0" text="Publisher" />
                 <TableColumn fx:id="yearColumn" prefWidth="130.0" text="Year" />
-                <TableColumn fx:id="priceColumn" prefWidth="130.0" text="Price" />
+                <TableColumn fx:id="priceColumn" prefWidth="130.0" text="Price (IDR)" />
                 <TableColumn fx:id="actionColumn" prefWidth="130.0" text="Action" />
               </columns>
             </TableView>

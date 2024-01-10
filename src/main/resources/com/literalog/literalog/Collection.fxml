@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1115.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1115.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.literalog.literalog.CollectionController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
@@ -25,15 +19,16 @@
                 <RowConstraints maxHeight="654.3333371480306" minHeight="10.0" prefHeight="608.9999974568685" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <TableView fx:id="bookmarksTable" editable="true" prefHeight="619.0" prefWidth="1075.0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
+                <TableView fx:id="collectionTable" prefHeight="619.0" prefWidth="1075.0" style="-fx-font-family: 'Segoe UI Semibold'; -fx-font-size: 14px;" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
                     <columns>
-                        <TableColumn fx:id="isbnColumn" prefWidth="150.0" text="ISBN" />
-                        <TableColumn fx:id="titleColumn" prefWidth="150.0" text="Title" />
-                        <TableColumn fx:id="authorColumn" prefWidth="150.0" text="Author" />
-                        <TableColumn fx:id="lastPage" prefWidth="150.0" text="Publisher" />
-                        <TableColumn fx:id="lastTime" prefWidth="150.0" text="Year" />
-                        <TableColumn fx:id="progress" prefWidth="150.0" text="Price" />
-                        <TableColumn fx:id="actionColumn" prefWidth="150.0" text="Action" />
+                        <TableColumn fx:id="isbnColumn" prefWidth="130.0" text="ISBN" />
+                        <TableColumn fx:id="titleColumn" prefWidth="130.0" text="Title" />
+                        <TableColumn fx:id="authorColumn" prefWidth="130.0" text="Author" />
+                        <TableColumn fx:id="totalPageColumn" prefWidth="130.0" text="Total Pages" />
+                        <TableColumn fx:id="publisherColumn" prefWidth="130.0" text="Publisher" />
+                        <TableColumn fx:id="yearColumn" prefWidth="130.0" text="Year" />
+                        <TableColumn fx:id="priceColumn" prefWidth="130.0" text="Price (IDR)" />
+                        <TableColumn fx:id="actionColumn" prefWidth="130.0" text="Action" />
                     </columns>
                 </TableView>
                 <GridPane>
@@ -45,7 +40,7 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <children>
-                        <TextField GridPane.columnIndex="1">
+                        <TextField fx:id="searchField" GridPane.columnIndex="1">
                             <font>
                                 <Font name="Segoe UI Semibold" size="16.0" />
                             </font>

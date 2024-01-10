@@ -30,6 +30,8 @@ public class LoginController {
             if(AccessDB.openConnection(serverNameField.getText(), instanceNameField.getText(), portField.getText(), usernameField.getText(), passwordField.getText())){
                 loginState = true;
                 messageText.setText("Connected to the database");
+            }else{
+                messageText.setText("Failed to connect to the database");
             }
         }
     }
