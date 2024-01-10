@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.time.LocalDateTime;
 
 public class CollectionController {
     @FXML
@@ -71,7 +72,10 @@ public class CollectionController {
                 collectionTable.getItems().remove(book);
             });
             readButton.setOnAction(event -> {
-                //buy action
+                Book book = collectionTable.getItems().get(cell.getIndex());
+                LocalDateTime localDateTime = LocalDateTime.now();
+                java.sql.Timestamp sqlTimestamp = java.sql.Timestamp.valueOf(localDateTime);
+                AccessDB.manipulateTable("INSERT INTO [BOOKMARKS] VALUES "+String.format("('%s', '%s', %d)", book.isbn.get(), sqlTimestamp.toString(), 0));
             });
             return cell;
         });
@@ -83,7 +87,9 @@ public class CollectionController {
                             "AND " +
                             "(([ISBN] LIKE '%" +newValue+"%') OR "+
                             "([Title] LIKE '%" +newValue+"%') OR "+
-                            "([Author] LIKE '%" +newValue+"%'));");
+                            "([Author] LIKE '%" +newValue+"%') OR "+
+                            "([Publisher] LIKE '%" +newValue+"%') OR "+
+                            "([Year] LIKE '%" +newValue+"%'));");
             ObservableList<Book> bookList = collectionTable.getItems();
             bookList.clear();
             for(Book book : container){
