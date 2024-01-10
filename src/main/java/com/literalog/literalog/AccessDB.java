@@ -2,19 +2,37 @@ package com.literalog.literalog;
 
 import java.sql.*;
 
-public class AccessDB{
-    private static String dbUrl = "jdbc:sqlserver://localhost\\SQLEXPRESS;databaseName=LiteraLog;Encrypt=true;trustServerCertificate=true";
+public final class AccessDB{
+    private static String serverName = "localhost";
+    private static String instanceName = "MSSQLSERVER";
+    private static String port = "1433";
     private static String username = "nerd";
     private static String password = "noreadnolife";
     private static Connection connection = null;
-    private static String user_role = null;
+    private AccessDB(){}
+    public static String getServerName() {
+        return serverName;
+    }
 
-    public static boolean openConnection(){
+    public static String getInstanceName() {
+        return instanceName;
+    }
+
+    public static String getPort() {
+        return port;
+    }
+
+    public static String getUsername() {
+        return username;
+    }
+
+    public static boolean openConnection(String serverName, String instanceName, String port, String username, String password){
         try {
+            String dbUrl = "jdbc:sqlserver://"+serverName+"\\"+instanceName+":"+port+";databaseName=LiteraLog;Encrypt=true;trustServerCertificate=true";
+
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 
             connection = DriverManager.getConnection(dbUrl, username, password);
-            System.out.println("Connected to the database!");
             return true;
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -45,34 +63,6 @@ public class AccessDB{
         return connection;
     }
 
-    public static void displayData(String query){
-        try {
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(query);
-
-            ResultSetMetaData metaData = resultSet.getMetaData();
-            int columnCount = metaData.getColumnCount();
-
-            // Processing data
-            for (int i = 1; i <= columnCount; i++) {
-                String columnName = metaData.getColumnName(i);
-                System.out.print(String.format("|%-25s|", columnName));
-            }
-            System.out.println();
-            String border = new String(new char[27*columnCount]).replace("\0", "-");
-            System.out.println(border);
-            while (resultSet.next()) {
-                for (int i = 1; i <= columnCount; i++) {
-                    Object columnValue = resultSet.getObject(i);
-
-                    System.out.print(String.format("|%-25s|", columnValue));
-                }
-                System.out.println();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     public static boolean closeConnection(){
         if(connection!=null){
@@ -84,9 +74,5 @@ public class AccessDB{
         }
         System.out.println("Connection closed");
         return false;
-    }
-
-    public static void main(String[] args){
-        openConnection();
     }
 }

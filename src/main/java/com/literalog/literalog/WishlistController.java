@@ -87,37 +87,39 @@ public class WishlistController {
             return cell;
         });
 
-        try {
-            Connection connection = AccessDB.getConnection();
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM [Wishlist]");
+        if(AccessDB.getConnection() != null){
+            try {
+                Connection connection = AccessDB.getConnection();
+                Statement statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery("SELECT * FROM [Wishlist]");
 
-            ResultSetMetaData metaData = resultSet.getMetaData();
-            int columnCount = metaData.getColumnCount();
-            while (resultSet.next()) {
-                String ISBN = null, Title = null, Author = null, Publisher = null;
-                int Year = 0, Price = 0;
+                ResultSetMetaData metaData = resultSet.getMetaData();
+                int columnCount = metaData.getColumnCount();
+                while (resultSet.next()) {
+                    String ISBN = null, Title = null, Author = null, Publisher = null;
+                    int Year = 0, Price = 0;
 
-                for (int i = 1; i <= columnCount; i++) {
-                    String columnName = metaData.getColumnName(i);
-                    Object columnValue = resultSet.getObject(i);
+                    for (int i = 1; i <= columnCount; i++) {
+                        String columnName = metaData.getColumnName(i);
+                        Object columnValue = resultSet.getObject(i);
 
-                    switch (columnName){
-                        case "ISBN": ISBN = columnValue.toString(); break;
-                        case "Title": Title = columnValue.toString(); break;
-                        case "Author": Author = columnValue.toString(); break;
-                        case "Publisher": Publisher = columnValue.toString(); break;
-                        case "Year": Year = Integer.parseInt(columnValue.toString()); break;
-                        case "Price": Price = Integer.parseInt(columnValue.toString()); break;
+                        switch (columnName){
+                            case "ISBN": ISBN = columnValue.toString(); break;
+                            case "Title": Title = columnValue.toString(); break;
+                            case "Author": Author = columnValue.toString(); break;
+                            case "Publisher": Publisher = columnValue.toString(); break;
+                            case "Year": Year = Integer.parseInt(columnValue.toString()); break;
+                            case "Price": Price = Integer.parseInt(columnValue.toString()); break;
+                        }
                     }
+                    Book book = new Book(ISBN, Title, Author, Publisher, Year, Price);
+                    ObservableList<Book> bookList = wishlistTable.getItems();
+                    bookList.add(book);
+                    wishlistTable.setItems(bookList);
                 }
-                Book book = new Book(ISBN, Title, Author, Publisher, Year, Price);
-                ObservableList<Book> bookList = wishlistTable.getItems();
-                bookList.add(book);
-                wishlistTable.setItems(bookList);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
     @FXML
