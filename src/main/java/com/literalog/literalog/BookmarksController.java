@@ -8,7 +8,11 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.GridPane;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.util.converter.IntegerStringConverter;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -41,6 +45,17 @@ public class BookmarksController {
         titleColumn.setCellValueFactory(cellData -> cellData.getValue().title);
         authorColumn.setCellValueFactory(cellData -> cellData.getValue().author);
         lastPageReadColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().lastPage.get()).asObject());
+        lastPageReadColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        lastPageReadColumn.setOnEditCommit(event -> {
+            Book book = event.getTableView().getItems().get(event.getTablePosition().getRow());
+            book.lastPage.set(event.getNewValue());
+            book.lastTimeRead.set(LocalDateTime.now());
+            LocalDateTime localDateTime = LocalDateTime.now();
+            java.sql.Timestamp sqlTimestamp = java.sql.Timestamp.valueOf(localDateTime);
+
+            AccessDB.manipulateTable("UPDATE [BOOKMARKS] SET [LastPage] = "+event.getNewValue()+" WHERE [ISBN] = "+book.isbn.get());
+            AccessDB.manipulateTable("UPDATE [BOOKMARKS] SET [LastTimeRead] = '"+sqlTimestamp.toString()+"' WHERE [ISBN] = "+book.isbn.get());
+        });
         lastTimeReadColumn.setCellValueFactory(cellData -> cellData.getValue().lastTimeRead);
         lastTimeReadColumn.setCellFactory(column -> {
             TableCell<Book, LocalDateTime> cell = new TableCell<Book, LocalDateTime>() {
@@ -60,7 +75,7 @@ public class BookmarksController {
 
         progressColumn.setCellValueFactory(cellData -> {
             final DoubleProperty value = new SimpleDoubleProperty();
-            value.bind(cellData.getValue().getProgress());
+            value.bind(cellData.getValue().progress);
             return value.asObject();
         });
         progressColumn.setCellFactory(param -> {
@@ -110,28 +125,30 @@ public class BookmarksController {
             });
             unreadButton.setOnAction(event -> {
                 Book book = bookmarksTable.getItems().get(cell.getIndex());
+                book.lastPage.set(0);
                 AccessDB.manipulateTable("DELETE FROM [BOOKMARKS] WHERE [ISBN] = "+book.isbn.get());
+                bookmarksTable.getItems().remove(book);
             });
             return cell;
         });
 
-
-
-//        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
-//            ArrayList<Book> container = AccessDB.getData("SELECT * " +
-//                    "FROM [BOOKS] " +
-//                    "WHERE [ISBN] IN (SELECT [ISBN] FROM [BOOKMARKS]) " +
-//                    "AND " +
-//                    "(([ISBN] LIKE '%" +newValue+"%') OR "+
-//                    "([Title] LIKE '%" +newValue+"%') OR "+
-//                    "([Author] LIKE '%" +newValue+"%'));");
-//            ObservableList<Book> bookList = bookmarksTable.getItems();
-//            bookList.clear();
-//            for(Book book : container){
-//                bookList.add(book);
-//            }
-//            bookmarksTable.setItems(bookList);
-//        });
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            ArrayList<Book> container = AccessDB.getData("SELECT * " +
+                    "FROM [BOOKS] A, [BOOKMARKS] B " +
+                    "WHERE A.ISBN = B.ISBN " +
+                    "AND " +
+                    "((A.ISBN LIKE '%" +newValue+"%') OR "+
+                    "(A.Title LIKE '%" +newValue+"%') OR "+
+                    "(A.Author LIKE '%" +newValue+"%'));");
+            ObservableList<Book> bookList = bookmarksTable.getItems();
+            bookList.clear();
+            if(container != null){
+                for(Book book : container){
+                    bookList.add(book);
+                }
+            }
+            bookmarksTable.setItems(bookList);
+        });
 
         //get data from database
         ArrayList<Book> container = AccessDB.getData("SELECT * FROM [BOOKS] A, [BOOKMARKS] B WHERE A.ISBN = B.ISBN;");
@@ -140,7 +157,6 @@ public class BookmarksController {
                 ObservableList<Book> bookList = bookmarksTable.getItems();
                 bookList.add(book);
                 bookmarksTable.setItems(bookList);
-                System.out.println(book.lastPage);
             }
         }
     }
