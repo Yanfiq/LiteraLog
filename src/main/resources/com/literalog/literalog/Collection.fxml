@@ -7,16 +7,16 @@
 
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1115.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.literalog.literalog.CollectionController">
     <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+        <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
     </padding>
     <children>
         <GridPane>
             <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints maxHeight="334.66668701171875" minHeight="10.0" prefHeight="70.33333587646484" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="654.3333371480306" minHeight="10.0" prefHeight="608.9999974568685" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="70.33333587646484" vgrow="NEVER" />
+                <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="608.9999974568685" vgrow="ALWAYS" />
             </rowConstraints>
             <children>
                 <TableView fx:id="collectionTable" prefHeight="619.0" prefWidth="1075.0" style="-fx-font-family: 'Segoe UI Semibold'; -fx-font-size: 14px;" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
@@ -33,19 +33,19 @@
                 </TableView>
                 <GridPane>
                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="529.3333129882812" minWidth="10.0" prefWidth="69.33333333333334" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="1015.0000000000001" minWidth="10.0" prefWidth="1005.9999999999999" />
+                        <ColumnConstraints hgrow="NEVER" maxWidth="529.3333129882812" minWidth="10.0" prefWidth="79.99998982747395" />
+                        <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="975.3333435058593" />
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
                     </rowConstraints>
                     <children>
-                        <TextField fx:id="searchField" GridPane.columnIndex="1">
+                        <TextField fx:id="searchField" GridPane.columnIndex="1" GridPane.valignment="TOP">
                             <font>
                                 <Font name="Segoe UI Semibold" size="16.0" />
                             </font>
                         </TextField>
-                        <Label text="Keyword">
+                        <Label prefHeight="36.0" text="Keyword" GridPane.valignment="TOP">
                             <font>
                                 <Font name="Segoe UI Semibold" size="16.0" />
                             </font>

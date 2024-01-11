@@ -42,9 +42,13 @@ public class BookmarksController {
     public void initialize(){
         // Initialize your table columns with property values from Book class
         isbnColumn.setCellValueFactory(cellData -> cellData.getValue().isbn);
+        isbnColumn.prefWidthProperty().bind(bookmarksTable.widthProperty().divide(7));
         titleColumn.setCellValueFactory(cellData -> cellData.getValue().title);
+        titleColumn.prefWidthProperty().bind(bookmarksTable.widthProperty().divide(7));
         authorColumn.setCellValueFactory(cellData -> cellData.getValue().author);
+        authorColumn.prefWidthProperty().bind(bookmarksTable.widthProperty().divide(7));
         lastPageReadColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().lastPage.get()).asObject());
+        lastPageReadColumn.prefWidthProperty().bind(bookmarksTable.widthProperty().divide(7));
         lastPageReadColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
         lastPageReadColumn.setOnEditCommit(event -> {
             Book book = event.getTableView().getItems().get(event.getTablePosition().getRow());
@@ -57,6 +61,7 @@ public class BookmarksController {
             AccessDB.manipulateTable("UPDATE [BOOKMARKS] SET [LastTimeRead] = '"+sqlTimestamp.toString()+"' WHERE [ISBN] = "+book.isbn.get());
         });
         lastTimeReadColumn.setCellValueFactory(cellData -> cellData.getValue().lastTimeRead);
+        lastTimeReadColumn.prefWidthProperty().bind(bookmarksTable.widthProperty().divide(7));
         lastTimeReadColumn.setCellFactory(column -> {
             TableCell<Book, LocalDateTime> cell = new TableCell<Book, LocalDateTime>() {
                 private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -92,11 +97,13 @@ public class BookmarksController {
                         setGraphic(null);
                     } else {
                         progressBar.setProgress(item);
+                        progressBar.prefWidthProperty().bind(progressColumn.prefWidthProperty());
                         setGraphic(progressBar);
                     }
                 }
             };
         });
+        progressColumn.prefWidthProperty().bind(bookmarksTable.widthProperty().divide(7));
 
         actionColumn.setCellFactory(param -> {
             final Button removeButton = new Button("Remove");
@@ -131,6 +138,7 @@ public class BookmarksController {
             });
             return cell;
         });
+        actionColumn.prefWidthProperty().bind(bookmarksTable.widthProperty().divide(7));
 
         searchField.textProperty().addListener((observable, oldValue, newValue) -> {
             ArrayList<Book> container = AccessDB.getData("SELECT * " +

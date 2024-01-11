@@ -2,10 +2,12 @@ package com.literalog.literalog;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 
 import java.io.IOException;
 
@@ -22,7 +24,7 @@ public class MainController {
     @FXML
     private Button loginButton;
     @FXML
-    private Pane content;
+    private AnchorPane content;
 
     @FXML
     public void initialize() {
@@ -40,7 +42,14 @@ public class MainController {
 
         try {
             FXMLLoader secondaryLoader = new FXMLLoader(getClass().getResource("Login.fxml"));
-            content.getChildren().setAll((Node) secondaryLoader.load());
+            Node object = secondaryLoader.load();
+            content.getChildren().setAll(object);
+            //content.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
+            //object.
+            AnchorPane.setLeftAnchor(object, 0.0);
+            AnchorPane.setRightAnchor(object, 0.0);
+            AnchorPane.setTopAnchor(object, 0.0);
+            AnchorPane.setBottomAnchor(object, 0.0);
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -80,32 +89,38 @@ public class MainController {
     }
 
     @FXML
+    private void onButtonClick(String fxmlFileName) throws IOException {
+        FXMLLoader secondaryLoader = new FXMLLoader(getClass().getResource(fxmlFileName));
+        Node object = secondaryLoader.load();
+        content.getChildren().setAll(object);
+        AnchorPane.setLeftAnchor(object, 0.0);
+        AnchorPane.setRightAnchor(object, 0.0);
+        AnchorPane.setTopAnchor(object, 0.0);
+        AnchorPane.setBottomAnchor(object, 0.0);
+    }
+
+    @FXML
     private void onWishlistButtonClick() throws IOException {
-        FXMLLoader secondaryLoader = new FXMLLoader(getClass().getResource("Wishlist.fxml"));
-        content.getChildren().setAll((Node) secondaryLoader.load());
+        onButtonClick("Wishlist.fxml");
     }
 
     @FXML
     private void onDashboardButtonClick() throws IOException {
-        FXMLLoader secondaryLoader = new FXMLLoader(getClass().getResource("Dashboard.fxml"));
-        content.getChildren().setAll((Node) secondaryLoader.load());
+        onButtonClick("Dashboard.fxml");
     }
 
     @FXML
     private void onBookmarksButtonClick() throws IOException {
-        FXMLLoader secondaryLoader = new FXMLLoader(getClass().getResource("Bookmarks.fxml"));
-        content.getChildren().setAll((Node) secondaryLoader.load());
+        onButtonClick("Bookmarks.fxml");
     }
 
     @FXML
     private void onLoginButtonClick() throws IOException {
-        FXMLLoader secondaryLoader = new FXMLLoader(getClass().getResource("Login.fxml"));
-        content.getChildren().setAll((Node) secondaryLoader.load());
+        onButtonClick("Login.fxml");
     }
 
     @FXML
     private void onCollectionButtonClick() throws IOException {
-        FXMLLoader secondaryLoader = new FXMLLoader(getClass().getResource("Collection.fxml"));
-        content.getChildren().setAll((Node) secondaryLoader.load());
+        onButtonClick("Collection.fxml");
     }
 }

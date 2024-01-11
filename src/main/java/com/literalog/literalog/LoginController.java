@@ -1,10 +1,13 @@
 package com.literalog.literalog;
 
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 
 public class LoginController {
     @FXML
@@ -21,9 +24,21 @@ public class LoginController {
     private TextField portField;
     @FXML
     private Label messageText;
+    @FXML
+    private GridPane gridLayout;
     public static boolean loginState;
+    @FXML
+    public void initialize(){
+        ColumnConstraints columnConstraints = new ColumnConstraints();
+        columnConstraints.setHgrow(javafx.scene.layout.Priority.ALWAYS);
+        RowConstraints rowConstraints = new RowConstraints();
+        rowConstraints.setVgrow(javafx.scene.layout.Priority.ALWAYS);
 
+        //gridLayout.setBackground(new Background(new BackgroundFill(Color.BLUE, CornerRadii.EMPTY, Insets.EMPTY)));
 
+        //gridLayout.getRowConstraints().add(rowConstraints);
+        //gridLayout.getColumnConstraints().add(columnConstraints);
+    }
     @FXML
     private void onLoginButtonClick(){
         if(!loginState){

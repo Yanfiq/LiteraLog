@@ -39,12 +39,19 @@ public class CollectionController {
     public void initialize() {
         // Initialize your table columns with property values from Book class
         isbnColumn.setCellValueFactory(cellData -> cellData.getValue().isbn);
+        isbnColumn.prefWidthProperty().bind(collectionTable.widthProperty().divide(8));
         titleColumn.setCellValueFactory(cellData -> cellData.getValue().title);
+        titleColumn.prefWidthProperty().bind(collectionTable.widthProperty().divide(8));
         authorColumn.setCellValueFactory(cellData -> cellData.getValue().author);
+        authorColumn.prefWidthProperty().bind(collectionTable.widthProperty().divide(8));
         totalPageColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().totalPage.get()).asObject());
+        totalPageColumn.prefWidthProperty().bind(collectionTable.widthProperty().divide(8));
         publisherColumn.setCellValueFactory(cellData -> cellData.getValue().publisher);
+        publisherColumn.prefWidthProperty().bind(collectionTable.widthProperty().divide(8));
         yearColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().year.get()).asObject());
+        yearColumn.prefWidthProperty().bind(collectionTable.widthProperty().divide(8));
         priceColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().price.get()).asObject());
+        priceColumn.prefWidthProperty().bind(collectionTable.widthProperty().divide(8));
 
         actionColumn.setCellFactory(param -> {
             final Button removeButton = new Button("Remove");
@@ -79,6 +86,7 @@ public class CollectionController {
             });
             return cell;
         });
+        actionColumn.prefWidthProperty().bind(collectionTable.widthProperty().divide(8));
 
         searchField.textProperty().addListener((observable, oldValue, newValue) -> {
             ArrayList<Book> container = AccessDB.getData("SELECT * " +

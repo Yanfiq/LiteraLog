@@ -1,5 +1,6 @@
 package com.literalog.literalog;
 
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -53,13 +54,22 @@ public class WishlistController {
     @FXML
     public void initialize() {
         // Initialize your table columns with property values from Book class
+//        wishlistTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
         isbnColumn.setCellValueFactory(cellData -> cellData.getValue().isbn);
+        isbnColumn.prefWidthProperty().bind(wishlistTable.widthProperty().divide(8));
         titleColumn.setCellValueFactory(cellData -> cellData.getValue().title);
+        titleColumn.prefWidthProperty().bind(wishlistTable.widthProperty().divide(8));
         authorColumn.setCellValueFactory(cellData -> cellData.getValue().author);
+        authorColumn.prefWidthProperty().bind(wishlistTable.widthProperty().divide(8));
         totalPageColumn.setCellValueFactory(celldata -> new SimpleIntegerProperty(celldata.getValue().totalPage.get()).asObject());
+        totalPageColumn.prefWidthProperty().bind(wishlistTable.widthProperty().divide(8));
         publisherColumn.setCellValueFactory(cellData -> cellData.getValue().publisher);
+        publisherColumn.prefWidthProperty().bind(wishlistTable.widthProperty().divide(8));
         yearColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().year.get()).asObject());
+        yearColumn.prefWidthProperty().bind(wishlistTable.widthProperty().divide(8));
         priceColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().price.get()).asObject());
+        priceColumn.prefWidthProperty().bind(wishlistTable.widthProperty().divide(8));
 
         actionColumn.setCellFactory(param -> {
             final Button removeButton = new Button("Remove");
@@ -96,6 +106,7 @@ public class WishlistController {
             });
             return cell;
         });
+        actionColumn.prefWidthProperty().bind(wishlistTable.widthProperty().divide(8));
 
         //get data from database
         ArrayList<Book> container = AccessDB.getData("SELECT * FROM [BOOKS] WHERE [ISBN] IN (SELECT [ISBN] FROM [WISHLIST])");
