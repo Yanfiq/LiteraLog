@@ -7,7 +7,7 @@
 
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1115.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.literalog.literalog.WishlistController">
    <children>
-      <GridPane maxWidth="1.7976931348623157E308" prefHeight="720.0" prefWidth="1124.0" vgap="10.0">
+      <GridPane maxWidth="1.7976931348623157E308" prefHeight="526.0" prefWidth="1055.0" vgap="10.0">
          <columnConstraints>
             <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
          </columnConstraints>
@@ -16,7 +16,7 @@
             <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="608.9999974568685" vgrow="ALWAYS" />
          </rowConstraints>
          <children>
-            <TableView fx:id="wishlistTable" maxWidth="1.7976931348623157E308" prefHeight="619.0" prefWidth="1075.0" style="-fx-font-family: 'Segoe UI Semibold'; -fx-font-size: 14px;" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
+            <TableView fx:id="wishlistTable" maxWidth="1.7976931348623157E308" prefHeight="387.0" prefWidth="1055.0" style="-fx-font-family: 'Segoe UI Semibold'; -fx-font-size: 14px;" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
                <columns>
                   <TableColumn fx:id="isbnColumn" maxWidth="1.7976931348623157E308" minWidth="130.0" prefWidth="-1.0" text="ISBN" />
                   <TableColumn fx:id="titleColumn" maxWidth="1.7976931348623157E308" minWidth="130.0" prefWidth="-1.0" text="Title" />

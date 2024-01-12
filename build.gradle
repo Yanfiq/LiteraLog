@@ -1,3 +1,12 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'io.github.fvarrui:javapackager:1.7.5'
+    }
+}
+
 plugins {
     id 'java'
     id 'application'
@@ -5,6 +14,8 @@ plugins {
     id 'org.openjfx.javafxplugin' version '0.0.13'
     id 'org.beryx.jlink' version '2.25.0'
 }
+
+apply plugin: 'io.github.fvarrui.javapackager.plugin'
 
 group 'com.literalog'
 version '1.0-SNAPSHOT'
@@ -26,7 +37,7 @@ tasks.withType(JavaCompile) {
 
 application {
     mainModule = 'com.literalog.literalog'
-    mainClass = 'com.literalog.literalog.HelloApplication'
+    mainClass = 'com.literalog.literalog.Main'
 }
 
 javafx {
@@ -56,3 +67,20 @@ jlink {
 jlinkZip {
     group = 'distribution'
 }
+
+task packageMyApp(type: io.github.fvarrui.javapackager.gradle.PackageTask, dependsOn: build) {
+    // mandatory
+    mainClass = 'com.literalog.literalog.Main'
+    // optional
+    bundleJre = true
+    customizedJre = false
+    generateInstaller = true
+    administratorRequired = false
+    platform = "windows"
+}
+
+//task packageMyApp(type: io.github.fvarrui.javapackager.gradle.PackageTask, dependsOn: build) {
+//    mainClass = 'com.literalog.literalog.Main'
+//    bundleJre = true
+//    customizedJre = false
+//}
