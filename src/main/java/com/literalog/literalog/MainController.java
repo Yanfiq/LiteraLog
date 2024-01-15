@@ -86,6 +86,7 @@ public class MainController {
 
         try{
             loadPage("Login.fxml");
+            loginButton.setStyle(buttonChosenStyle);
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -114,7 +115,7 @@ public class MainController {
     private void onMouseExited(MouseEvent event) {
         Button button = (Button) event.getSource();
 
-        if(((SimpleBooleanProperty) button.getUserData()).get() == true) return;
+        if(((SimpleBooleanProperty) button.getUserData()).get()) return;
 
         // Retrieve the current style
         String currentStyle = button.getStyle();
@@ -141,54 +142,54 @@ public class MainController {
     private void onDashboardButtonClick() throws IOException {
         loadPage("Dashboard.fxml");
 
-        ((SimpleBooleanProperty) dashboardButton.getUserData()).set(true);
-        ((SimpleBooleanProperty) collectionButton.getUserData()).set(false);
-        ((SimpleBooleanProperty) wishlistButton.getUserData()).set(false);
-        ((SimpleBooleanProperty) bookmarksButton.getUserData()).set(false);
-        ((SimpleBooleanProperty) loginButton.getUserData()).set(false);
+        ((SimpleBooleanProperty) dashboardButton.getUserData()).set(true); dashboardButton.setStyle(buttonChosenStyle);
+        ((SimpleBooleanProperty) collectionButton.getUserData()).set(false); collectionButton.setStyle(buttonNotChosenStyle);
+        ((SimpleBooleanProperty) wishlistButton.getUserData()).set(false); wishlistButton.setStyle(buttonNotChosenStyle);
+        ((SimpleBooleanProperty) bookmarksButton.getUserData()).set(false); bookmarksButton.setStyle(buttonNotChosenStyle);
+        ((SimpleBooleanProperty) loginButton.getUserData()).set(false); loginButton.setStyle(buttonNotChosenStyle);
     }
 
     @FXML
     private void onCollectionButtonClick() throws IOException {
         loadPage("Collection.fxml");
 
-        ((SimpleBooleanProperty) dashboardButton.getUserData()).set(false);
-        ((SimpleBooleanProperty) collectionButton.getUserData()).set(true);
-        ((SimpleBooleanProperty) wishlistButton.getUserData()).set(false);
-        ((SimpleBooleanProperty) bookmarksButton.getUserData()).set(false);
-        ((SimpleBooleanProperty) loginButton.getUserData()).set(false);
+        ((SimpleBooleanProperty) dashboardButton.getUserData()).set(false); dashboardButton.setStyle(buttonNotChosenStyle);
+        ((SimpleBooleanProperty) collectionButton.getUserData()).set(true); collectionButton.setStyle(buttonChosenStyle);
+        ((SimpleBooleanProperty) wishlistButton.getUserData()).set(false); wishlistButton.setStyle(buttonNotChosenStyle);
+        ((SimpleBooleanProperty) bookmarksButton.getUserData()).set(false); bookmarksButton.setStyle(buttonNotChosenStyle);
+        ((SimpleBooleanProperty) loginButton.getUserData()).set(false); loginButton.setStyle(buttonNotChosenStyle);
     }
 
     @FXML
     private void onWishlistButtonClick() throws IOException {
         loadPage("Wishlist.fxml");
 
-        ((SimpleBooleanProperty) dashboardButton.getUserData()).set(false);
-        ((SimpleBooleanProperty) collectionButton.getUserData()).set(false);
-        ((SimpleBooleanProperty) wishlistButton.getUserData()).set(true);
-        ((SimpleBooleanProperty) bookmarksButton.getUserData()).set(false);
-        ((SimpleBooleanProperty) loginButton.getUserData()).set(false);
+        ((SimpleBooleanProperty) dashboardButton.getUserData()).set(false); dashboardButton.setStyle(buttonNotChosenStyle);
+        ((SimpleBooleanProperty) collectionButton.getUserData()).set(false); collectionButton.setStyle(buttonNotChosenStyle);
+        ((SimpleBooleanProperty) wishlistButton.getUserData()).set(true); wishlistButton.setStyle(buttonChosenStyle);
+        ((SimpleBooleanProperty) bookmarksButton.getUserData()).set(false); bookmarksButton.setStyle(buttonNotChosenStyle);
+        ((SimpleBooleanProperty) loginButton.getUserData()).set(false); loginButton.setStyle(buttonNotChosenStyle);
     }
 
     @FXML
     private void onBookmarksButtonClick() throws IOException {
         loadPage("Bookmarks.fxml");
 
-        ((SimpleBooleanProperty) dashboardButton.getUserData()).set(false);
-        ((SimpleBooleanProperty) collectionButton.getUserData()).set(false);
-        ((SimpleBooleanProperty) wishlistButton.getUserData()).set(false);
-        ((SimpleBooleanProperty) bookmarksButton.getUserData()).set(true);
-        ((SimpleBooleanProperty) loginButton.getUserData()).set(false);
+        ((SimpleBooleanProperty) dashboardButton.getUserData()).set(false); dashboardButton.setStyle(buttonNotChosenStyle);
+        ((SimpleBooleanProperty) collectionButton.getUserData()).set(false); collectionButton.setStyle(buttonNotChosenStyle);
+        ((SimpleBooleanProperty) wishlistButton.getUserData()).set(false); wishlistButton.setStyle(buttonNotChosenStyle);
+        ((SimpleBooleanProperty) bookmarksButton.getUserData()).set(true); bookmarksButton.setStyle(buttonChosenStyle);
+        ((SimpleBooleanProperty) loginButton.getUserData()).set(false); loginButton.setStyle(buttonNotChosenStyle);
     }
 
     @FXML
     private void onLoginButtonClick() throws IOException {
         loadPage("Login.fxml");
 
-        ((SimpleBooleanProperty) dashboardButton.getUserData()).set(false);
-        ((SimpleBooleanProperty) collectionButton.getUserData()).set(false);
-        ((SimpleBooleanProperty) wishlistButton.getUserData()).set(false);
-        ((SimpleBooleanProperty) bookmarksButton.getUserData()).set(false);
-        ((SimpleBooleanProperty) loginButton.getUserData()).set(true);
+        ((SimpleBooleanProperty) dashboardButton.getUserData()).set(false); dashboardButton.setStyle(buttonNotChosenStyle);
+        ((SimpleBooleanProperty) collectionButton.getUserData()).set(false); collectionButton.setStyle(buttonNotChosenStyle);
+        ((SimpleBooleanProperty) wishlistButton.getUserData()).set(false); wishlistButton.setStyle(buttonNotChosenStyle);
+        ((SimpleBooleanProperty) bookmarksButton.getUserData()).set(false); bookmarksButton.setStyle(buttonNotChosenStyle);
+        ((SimpleBooleanProperty) loginButton.getUserData()).set(true); loginButton.setStyle(buttonChosenStyle);
     }
 }
