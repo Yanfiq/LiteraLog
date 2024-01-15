@@ -1,30 +1,50 @@
 package com.literalog.literalog;
 
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class MainController {
 
     @FXML
     private Button dashboardButton;
     @FXML
+    private Label dashboardButtonClickSign;
+    @FXML
     private Button wishlistButton;
+    @FXML
+    private Label wishlistButtonClickSign;
     @FXML
     private Button bookmarksButton;
     @FXML
+    private Label bookmarksButtonClickSign;
+    @FXML
     private Button collectionButton;
+    @FXML
+    private Label collectionButtonClickSign;
     @FXML
     private Button loginButton;
     @FXML
+    private Label loginButtonClickSign;
+    @FXML
     private AnchorPane content;
+
+    String buttonChosenStyle = "-fx-background-color: rgb(42, 96, 131); -fx-background-radius: 4; -fx-alignment: center-left;";
+    String buttonNotChosenStyle = "-fx-background-color: transparent; -fx-background-radius: 4; -fx-alignment: center-left;";
 
     @FXML
     public void initialize() {
@@ -40,17 +60,33 @@ public class MainController {
         bookmarksButton.setOnMouseExited(this::onMouseExited);
         collectionButton.setOnMouseExited(this::onMouseExited);
 
-        try {
-            FXMLLoader secondaryLoader = new FXMLLoader(getClass().getResource("Login.fxml"));
-            Node object = secondaryLoader.load();
-            content.getChildren().setAll(object);
-            //content.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
-            //object.
-            AnchorPane.setLeftAnchor(object, 0.0);
-            AnchorPane.setRightAnchor(object, 0.0);
-            AnchorPane.setTopAnchor(object, 0.0);
-            AnchorPane.setBottomAnchor(object, 0.0);
-        } catch (Exception e){
+        dashboardButton.setUserData(new SimpleBooleanProperty(false));
+        wishlistButton.setUserData(new SimpleBooleanProperty(false));
+        loginButton.setUserData(new SimpleBooleanProperty(true));
+        bookmarksButton.setUserData(new SimpleBooleanProperty(false));
+        collectionButton.setUserData(new SimpleBooleanProperty(false));
+
+        dashboardButtonClickSign.styleProperty().bind((ObservableValue<? extends String>) Bindings.when((SimpleBooleanProperty) dashboardButton.getUserData())
+                .then("-fx-background-color: rgb(76, 194, 255);")
+                .otherwise("-fx-background-color: transparent;"));
+        wishlistButtonClickSign.styleProperty().bind((ObservableValue<? extends String>) Bindings.when((SimpleBooleanProperty) wishlistButton.getUserData())
+                .then("-fx-background-color: rgb(76, 194, 255);")
+                .otherwise("-fx-background-color: transparent;"));
+        loginButtonClickSign.styleProperty().bind((ObservableValue<? extends String>) Bindings.when((SimpleBooleanProperty) loginButton.getUserData())
+                .then("-fx-background-color: rgb(76, 194, 255);")
+                .otherwise("-fx-background-color: transparent;"));
+        bookmarksButtonClickSign.styleProperty().bind((ObservableValue<? extends String>) Bindings.when((SimpleBooleanProperty) bookmarksButton.getUserData())
+                .then("-fx-background-color: rgb(76, 194, 255);")
+                .otherwise("-fx-background-color: transparent;"));
+        collectionButtonClickSign.styleProperty().bind((ObservableValue<? extends String>) Bindings.when((SimpleBooleanProperty) collectionButton.getUserData())
+                .then("-fx-background-color: rgb(76, 194, 255);")
+                .otherwise("-fx-background-color: transparent;"));
+
+
+
+        try{
+            loadPage("Login.fxml");
+        }catch (IOException e){
             e.printStackTrace();
         }
     }
@@ -78,6 +114,8 @@ public class MainController {
     private void onMouseExited(MouseEvent event) {
         Button button = (Button) event.getSource();
 
+        if(((SimpleBooleanProperty) button.getUserData()).get() == true) return;
+
         // Retrieve the current style
         String currentStyle = button.getStyle();
 
@@ -89,7 +127,7 @@ public class MainController {
     }
 
     @FXML
-    private void onButtonClick(String fxmlFileName) throws IOException {
+    private void loadPage(String fxmlFileName) throws IOException {
         FXMLLoader secondaryLoader = new FXMLLoader(getClass().getResource(fxmlFileName));
         Node object = secondaryLoader.load();
         content.getChildren().setAll(object);
@@ -100,27 +138,57 @@ public class MainController {
     }
 
     @FXML
-    private void onWishlistButtonClick() throws IOException {
-        onButtonClick("Wishlist.fxml");
-    }
-
-    @FXML
     private void onDashboardButtonClick() throws IOException {
-        onButtonClick("Dashboard.fxml");
-    }
+        loadPage("Dashboard.fxml");
 
-    @FXML
-    private void onBookmarksButtonClick() throws IOException {
-        onButtonClick("Bookmarks.fxml");
-    }
-
-    @FXML
-    private void onLoginButtonClick() throws IOException {
-        onButtonClick("Login.fxml");
+        ((SimpleBooleanProperty) dashboardButton.getUserData()).set(true);
+        ((SimpleBooleanProperty) collectionButton.getUserData()).set(false);
+        ((SimpleBooleanProperty) wishlistButton.getUserData()).set(false);
+        ((SimpleBooleanProperty) bookmarksButton.getUserData()).set(false);
+        ((SimpleBooleanProperty) loginButton.getUserData()).set(false);
     }
 
     @FXML
     private void onCollectionButtonClick() throws IOException {
-        onButtonClick("Collection.fxml");
+        loadPage("Collection.fxml");
+
+        ((SimpleBooleanProperty) dashboardButton.getUserData()).set(false);
+        ((SimpleBooleanProperty) collectionButton.getUserData()).set(true);
+        ((SimpleBooleanProperty) wishlistButton.getUserData()).set(false);
+        ((SimpleBooleanProperty) bookmarksButton.getUserData()).set(false);
+        ((SimpleBooleanProperty) loginButton.getUserData()).set(false);
+    }
+
+    @FXML
+    private void onWishlistButtonClick() throws IOException {
+        loadPage("Wishlist.fxml");
+
+        ((SimpleBooleanProperty) dashboardButton.getUserData()).set(false);
+        ((SimpleBooleanProperty) collectionButton.getUserData()).set(false);
+        ((SimpleBooleanProperty) wishlistButton.getUserData()).set(true);
+        ((SimpleBooleanProperty) bookmarksButton.getUserData()).set(false);
+        ((SimpleBooleanProperty) loginButton.getUserData()).set(false);
+    }
+
+    @FXML
+    private void onBookmarksButtonClick() throws IOException {
+        loadPage("Bookmarks.fxml");
+
+        ((SimpleBooleanProperty) dashboardButton.getUserData()).set(false);
+        ((SimpleBooleanProperty) collectionButton.getUserData()).set(false);
+        ((SimpleBooleanProperty) wishlistButton.getUserData()).set(false);
+        ((SimpleBooleanProperty) bookmarksButton.getUserData()).set(true);
+        ((SimpleBooleanProperty) loginButton.getUserData()).set(false);
+    }
+
+    @FXML
+    private void onLoginButtonClick() throws IOException {
+        loadPage("Login.fxml");
+
+        ((SimpleBooleanProperty) dashboardButton.getUserData()).set(false);
+        ((SimpleBooleanProperty) collectionButton.getUserData()).set(false);
+        ((SimpleBooleanProperty) wishlistButton.getUserData()).set(false);
+        ((SimpleBooleanProperty) bookmarksButton.getUserData()).set(false);
+        ((SimpleBooleanProperty) loginButton.getUserData()).set(true);
     }
 }
