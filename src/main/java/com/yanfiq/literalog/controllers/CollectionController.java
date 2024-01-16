@@ -1,15 +1,13 @@
-package com.literalog.literalog;
+package com.yanfiq.literalog.controllers;
 
+import com.yanfiq.literalog.models.Book;
+import com.yanfiq.literalog.utils.DatabaseUtils;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.time.LocalDateTime;
 
@@ -74,22 +72,22 @@ public class CollectionController {
 
             removeButton.setOnAction(event -> {
                 Book book = collectionTable.getItems().get(cell.getIndex());
-                AccessDB.manipulateTable("DELETE FROM [BOOKMARKS] WHERE [ISBN] = "+book.isbn.get());
-                AccessDB.manipulateTable("DELETE FROM [BOOKS] WHERE [ISBN] = "+book.isbn.get());
+                DatabaseUtils.manipulateTable("DELETE FROM [BOOKMARKS] WHERE [ISBN] = "+book.isbn.get());
+                DatabaseUtils.manipulateTable("DELETE FROM [BOOKS] WHERE [ISBN] = "+book.isbn.get());
                 collectionTable.getItems().remove(book);
             });
             readButton.setOnAction(event -> {
                 Book book = collectionTable.getItems().get(cell.getIndex());
                 LocalDateTime localDateTime = LocalDateTime.now();
                 java.sql.Timestamp sqlTimestamp = java.sql.Timestamp.valueOf(localDateTime);
-                AccessDB.manipulateTable("INSERT INTO [BOOKMARKS] VALUES "+String.format("('%s', '%s', %d)", book.isbn.get(), sqlTimestamp.toString(), 0));
+                DatabaseUtils.manipulateTable("INSERT INTO [BOOKMARKS] VALUES "+String.format("('%s', '%s', %d)", book.isbn.get(), sqlTimestamp.toString(), 0));
             });
             return cell;
         });
         actionColumn.prefWidthProperty().bind(collectionTable.widthProperty().divide(8));
 
         searchField.textProperty().addListener((observable, oldValue, newValue) -> {
-            ArrayList<Book> container = AccessDB.getData("SELECT * " +
+            ArrayList<Book> container = DatabaseUtils.getData("SELECT * " +
                             "FROM [BOOKS] " +
                             "WHERE [ISBN] NOT IN (SELECT [ISBN] FROM [WISHLIST]) " +
                             "AND " +
@@ -107,7 +105,7 @@ public class CollectionController {
         });
 
         //get data from database
-        ArrayList<Book> container = AccessDB.getData("SELECT * FROM [BOOKS] WHERE [ISBN] NOT IN (SELECT [ISBN] FROM [WISHLIST])");
+        ArrayList<Book> container = DatabaseUtils.getData("SELECT * FROM [BOOKS] WHERE [ISBN] NOT IN (SELECT [ISBN] FROM [WISHLIST])");
         if(container != null){
             for(Book book : container){
                 ObservableList<Book> bookList = collectionTable.getItems();

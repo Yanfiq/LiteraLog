@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1115.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.literalog.literalog.WishlistController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1100.0" style="-fx-background-color: rgb(32, 32, 32);" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.yanfiq.literalog.controllers.WishlistController">
    <children>
       <GridPane maxWidth="1.7976931348623157E308" prefHeight="526.0" prefWidth="1055.0" vgap="10.0">
          <columnConstraints>
@@ -16,7 +23,7 @@
             <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="608.9999974568685" vgrow="ALWAYS" />
          </rowConstraints>
          <children>
-            <TableView fx:id="wishlistTable" maxWidth="1.7976931348623157E308" prefHeight="387.0" prefWidth="1055.0" style="-fx-font-family: 'Segoe UI Semibold'; -fx-font-size: 14px;" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
+            <TableView fx:id="wishlistTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="387.0" prefWidth="1055.0" style="-fx-font-family: 'Segoe UI Semibold'; -fx-font-size: 14px; -fx-background-radius: 5; -fx-background-color: rgb(45, 45, 45);" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
                <columns>
                   <TableColumn fx:id="isbnColumn" maxWidth="1.7976931348623157E308" minWidth="130.0" prefWidth="-1.0" text="ISBN" />
                   <TableColumn fx:id="titleColumn" maxWidth="1.7976931348623157E308" minWidth="130.0" prefWidth="-1.0" text="Title" />
@@ -30,13 +37,13 @@
             </TableView>
             <GridPane hgap="5.0" maxWidth="1.7976931348623157E308" prefHeight="52.0" prefWidth="906.0" GridPane.hgrow="ALWAYS" GridPane.vgrow="NEVER">
                <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="120.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="120.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="120.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="120.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="120.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="120.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="120.0" />
+                  <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="120.0" />
+                  <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="120.0" />
+                  <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="120.0" />
+                  <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="120.0" />
+                  <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="120.0" />
+                  <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="120.0" />
+                  <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="120.0" />
                   <ColumnConstraints hgrow="NEVER" maxWidth="172.66668701171875" minWidth="10.0" prefWidth="80.3333740234375" />
                </columnConstraints>
                <rowConstraints>
@@ -44,79 +51,79 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Label text="ISBN" GridPane.halignment="CENTER">
+                  <Label text="ISBN" textFill="WHITE" GridPane.halignment="CENTER">
                      <font>
                         <Font name="Segoe UI Semibold" size="16.0" />
                      </font>
                   </Label>
-                  <Label text="Title" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+                  <Label text="Title" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER">
                      <font>
                         <Font name="Segoe UI Semibold" size="16.0" />
                      </font>
                   </Label>
-                  <Label text="Author" GridPane.columnIndex="2" GridPane.halignment="CENTER">
+                  <Label text="Author" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER">
                      <font>
                         <Font name="Segoe UI Semibold" size="16.0" />
                      </font>
                   </Label>
-                  <Label text="Publisher" GridPane.columnIndex="4" GridPane.halignment="CENTER">
+                  <Label text="Publisher" textFill="WHITE" GridPane.columnIndex="4" GridPane.halignment="CENTER">
                      <font>
                         <Font name="Segoe UI Semibold" size="16.0" />
                      </font>
                   </Label>
-                  <Label text="Year" GridPane.columnIndex="5" GridPane.halignment="CENTER">
+                  <Label text="Year" textFill="WHITE" GridPane.columnIndex="5" GridPane.halignment="CENTER">
                      <font>
                         <Font name="Segoe UI Semibold" size="16.0" />
                      </font>
                   </Label>
-                  <Label text="Price" GridPane.columnIndex="6" GridPane.halignment="CENTER">
+                  <Label text="Price" textFill="WHITE" GridPane.columnIndex="6" GridPane.halignment="CENTER">
                      <font>
                         <Font name="Segoe UI Semibold" size="16.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="isbnInput" GridPane.rowIndex="1">
+                  <TextField fx:id="isbnInput" style="-fx-background-radius: 5; -fx-background-color: rgb(45, 45, 45); -fx-text-fill: rgb(255, 255, 255);" GridPane.rowIndex="1">
                      <font>
                         <Font name="Segoe UI Semibold" size="16.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="titleInput" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <TextField fx:id="titleInput" style="-fx-background-radius: 5; -fx-background-color: rgb(45, 45, 45); -fx-text-fill: rgb(255, 255, 255);" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <font>
                         <Font name="Segoe UI Semibold" size="16.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="authorInput" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                  <TextField fx:id="authorInput" style="-fx-background-radius: 5; -fx-background-color: rgb(45, 45, 45); -fx-text-fill: rgb(255, 255, 255);" GridPane.columnIndex="2" GridPane.rowIndex="1">
                      <font>
                         <Font name="Segoe UI Semibold" size="16.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="publisherInput" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                  <TextField fx:id="publisherInput" style="-fx-background-radius: 5; -fx-background-color: rgb(45, 45, 45); -fx-text-fill: rgb(255, 255, 255);" GridPane.columnIndex="4" GridPane.rowIndex="1">
                      <font>
                         <Font name="Segoe UI Semibold" size="16.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="yearInput" GridPane.columnIndex="5" GridPane.rowIndex="1">
+                  <TextField fx:id="yearInput" style="-fx-background-radius: 5; -fx-background-color: rgb(45, 45, 45); -fx-text-fill: rgb(255, 255, 255);" GridPane.columnIndex="5" GridPane.rowIndex="1">
                      <font>
                         <Font name="Segoe UI Semibold" size="16.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="priceInput" prefHeight="30.0" prefWidth="147.0" GridPane.columnIndex="6" GridPane.rowIndex="1">
+                  <TextField fx:id="priceInput" prefHeight="30.0" prefWidth="147.0" style="-fx-background-radius: 5; -fx-background-color: rgb(45, 45, 45); -fx-text-fill: rgb(255, 255, 255);" GridPane.columnIndex="6" GridPane.rowIndex="1">
                      <font>
                         <Font name="Segoe UI Semibold" size="16.0" />
                      </font>
                   </TextField>
-                  <Label text="Total Page" GridPane.columnIndex="3" GridPane.halignment="CENTER">
+                  <Label text="Total Page" textFill="WHITE" GridPane.columnIndex="3" GridPane.halignment="CENTER">
                      <font>
                         <Font name="Segoe UI Semibold" size="16.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="totalPageInput" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                  <TextField fx:id="totalPageInput" style="-fx-background-radius: 5; -fx-background-color: rgb(45, 45, 45); -fx-text-fill: rgb(255, 255, 255);" GridPane.columnIndex="3" GridPane.rowIndex="1">
                      <font>
                         <Font name="Segoe UI Semibold" size="16.0" />
                      </font>
                   </TextField>
-                  <Button fx:id="wishlistButton" mnemonicParsing="false" onAction="#addWishlist" prefHeight="28.0" prefWidth="92.0" text="Wishlist" GridPane.columnIndex="7" GridPane.rowIndex="1">
+                  <Button fx:id="wishlistButton" mnemonicParsing="false" onAction="#addWishlist" prefHeight="28.0" prefWidth="92.0" style="-fx-background-color: #4cc2ff; -fx-background-radius: 5;" text="Wishlist" GridPane.columnIndex="7" GridPane.rowIndex="1">
                      <font>
-                        <Font name="Segoe UI Semibold" size="16.0" />
+                        <Font name="Segoe UI Historic" size="16.0" />
                      </font>
                   </Button>
                </children>

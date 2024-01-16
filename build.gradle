@@ -17,7 +17,7 @@ plugins {
 
 apply plugin: 'io.github.fvarrui.javapackager.plugin'
 
-group 'com.literalog'
+group 'com.yanfiq'
 version '1.0-SNAPSHOT'
 
 repositories {
@@ -36,8 +36,8 @@ tasks.withType(JavaCompile) {
 }
 
 application {
-    mainModule = 'com.literalog.literalog'
-    mainClass = 'com.literalog.literalog.Main'
+    mainModule = 'com.yanfiq.literalog'
+    mainClass = 'com.yanfiq.literalog.Main'
 }
 
 javafx {
@@ -70,7 +70,7 @@ jlinkZip {
 
 task packageMyApp(type: io.github.fvarrui.javapackager.gradle.PackageTask, dependsOn: build) {
     // mandatory
-    mainClass = 'com.literalog.literalog.Main'
+    mainClass = 'com.yanfiq.literalog.Main'
     // optional
     bundleJre = true
     customizedJre = false

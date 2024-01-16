@@ -1,13 +1,13 @@
-package com.literalog.literalog;
+package com.yanfiq.literalog.controllers;
 
+import com.yanfiq.literalog.models.Book;
+import com.yanfiq.literalog.utils.DatabaseUtils;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.GridPane;
 import javafx.scene.control.TableColumn;
@@ -57,8 +57,8 @@ public class BookmarksController {
             LocalDateTime localDateTime = LocalDateTime.now();
             java.sql.Timestamp sqlTimestamp = java.sql.Timestamp.valueOf(localDateTime);
 
-            AccessDB.manipulateTable("UPDATE [BOOKMARKS] SET [LastPage] = "+event.getNewValue()+" WHERE [ISBN] = "+book.isbn.get());
-            AccessDB.manipulateTable("UPDATE [BOOKMARKS] SET [LastTimeRead] = '"+sqlTimestamp.toString()+"' WHERE [ISBN] = "+book.isbn.get());
+            DatabaseUtils.manipulateTable("UPDATE [BOOKMARKS] SET [LastPage] = "+event.getNewValue()+" WHERE [ISBN] = "+book.isbn.get());
+            DatabaseUtils.manipulateTable("UPDATE [BOOKMARKS] SET [LastTimeRead] = '"+sqlTimestamp.toString()+"' WHERE [ISBN] = "+book.isbn.get());
         });
         lastTimeReadColumn.setCellValueFactory(cellData -> cellData.getValue().lastTimeRead);
         lastTimeReadColumn.prefWidthProperty().bind(bookmarksTable.widthProperty().divide(7));
@@ -126,14 +126,14 @@ public class BookmarksController {
 
             removeButton.setOnAction(event -> {
                 Book book = bookmarksTable.getItems().get(cell.getIndex());
-                AccessDB.manipulateTable("DELETE FROM [BOOKMARKS] WHERE [ISBN] = "+book.isbn.get());
-                AccessDB.manipulateTable("DELETE FROM [BOOKS] WHERE [ISBN] = "+book.isbn.get());
+                DatabaseUtils.manipulateTable("DELETE FROM [BOOKMARKS] WHERE [ISBN] = "+book.isbn.get());
+                DatabaseUtils.manipulateTable("DELETE FROM [BOOKS] WHERE [ISBN] = "+book.isbn.get());
                 bookmarksTable.getItems().remove(book);
             });
             unreadButton.setOnAction(event -> {
                 Book book = bookmarksTable.getItems().get(cell.getIndex());
                 book.lastPage.set(0);
-                AccessDB.manipulateTable("DELETE FROM [BOOKMARKS] WHERE [ISBN] = "+book.isbn.get());
+                DatabaseUtils.manipulateTable("DELETE FROM [BOOKMARKS] WHERE [ISBN] = "+book.isbn.get());
                 bookmarksTable.getItems().remove(book);
             });
             return cell;
@@ -141,7 +141,7 @@ public class BookmarksController {
         actionColumn.prefWidthProperty().bind(bookmarksTable.widthProperty().divide(7));
 
         searchField.textProperty().addListener((observable, oldValue, newValue) -> {
-            ArrayList<Book> container = AccessDB.getData("SELECT * " +
+            ArrayList<Book> container = DatabaseUtils.getData("SELECT * " +
                     "FROM [BOOKS] A, [BOOKMARKS] B " +
                     "WHERE A.ISBN = B.ISBN " +
                     "AND " +
@@ -159,7 +159,7 @@ public class BookmarksController {
         });
 
         //get data from database
-        ArrayList<Book> container = AccessDB.getData("SELECT * FROM [BOOKS] A, [BOOKMARKS] B WHERE A.ISBN = B.ISBN;");
+        ArrayList<Book> container = DatabaseUtils.getData("SELECT * FROM [BOOKS] A, [BOOKMARKS] B WHERE A.ISBN = B.ISBN;");
         if(container != null){
             for(Book book : container){
                 ObservableList<Book> bookList = bookmarksTable.getItems();

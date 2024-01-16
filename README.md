@@ -1,11 +1,26 @@
 # LiteraLog
-LiteraLog is a desktop application that is useful for recording personal book collections, recording reading progress, and recording book wishlist. This application is built using Java programming language with Gradle build system and using JavaFX framework for its GUI.
 
-## Feature
-1. Save the data to MSSQL database
-2. That's it
+## What?
+LiteraLog is a desktop application that is useful for recording personal book collections, recording reading progress, and recording book wishlist. 
 
-## How to use
+## Who?
+Me, obviously.
+
+## When?
+
+## Where?
+
+## Why?
+This project is my attempts to learning the following material
+1. Object-Oriented programming
+    1. Encapsulation.
+    2. Inheritance.
+    3. Polymorphism
+    4. etc.
+2. JDBC (Java Database Connectivity) API
+3. JavaFX Framework
+
+## How?
 0. Set the MSSQL database. There is a lot of tutorials out there.
 1. Clone this repository.
 2. Open in Intellij IDEA.

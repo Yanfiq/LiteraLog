@@ -1,20 +1,19 @@
-package com.literalog.literalog;
+package com.yanfiq.literalog.utils;
 
-import javafx.collections.ObservableList;
+import com.yanfiq.literalog.models.Book;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public final class AccessDB{
+public final class DatabaseUtils {
     private static String serverName;
     private static String instanceName;
     private static String port;
     private static String username;
     private static String password;
     private static Connection connection = null;
-    private AccessDB(){}
+    private DatabaseUtils(){}
     public static String getServerName() {
         return serverName;
     }

@@ -1,4 +1,4 @@
-package com.literalog.literalog;
+package com.yanfiq.literalog.models;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.DoubleBinding;

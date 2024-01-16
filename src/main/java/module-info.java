@@ -4,6 +4,12 @@ module com.literalog.literalog {
     requires java.sql;
 
 
-    opens com.literalog.literalog to javafx.fxml;
-    exports com.literalog.literalog;
+    opens com.yanfiq.literalog to javafx.fxml;
+    exports com.yanfiq.literalog;
+    exports com.yanfiq.literalog.utils;
+    opens com.yanfiq.literalog.utils to javafx.fxml;
+    exports com.yanfiq.literalog.models;
+    opens com.yanfiq.literalog.models to javafx.fxml;
+    exports com.yanfiq.literalog.controllers;
+    opens com.yanfiq.literalog.controllers to javafx.fxml;
 }

@@ -1,13 +1,12 @@
-package com.literalog.literalog;
+package com.yanfiq.literalog.controllers;
 
+import com.yanfiq.literalog.utils.DatabaseUtils;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 
 public class LoginController {
     @FXML
@@ -42,7 +41,7 @@ public class LoginController {
     @FXML
     private void onLoginButtonClick(){
         if(!loginState){
-            if(AccessDB.openConnection(serverNameField.getText(), instanceNameField.getText(), portField.getText(), usernameField.getText(), passwordField.getText())){
+            if(DatabaseUtils.openConnection(serverNameField.getText(), instanceNameField.getText(), portField.getText(), usernameField.getText(), passwordField.getText())){
                 loginState = true;
                 messageText.setText("Connected to the database");
             }else{

@@ -1,17 +1,14 @@
-package com.literalog.literalog;
+package com.yanfiq.literalog.controllers;
 
-import javafx.beans.property.DoubleProperty;
+import com.yanfiq.literalog.models.Book;
+import com.yanfiq.literalog.utils.DatabaseUtils;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 
-import javax.security.auth.callback.Callback;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -95,21 +92,21 @@ public class WishlistController {
                 String isbn = book.isbn.get();
                 wishlistTable.getItems().remove(book);
 
-                AccessDB.manipulateTable("DELETE FROM [WISHLIST] WHERE [ISBN] = "+isbn);
-                AccessDB.manipulateTable("DELETE FROM [BOOKS] WHERE [ISBN] = "+isbn);
+                DatabaseUtils.manipulateTable("DELETE FROM [WISHLIST] WHERE [ISBN] = "+isbn);
+                DatabaseUtils.manipulateTable("DELETE FROM [BOOKS] WHERE [ISBN] = "+isbn);
             });
             buyButton.setOnAction(event -> {
                 Book book = wishlistTable.getItems().get(cell.getIndex());
                 String isbn = book.isbn.get();
                 wishlistTable.getItems().remove(book);
-                AccessDB.manipulateTable("DELETE FROM [WISHLIST] WHERE [ISBN] = "+isbn);
+                DatabaseUtils.manipulateTable("DELETE FROM [WISHLIST] WHERE [ISBN] = "+isbn);
             });
             return cell;
         });
         actionColumn.prefWidthProperty().bind(wishlistTable.widthProperty().divide(8));
 
         //get data from database
-        ArrayList<Book> container = AccessDB.getData("SELECT * FROM [BOOKS] WHERE [ISBN] IN (SELECT [ISBN] FROM [WISHLIST])");
+        ArrayList<Book> container = DatabaseUtils.getData("SELECT * FROM [BOOKS] WHERE [ISBN] IN (SELECT [ISBN] FROM [WISHLIST])");
         if(container != null){
             for(Book book : container){
                 ObservableList<Book> bookList = wishlistTable.getItems();
@@ -132,11 +129,11 @@ public class WishlistController {
         bookList.add(book);
         wishlistTable.setItems(bookList);
 
-        if(AccessDB.getConnection() != null){
+        if(DatabaseUtils.getConnection() != null){
             String query_book = "INSERT INTO [BOOKS] VALUES "+String.format("('%s', '%s' ,'%s' ,%d ,'%s' ,%d ,%d)", isbn, title, author, totalPage, publisher, year, price);
             String query_wishlist = "INSERT INTO [WISHLIST] VALUES "+isbn;
             try {
-                Connection connection = AccessDB.getConnection();
+                Connection connection = DatabaseUtils.getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(query_book);
                 preparedStatement.executeUpdate();
                 preparedStatement = connection.prepareStatement(query_wishlist);
