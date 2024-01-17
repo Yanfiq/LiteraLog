@@ -50,6 +50,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
     implementation 'com.microsoft.sqlserver:mssql-jdbc:12.4.2.jre8'
+    implementation 'org.jasypt:jasypt:1.9.3'
 }
 
 test {

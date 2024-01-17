@@ -1,5 +1,5 @@
 .background{
-    -fx-background-color: rgb(32, 32, 32);
+    -fx-background-color: rgb(40, 40, 42);
 }
 
 .container-1{
@@ -61,4 +61,59 @@
 	-fx-background-insets: 2, 0, 0;
 	-fx-background-radius: 2em;
 
+}
+
+
+.scroll-pane .scroll-bar {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane .scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-pref-width: 5;
+}
+
+.scroll-pane .scroll-bar:horizontal{
+    -fx-background-color: transparent;
+    -fx-pref-height: 5;
+}
+
+.scroll-pane .scroll-bar:horizontal .increment-button,
+.scroll-pane .scroll-bar:horizontal .decrement-button,
+.scroll-pane .scroll-bar:vertical .increment-button,
+.scroll-pane .scroll-bar:vertical .decrement-button {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane > .scroll-bar:horizontal > .increment-button,
+.scroll-pane > .scroll-bar:horizontal > .decrement-button {
+    -fx-padding: 0 0 0 0;
+}
+.scroll-pane > .scroll-bar:vertical > .increment-button,
+.scroll-pane > .scroll-bar:vertical > .decrement-button {
+    -fx-padding: 0 0 0 0;
+}
+.scroll-bar > .increment-button,
+.scroll-bar > .decrement-button {
+    -fx-padding: 0 0 0 0;
+}
+.scroll-bar:horizontal > .increment-button,
+.scroll-bar:horizontal > .decrement-button {
+    -fx-background-insets: 0 0 0 0 , 0 0 0 0, 0 0 0 0, 0 0 0 0 0;
+}
+.scroll-bar:vertical > .increment-button,
+.scroll-bar:vertical > .decrement-button {
+    -fx-background-insets: 0 0 0 0, 0 0 0 0, 0 0 0 0;
+}
+.scroll-bar:horizontal > .decrement-button > .decrement-arrow {
+    -fx-padding: 0 0 0 0;
+}
+.scroll-bar:horizontal > .increment-button > .increment-arrow {
+    -fx-padding: 0 0 0 0;
+}
+.scroll-bar:vertical > .decrement-button > .decrement-arrow {
+    -fx-padding: 0 0 0 0;
+}
+.scroll-bar:vertical > .increment-button > .increment-arrow {
+    -fx-padding: 0 0 0 0;
 }

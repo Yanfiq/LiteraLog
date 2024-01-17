@@ -130,18 +130,11 @@ public class WishlistController {
         bookList.add(book);
         wishlistTable.setItems(bookList);
 
-        if(DatabaseUtils.getConnection() != null){
+        if(DatabaseUtils.isConnected.get()){
             String query_book = "INSERT INTO [BOOKS] VALUES "+String.format("('%s', '%s' ,'%s' ,%d ,'%s' ,%d ,%d)", isbn, title, author, totalPage, publisher, year, price);
             String query_wishlist = "INSERT INTO [WISHLIST] VALUES "+isbn;
-            try {
-                Connection connection = DatabaseUtils.getConnection();
-                PreparedStatement preparedStatement = connection.prepareStatement(query_book);
-                preparedStatement.executeUpdate();
-                preparedStatement = connection.prepareStatement(query_wishlist);
-                preparedStatement.executeUpdate();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            DatabaseUtils.manipulateTable(query_book);
+            DatabaseUtils.manipulateTable(query_wishlist);
         }
     }
 }

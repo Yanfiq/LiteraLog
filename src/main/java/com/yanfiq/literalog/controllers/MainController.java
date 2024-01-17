@@ -35,9 +35,9 @@ public class MainController {
     @FXML
     private Label collectionButtonClickSign;
     @FXML
-    private Button loginButton;
+    private Button settingsButton;
     @FXML
-    private Label loginButtonClickSign;
+    private Label settingsButtonClickSign;
     @FXML
     private AnchorPane content;
 
@@ -49,11 +49,11 @@ public class MainController {
         initializeButton(wishlistButton, "Wishlist.fxml");
         initializeButton(bookmarksButton, "Bookmarks.fxml");
         initializeButton(collectionButton, "Collection.fxml");
-        initializeButton(loginButton, "Login.fxml");
+        initializeButton(settingsButton, "Settings.fxml");
 
         try {
             loadPage("Login.fxml");
-            setButtonChosen(loginButton);
+//            setButtonChosen(loginButton);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -80,8 +80,8 @@ public class MainController {
                 return bookmarksButtonClickSign;
             case "collectionButton":
                 return collectionButtonClickSign;
-            case "loginButton":
-                return loginButtonClickSign;
+            case "settingsButton":
+                return settingsButtonClickSign;
             default:
                 throw new IllegalArgumentException("Unknown button ID: " + button.getId());
         }
@@ -132,7 +132,7 @@ public class MainController {
     }
 
     @FXML
-    private void onLoginButtonClick() throws IOException {
-        onButtonClick(loginButton);
+    private void onSettingsButtonClick() throws IOException {
+        onButtonClick(settingsButton);
     }
 }

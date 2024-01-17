@@ -14,16 +14,17 @@
 
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.yanfiq.literalog.controllers.WishlistController">
    <children>
-      <GridPane maxWidth="1.7976931348623157E308" prefHeight="526.0" prefWidth="1055.0" vgap="10.0">
+      <GridPane maxWidth="1.7976931348623157E308" prefHeight="660.0" prefWidth="982.0" vgap="10.0">
          <columnConstraints>
             <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
          </columnConstraints>
          <rowConstraints>
-            <RowConstraints maxHeight="334.66668701171875" minHeight="10.0" prefHeight="70.33333587646484" vgrow="NEVER" />
-            <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="608.9999974568685" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="25.0" vgrow="NEVER" />
+            <RowConstraints maxHeight="334.66668701171875" minHeight="0.0" prefHeight="60.0" vgrow="NEVER" />
+            <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="553.3333231608073" vgrow="ALWAYS" />
          </rowConstraints>
          <children>
-            <TableView fx:id="wishlistTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="387.0" prefWidth="1055.0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
+            <TableView fx:id="wishlistTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="387.0" prefWidth="1055.0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
                <columns>
                   <TableColumn fx:id="isbnColumn" maxWidth="1.7976931348623157E308" minWidth="130.0" prefWidth="-1.0" text="ISBN" />
                   <TableColumn fx:id="titleColumn" maxWidth="1.7976931348623157E308" minWidth="130.0" prefWidth="-1.0" text="Title" />
@@ -35,7 +36,7 @@
                   <TableColumn fx:id="actionColumn" maxWidth="1.7976931348623157E308" minWidth="130.0" prefWidth="-1.0" text="Action" />
                </columns>
             </TableView>
-            <GridPane hgap="5.0" maxWidth="1.7976931348623157E308" prefHeight="52.0" prefWidth="906.0" GridPane.hgrow="ALWAYS" GridPane.vgrow="NEVER">
+            <GridPane hgap="5.0" maxWidth="1.7976931348623157E308" prefHeight="60.0" prefWidth="1116.0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="NEVER">
                <columnConstraints>
                   <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="120.0" />
                   <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="120.0" />
@@ -47,8 +48,8 @@
                   <ColumnConstraints hgrow="NEVER" maxWidth="172.66668701171875" minWidth="10.0" prefWidth="80.3333740234375" />
                </columnConstraints>
                <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
                </rowConstraints>
                <children>
                   <Label text="ISBN" textFill="WHITE" GridPane.halignment="CENTER">
@@ -121,13 +122,18 @@
                         <Font name="Segoe UI Semibold" size="16.0" />
                      </font>
                   </TextField>
-                  <Button fx:id="wishlistButton" mnemonicParsing="false" onAction="#addWishlist" prefHeight="28.0" prefWidth="92.0" styleClass="button" text="Wishlist" GridPane.columnIndex="7" GridPane.rowIndex="1">
+                  <Button fx:id="wishlistButton" mnemonicParsing="false" onAction="#addWishlist" prefHeight="36.0" prefWidth="105.0" styleClass="button" text="Wishlist" GridPane.columnIndex="7" GridPane.rowIndex="1">
                      <font>
                         <Font name="Segoe UI Historic" size="16.0" />
                      </font>
                   </Button>
                </children>
             </GridPane>
+            <Label alignment="TOP_LEFT" text="Wishlist" textFill="WHITE">
+               <font>
+                  <Font name="Segoe UI Semibold" size="24.0" />
+               </font>
+            </Label>
          </children>
       </GridPane>
    </children>

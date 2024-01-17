@@ -1,25 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.yanfiq.literalog.controllers.CollectionController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.yanfiq.literalog.controllers.CollectionController">
     <padding>
         <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
     </padding>
     <children>
-        <GridPane>
+        <GridPane vgap="10.0">
             <columnConstraints>
                 <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="70.33333587646484" vgrow="NEVER" />
+            <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="25.0" vgrow="NEVER" />
+                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" vgrow="NEVER" />
                 <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="608.9999974568685" vgrow="ALWAYS" />
             </rowConstraints>
             <children>
-                <TableView fx:id="collectionTable" prefHeight="619.0" prefWidth="1075.0" style="-fx-font-family: 'Segoe UI Semibold'; -fx-font-size: 14px;" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
+                <TableView fx:id="collectionTable" prefHeight="619.0" prefWidth="1075.0" style="-fx-font-family: 'Segoe UI Semibold'; -fx-font-size: 14px;" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
                     <columns>
                         <TableColumn fx:id="isbnColumn" prefWidth="130.0" text="ISBN" />
                         <TableColumn fx:id="titleColumn" prefWidth="130.0" text="Title" />
@@ -31,27 +39,25 @@
                         <TableColumn fx:id="actionColumn" prefWidth="130.0" text="Action" />
                     </columns>
                 </TableView>
-                <GridPane>
-                    <columnConstraints>
-                        <ColumnConstraints hgrow="NEVER" maxWidth="529.3333129882812" minWidth="10.0" prefWidth="79.99998982747395" />
-                        <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="975.3333435058593" />
-                    </columnConstraints>
-                    <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
-                    </rowConstraints>
-                    <children>
-                        <TextField fx:id="searchField" GridPane.columnIndex="1" GridPane.valignment="TOP">
+            <Label alignment="TOP_LEFT" text="Collection" textFill="WHITE">
+               <font>
+                  <Font name="Segoe UI Semibold" size="24.0" />
+               </font>
+            </Label>
+            <HBox alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="975.0" spacing="10.0" GridPane.rowIndex="1">
+               <children>
+                        <Label text="Keyword">
                             <font>
-                                <Font name="Segoe UI Semibold" size="16.0" />
-                            </font>
-                        </TextField>
-                        <Label prefHeight="36.0" text="Keyword" GridPane.valignment="TOP">
-                            <font>
-                                <Font name="Segoe UI Semibold" size="16.0" />
+                                <Font name="Segoe UI Semibold" size="14.0" />
                             </font>
                         </Label>
-                    </children>
-                </GridPane>
+                  <TextField fx:id="searchField" prefHeight="29.0" prefWidth="917.0" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font name="Segoe UI Semibold" size="14.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </HBox>
             </children>
         </GridPane>
     </children>

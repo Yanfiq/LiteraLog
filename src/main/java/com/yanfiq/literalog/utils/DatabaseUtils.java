@@ -1,6 +1,7 @@
 package com.yanfiq.literalog.utils;
 
 import com.yanfiq.literalog.models.Book;
+import javafx.beans.property.SimpleBooleanProperty;
 
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -13,6 +14,7 @@ public final class DatabaseUtils {
     private static String username;
     private static String password;
     private static Connection connection = null;
+    public static SimpleBooleanProperty isConnected = new SimpleBooleanProperty(false);
     private DatabaseUtils(){}
     public static String getServerName() {
         return serverName;
@@ -38,18 +40,17 @@ public final class DatabaseUtils {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 
             connection = DriverManager.getConnection(dbUrl, username, password);
+            isConnected.set(true);
             return true;
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
+            isConnected.set(false);
             return false;
         } catch (SQLException e) {
             connection = null;
+            isConnected.set(false);
             return false;
         }
-    }
-
-    public static Connection getConnection(){
-        return connection;
     }
 
     public static ArrayList<Book> getData(String query){
@@ -116,6 +117,7 @@ public final class DatabaseUtils {
                 e.printStackTrace();
             }
         }
+        isConnected.set(false);
         return false;
     }
 }
