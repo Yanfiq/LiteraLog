@@ -8,6 +8,7 @@ import javafx.scene.control.*;
 
 import javafx.collections.ObservableList;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -71,9 +72,9 @@ public class WishlistController {
         actionColumn.setCellFactory(param -> {
             final Button removeButton = new Button("Remove");
             final Button buyButton = new Button("Buy");
-            final GridPane actionbutton = new GridPane();
-            actionbutton.addColumn(0, buyButton);
-            actionbutton.addColumn(1, removeButton);
+            final HBox actionbutton = new HBox();
+            actionbutton.getChildren().addAll(buyButton, removeButton);
+            actionbutton.setSpacing(2);
 
             TableCell<Book, Void> cell = new TableCell<>() {
                 @Override

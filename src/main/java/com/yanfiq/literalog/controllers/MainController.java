@@ -3,15 +3,14 @@ package com.yanfiq.literalog.controllers;
 import com.yanfiq.literalog.utils.FXMLUtils;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.animation.FadeTransition;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -61,8 +60,6 @@ public class MainController {
     }
 
     private void initializeButton(Button button, String fxmlFileName) {
-        button.setOnMouseEntered(this::onMouseEntered);
-        button.setOnMouseExited(this::onMouseExited);
         button.setUserData(new SimpleBooleanProperty(false));
         buttonFXMLMap.put(button, fxmlFileName);
 
@@ -90,23 +87,6 @@ public class MainController {
         }
     }
 
-    private void onMouseEntered(MouseEvent event) {
-        Button button = (Button) event.getSource();
-        updateButtonStyle(button, "rgba(255, 255, 255, 0.1);");
-    }
-
-    private void onMouseExited(MouseEvent event) {
-        Button button = (Button) event.getSource();
-        if (!((SimpleBooleanProperty) button.getUserData()).get()) {
-            updateButtonStyle(button, "transparent");
-        }
-    }
-
-    private void updateButtonStyle(Button button, String backgroundColor) {
-        String updatedStyle = "-fx-background-color: " + backgroundColor + ";";
-        button.setStyle(updatedStyle);
-    }
-
     @FXML
     private void loadPage(String fxmlFileName) throws IOException {
         Node node = (Node) FXMLUtils.loadFXML(fxmlFileName);
@@ -127,7 +107,8 @@ public class MainController {
         buttonFXMLMap.keySet().forEach(button -> {
             boolean isChosen = button == chosenButton;
             ((SimpleBooleanProperty) button.getUserData()).set(isChosen);
-            updateButtonStyle(button, isChosen ? "rgba(255, 255, 255, 0.1);" : "transparent");
+            button.getStyleClass().clear();
+            button.getStyleClass().add(isChosen ? "button-selection-chosen" : "button-selection-not-chosen");
         });
     }
     @FXML

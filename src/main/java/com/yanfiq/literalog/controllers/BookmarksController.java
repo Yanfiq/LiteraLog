@@ -12,6 +12,7 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.GridPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.HBox;
 import javafx.util.converter.IntegerStringConverter;
 
 import java.time.LocalDateTime;
@@ -108,9 +109,9 @@ public class BookmarksController {
         actionColumn.setCellFactory(param -> {
             final Button removeButton = new Button("Remove");
             final Button unreadButton = new Button("Unread");
-            final GridPane actionButton = new GridPane();
-            actionButton.addColumn(0, unreadButton);
-            actionButton.addColumn(1, removeButton);
+            final HBox actionButton = new HBox();
+            actionButton.getChildren().addAll(unreadButton, removeButton);
+            actionButton.setSpacing(2);
 
             TableCell<Book, Void> cell = new TableCell<>() {
                 @Override

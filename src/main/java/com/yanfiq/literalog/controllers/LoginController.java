@@ -23,20 +23,9 @@ public class LoginController {
     private TextField portField;
     @FXML
     private Label messageText;
-    @FXML
-    private GridPane gridLayout;
     public static boolean loginState;
     @FXML
     public void initialize(){
-        ColumnConstraints columnConstraints = new ColumnConstraints();
-        columnConstraints.setHgrow(javafx.scene.layout.Priority.ALWAYS);
-        RowConstraints rowConstraints = new RowConstraints();
-        rowConstraints.setVgrow(javafx.scene.layout.Priority.ALWAYS);
-
-        //gridLayout.setBackground(new Background(new BackgroundFill(Color.BLUE, CornerRadii.EMPTY, Insets.EMPTY)));
-
-        //gridLayout.getRowConstraints().add(rowConstraints);
-        //gridLayout.getColumnConstraints().add(columnConstraints);
     }
     @FXML
     private void onLoginButtonClick(){

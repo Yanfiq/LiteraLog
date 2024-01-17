@@ -1,0 +1,38 @@
+.button-selection-chosen {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+    -fx-background-radius: 4;
+    -fx-alignment: center-left;
+}
+
+.button-selection-not-chosen {
+    -fx-background-color: transparent;
+    -fx-background-radius: 4;
+    -fx-alignment: center-left;
+}
+
+.button-selection-not-chosen:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+    -fx-background-radius: 4;
+    -fx-alignment: center-left;
+}
+
+Button {
+    -fx-background-color:  #4cc2ff;
+    -fx-background-radius:  5;
+}
+
+Button:hover {
+    -fx-background-color:  #41a6d9;
+    -fx-background-radius:  5;
+}
+
+TextField, PasswordField {
+    -fx-background-color:  rgb(45, 45, 45);
+    -fx-background-radius: 5;
+    -fx-text-fill:  rgb(0, 0, 0);
+    -fx-font-family: "Segoe UI SemiBold";
+}
+
+Label {
+    -fx-text-fill: rgb(0, 0, 0);
+}
