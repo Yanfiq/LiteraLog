@@ -1,6 +1,7 @@
 package com.yanfiq.literalog.utils;
 
 import com.yanfiq.literalog.models.Book;
+import com.yanfiq.literalog.models.User;
 import javafx.beans.property.SimpleBooleanProperty;
 
 import java.sql.*;
@@ -53,7 +54,7 @@ public final class DatabaseUtils {
         }
     }
 
-    public static ArrayList<Book> getData(String query){
+    public static ArrayList<Book> getBooksData(String query){
         if(connection == null) return null;
         ArrayList<Book> container = new ArrayList<>();
         try {
@@ -91,6 +92,37 @@ public final class DatabaseUtils {
                 book.lastTimeRead.set(LastTimeRead);
                 book.lastPage.set(LastPage);
                 container.add(book);
+            }
+            return container;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static ArrayList<User> getUsersData(){
+        if(connection == null) return null;
+        ArrayList<User> container = new ArrayList<>();
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM [USER]");
+
+            ResultSetMetaData metaData = resultSet.getMetaData();
+            int columnCount = metaData.getColumnCount();
+            while (resultSet.next()) {
+                String _username = null, _password = null;
+
+                for (int i = 1; i <= columnCount; i++) {
+                    String columnName = metaData.getColumnName(i);
+                    Object columnValue = resultSet.getObject(i);
+
+                    switch (columnName){
+                        case "Name": _username = columnValue.toString(); break;
+                        case "Password": _password = columnValue.toString(); break;
+                    }
+                }
+                User user = new User(_username, _password);
+                container.add(user);
             }
             return container;
         } catch (Exception e) {

@@ -27,7 +27,7 @@
                 <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="608.9999974568685" vgrow="ALWAYS" />
             </rowConstraints>
             <children>
-                <TableView fx:id="collectionTable" prefHeight="619.0" prefWidth="1075.0" style="-fx-font-family: 'Segoe UI Semibold'; -fx-font-size: 14px;" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
+                <TableView fx:id="collectionTable" prefHeight="619.0" prefWidth="1075.0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
                     <columns>
                         <TableColumn fx:id="isbnColumn" prefWidth="130.0" text="ISBN" />
                         <TableColumn fx:id="titleColumn" prefWidth="130.0" text="Title" />

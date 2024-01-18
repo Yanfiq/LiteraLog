@@ -52,8 +52,8 @@ public class MainController {
         initializeButton(settingsButton, "Settings.fxml");
 
         try {
-            loadPage("Login.fxml");
-//            setButtonChosen(loginButton);
+            loadPage("Dashboard.fxml");
+            setButtonChosen(dashboardButton);
         } catch (IOException e) {
             e.printStackTrace();
         }

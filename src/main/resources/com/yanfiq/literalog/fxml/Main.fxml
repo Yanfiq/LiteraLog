@@ -19,7 +19,7 @@
       <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="720.0" vgrow="ALWAYS" />
    </rowConstraints>
    <children>
-      <GridPane fx:id="navbar" maxWidth="1.7976931348623157E308" prefHeight="720.0" prefWidth="1100.0" styleClass="background">
+      <GridPane fx:id="navbar" maxWidth="1.7976931348623157E308" prefHeight="720.0" prefWidth="1100.0" styleClass="navbar">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" />
          </columnConstraints>
@@ -55,7 +55,7 @@
                   <Insets bottom="1.0E-4" left="1.0E-4" right="1.0E-4" top="1.0E-4" />
                </padding>
             </Button>
-            <Button fx:id="collectionButton" mnemonicParsing="false" onAction="#onCollectionButtonClick" prefHeight="125.0" prefWidth="245.0" styleClass="button-selection-not-chosen" GridPane.rowIndex="2">
+            <Button fx:id="collectionButton" mnemonicParsing="false" onAction="#onCollectionButtonClick" prefHeight="125.0" prefWidth="245.0" styleClass="button-selection-not-chosen" GridPane.rowIndex="3">
                <graphic>
                   <HBox alignment="CENTER_LEFT" spacing="12.0" style="-fx-background-color: transparent;">
                      <Label fx:id="collectionButtonClickSign" style="-fx-background-color: rgb(52, 152, 219); -fx-background-radius: 100;" text=" " />
@@ -77,7 +77,7 @@
                   <Insets bottom="1.0E-4" left="1.0E-4" right="1.0E-4" top="1.0E-4" />
                </padding>
             </Button>
-            <Button fx:id="wishlistButton" mnemonicParsing="false" onAction="#onWishlistButtonClick" prefHeight="109.0" prefWidth="221.0" styleClass="button-selection-not-chosen" GridPane.rowIndex="3">
+            <Button fx:id="wishlistButton" mnemonicParsing="false" onAction="#onWishlistButtonClick" prefHeight="109.0" prefWidth="221.0" styleClass="button-selection-not-chosen" GridPane.rowIndex="2">
                <graphic>
                   <HBox alignment="CENTER_LEFT" spacing="12.0" style="-fx-background-color: transparent;">
                      <Label fx:id="wishlistButtonClickSign" style="-fx-background-color: rgb(52, 152, 219); -fx-background-radius: 100;" text=" " />

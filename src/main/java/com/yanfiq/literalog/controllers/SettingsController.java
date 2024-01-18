@@ -4,9 +4,7 @@ import com.yanfiq.literalog.utils.DatabaseUtils;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 public class SettingsController {
     @FXML
@@ -21,12 +19,23 @@ public class SettingsController {
     private TextField portField;
     @FXML
     private Label statusDB;
+    @FXML
+    private ComboBox<String> themeMenu = new ComboBox<>();
+    @FXML
+    private ComboBox<String> fontSizeMenu = new ComboBox<>();
+
 
     @FXML
     public void initialize(){
         statusDB.textProperty().bind(Bindings.when((SimpleBooleanProperty) DatabaseUtils.isConnected)
                 .then("Connected")
                 .otherwise("Not Connected"));
+
+        themeMenu.getItems().addAll("Dark Mode", "Light Mode");
+        themeMenu.setValue("Dark Mode");
+
+        fontSizeMenu.getItems().addAll("Small", "Medium", "Large");
+        fontSizeMenu.setValue("Small");
     }
     @FXML
     private void onConnectButtonClick(){

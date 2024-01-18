@@ -1,12 +1,14 @@
 package com.yanfiq.literalog.controllers;
 
 import com.yanfiq.literalog.models.Book;
+import com.yanfiq.literalog.models.User;
 import com.yanfiq.literalog.utils.DatabaseUtils;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 
 import java.util.ArrayList;
 import java.time.LocalDateTime;
@@ -54,9 +56,9 @@ public class CollectionController {
         actionColumn.setCellFactory(param -> {
             final Button removeButton = new Button("Remove");
             final Button readButton = new Button("Read");
-            final GridPane actionButton = new GridPane();
-            actionButton.addColumn(0, readButton);
-            actionButton.addColumn(1, removeButton);
+            final HBox actionButton = new HBox();
+            actionButton.getChildren().addAll(readButton, removeButton);
+            actionButton.setSpacing(2);
 
             TableCell<Book, Void> cell = new TableCell<>() {
                 @Override
@@ -72,7 +74,8 @@ public class CollectionController {
 
             removeButton.setOnAction(event -> {
                 Book book = collectionTable.getItems().get(cell.getIndex());
-                DatabaseUtils.manipulateTable("DELETE FROM [BOOKMARKS] WHERE [ISBN] = "+book.isbn.get());
+                DatabaseUtils.manipulateTable("DELETE FROM [BOOKMARKS] WHERE [ISBN] = " + book.isbn.get() + " AND [Username] = '" + User.loggedInUser.get() + "';");
+                DatabaseUtils.manipulateTable("DELETE FROM [COLLECTION] WHERE [ISBN] = " + book.isbn.get() + " AND [Username] = '" + User.loggedInUser.get() + "';");
                 DatabaseUtils.manipulateTable("DELETE FROM [BOOKS] WHERE [ISBN] = "+book.isbn.get());
                 collectionTable.getItems().remove(book);
             });
@@ -80,16 +83,17 @@ public class CollectionController {
                 Book book = collectionTable.getItems().get(cell.getIndex());
                 LocalDateTime localDateTime = LocalDateTime.now();
                 java.sql.Timestamp sqlTimestamp = java.sql.Timestamp.valueOf(localDateTime);
-                DatabaseUtils.manipulateTable("INSERT INTO [BOOKMARKS] VALUES "+String.format("('%s', '%s', %d)", book.isbn.get(), sqlTimestamp.toString(), 0));
+                DatabaseUtils.manipulateTable("INSERT INTO [BOOKMARKS] VALUES "+String.format("('%s', '%s', '%s', %d)", User.loggedInUser.get(), book.isbn.get(), sqlTimestamp.toString(), 0));
             });
             return cell;
         });
         actionColumn.prefWidthProperty().bind(collectionTable.widthProperty().divide(8));
 
         searchField.textProperty().addListener((observable, oldValue, newValue) -> {
-            ArrayList<Book> container = DatabaseUtils.getData("SELECT * " +
-                            "FROM [BOOKS] " +
-                            "WHERE [ISBN] NOT IN (SELECT [ISBN] FROM [WISHLIST]) " +
+            ArrayList<Book> container = DatabaseUtils.getBooksData("SELECT * " +
+                            "FROM [BOOKS] A, [COLLECTION] B" +
+                            "WHERE A.ISBN = B.ISBN" +
+                            "AND B.Username = '" + User.loggedInUser.get() + "' " +
                             "AND " +
                             "(([ISBN] LIKE '%" +newValue+"%') OR "+
                             "([Title] LIKE '%" +newValue+"%') OR "+
@@ -105,7 +109,10 @@ public class CollectionController {
         });
 
         //get data from database
-        ArrayList<Book> container = DatabaseUtils.getData("SELECT * FROM [BOOKS] WHERE [ISBN] NOT IN (SELECT [ISBN] FROM [WISHLIST])");
+        ArrayList<Book> container = DatabaseUtils.getBooksData("SELECT * " +
+                "FROM [BOOKS] B, [COLLECTION] C " +
+                "WHERE B.ISBN = C.ISBN " +
+                "AND C.Username = '" + User.loggedInUser.get() + "';");
         if(container != null){
             for(Book book : container){
                 ObservableList<Book> bookList = collectionTable.getItems();

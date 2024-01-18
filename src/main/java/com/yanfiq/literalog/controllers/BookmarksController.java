@@ -1,23 +1,29 @@
 package com.yanfiq.literalog.controllers;
 
 import com.yanfiq.literalog.models.Book;
+import com.yanfiq.literalog.models.User;
 import com.yanfiq.literalog.utils.DatabaseUtils;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.layout.GridPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.util.converter.IntegerStringConverter;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+
+import static javafx.scene.paint.Color.rgb;
 
 public class BookmarksController {
     @FXML
@@ -87,7 +93,6 @@ public class BookmarksController {
         progressColumn.setCellFactory(param -> {
             return new TableCell<Book, Double>() {
                 private final ProgressBar progressBar = new ProgressBar();
-
                 {
                     setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
                 }
@@ -127,14 +132,15 @@ public class BookmarksController {
 
             removeButton.setOnAction(event -> {
                 Book book = bookmarksTable.getItems().get(cell.getIndex());
-                DatabaseUtils.manipulateTable("DELETE FROM [BOOKMARKS] WHERE [ISBN] = "+book.isbn.get());
-                DatabaseUtils.manipulateTable("DELETE FROM [BOOKS] WHERE [ISBN] = "+book.isbn.get());
+                DatabaseUtils.manipulateTable("DELETE FROM [BOOKMARKS] WHERE [ISBN] = " + book.isbn.get() + " AND [Username] = '" + User.loggedInUser.get() + "';");
+                DatabaseUtils.manipulateTable("DELETE FROM [COLLECTION] WHERE [ISBN] = " + book.isbn.get() + " AND [Username] = '" + User.loggedInUser.get() + "';");
+                DatabaseUtils.manipulateTable("DELETE FROM [BOOKS] WHERE [ISBN] = " + book.isbn.get());
                 bookmarksTable.getItems().remove(book);
             });
             unreadButton.setOnAction(event -> {
                 Book book = bookmarksTable.getItems().get(cell.getIndex());
                 book.lastPage.set(0);
-                DatabaseUtils.manipulateTable("DELETE FROM [BOOKMARKS] WHERE [ISBN] = "+book.isbn.get());
+                DatabaseUtils.manipulateTable("DELETE FROM [BOOKMARKS] WHERE [ISBN] = " + book.isbn.get() + " AND [Username] = '" + User.loggedInUser.get() + "';");
                 bookmarksTable.getItems().remove(book);
             });
             return cell;
@@ -142,9 +148,10 @@ public class BookmarksController {
         actionColumn.prefWidthProperty().bind(bookmarksTable.widthProperty().divide(7));
 
         searchField.textProperty().addListener((observable, oldValue, newValue) -> {
-            ArrayList<Book> container = DatabaseUtils.getData("SELECT * " +
+            ArrayList<Book> container = DatabaseUtils.getBooksData("SELECT * " +
                     "FROM [BOOKS] A, [BOOKMARKS] B " +
                     "WHERE A.ISBN = B.ISBN " +
+                    "AND B.Username = '" + User.loggedInUser.get() + "' " +
                     "AND " +
                     "((A.ISBN LIKE '%" +newValue+"%') OR "+
                     "(A.Title LIKE '%" +newValue+"%') OR "+
@@ -160,7 +167,7 @@ public class BookmarksController {
         });
 
         //get data from database
-        ArrayList<Book> container = DatabaseUtils.getData("SELECT * FROM [BOOKS] A, [BOOKMARKS] B WHERE A.ISBN = B.ISBN;");
+        ArrayList<Book> container = DatabaseUtils.getBooksData("SELECT * FROM [BOOKS] A, [BOOKMARKS] B WHERE A.ISBN = B.ISBN;");
         if(container != null){
             for(Book book : container){
                 ObservableList<Book> bookList = bookmarksTable.getItems();

@@ -1,16 +1,15 @@
 package com.yanfiq.literalog.controllers;
 
 import com.yanfiq.literalog.models.Book;
+import com.yanfiq.literalog.models.User;
 import com.yanfiq.literalog.utils.DatabaseUtils;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import javafx.collections.ObservableList;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
-import java.sql.*;
 import java.util.ArrayList;
 
 public class WishlistController {
@@ -93,21 +92,22 @@ public class WishlistController {
                 String isbn = book.isbn.get();
                 wishlistTable.getItems().remove(book);
 
-                DatabaseUtils.manipulateTable("DELETE FROM [WISHLIST] WHERE [ISBN] = "+isbn);
-                DatabaseUtils.manipulateTable("DELETE FROM [BOOKS] WHERE [ISBN] = "+isbn);
+                DatabaseUtils.manipulateTable("DELETE FROM [WISHLIST] WHERE [ISBN] = " + isbn + " AND [Username] = '" + User.loggedInUser.get() + "';");
+                DatabaseUtils.manipulateTable("DELETE FROM [BOOKS] WHERE [ISBN] = " + isbn);
             });
             buyButton.setOnAction(event -> {
                 Book book = wishlistTable.getItems().get(cell.getIndex());
                 String isbn = book.isbn.get();
                 wishlistTable.getItems().remove(book);
-                DatabaseUtils.manipulateTable("DELETE FROM [WISHLIST] WHERE [ISBN] = "+isbn);
+                DatabaseUtils.manipulateTable("DELETE FROM [WISHLIST] WHERE [ISBN] = "+isbn + " AND [Username] = '" + User.loggedInUser.get() + "';");
+                DatabaseUtils.manipulateTable("INSERT INTO [COLLECTION] VALUES ('" + User.loggedInUser.get() + "', '" + isbn + "');");
             });
             return cell;
         });
         actionColumn.prefWidthProperty().bind(wishlistTable.widthProperty().divide(8));
 
         //get data from database
-        ArrayList<Book> container = DatabaseUtils.getData("SELECT * FROM [BOOKS] WHERE [ISBN] IN (SELECT [ISBN] FROM [WISHLIST])");
+        ArrayList<Book> container = DatabaseUtils.getBooksData("SELECT * FROM [BOOKS] B, [WISHLIST] W WHERE B.ISBN = W.ISBN AND W.Username = '"+ User.loggedInUser.get() + "';");
         if(container != null){
             for(Book book : container){
                 ObservableList<Book> bookList = wishlistTable.getItems();

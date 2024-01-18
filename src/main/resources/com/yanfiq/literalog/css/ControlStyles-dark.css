@@ -16,6 +16,12 @@
     -fx-alignment: center-left;
 }
 
+.button-selection-chosen:hover {
+    -fx-background-color: rgb(41, 41, 41);
+    -fx-background-radius: 4;
+    -fx-alignment: center-left;
+}
+
 Button {
     -fx-background-color:   #4cc2ff;
     -fx-background-radius:  5;
@@ -26,23 +32,75 @@ Button:hover {
     -fx-background-radius:  5;
 }
 
-TextField, PasswordField {
+.text-field, .password-field {
     -fx-background-color:  rgb(45, 45, 45);
     -fx-background-radius: 5;
     -fx-text-fill:  rgb(255, 255, 255);
     -fx-font-family: "Segoe UI SemiBold";
-    -fx-font-size: 16;
+    -fx-font-size: 14;
 }
 
-TextField:focused, PasswordField:focused {
+.text-field:focused, .password-field:focused {
     -fx-background-color:  rgb(45, 45, 45);
     -fx-border-color: #4cc2ff;
     -fx-background-radius: 5;
     -fx-text-fill:  rgb(255, 255, 255);
     -fx-font-family: "Segoe UI SemiBold";
-    -fx-font-size: 16;
+    -fx-font-size: 14;
 }
 
-Label {
+.label {
     -fx-text-fill: rgb(255, 255, 255);
+}
+
+.combo-box {
+    -fx-font-family: "Segoe UI SemiBold";
+    -fx-font-size: 14;
+    -fx-background-color : rgb(43, 43, 43);
+}
+
+/* outer combo-box text */
+.combo-box .list-cell {
+    -fx-text-fill: white;
+}
+
+.combo-box .list-cell .combo-box-popup {
+    -fx-background-color : rgb(43, 43, 43);
+    -fx-text-fill: white;
+}
+
+/* combo-box list view text, not hovered or focused */
+.combo-box .list-view .list-cell {
+    -fx-background-color : rgb(43, 43, 43);
+    -fx-text-fill: rgb(255, 255, 255);
+}
+
+/* combo-box selected text */
+.combo-box .list-view .list-cell:focused {
+    -fx-background-color : rgb(41, 88, 142);
+    -fx-text-fill: rgb(255, 255, 255);
+}
+
+/* combo-box hover text */
+.combo-box .list-view .list-cell:hover {
+    -fx-background-color : rgb(85, 85, 85);
+    -fx-text-fill: rgb(255, 255, 255);
+}
+
+.progress-bar {
+    -fx-accent: #4cc2ff;
+}
+
+.progress-bar .bar {
+    -fx-padding: 10px;
+    -fx-background-insets: 0;
+    -fx-background-radius: 5;
+}
+
+.progress-bar > .track {
+    -fx-border-radius: 0;
+    -fx-background-radius: 0;
+    -fx-text-box-border: transparent;
+    -fx-control-inner-background: transparent;
+    -fx-background-color: rgba(255, 255, 255, 0.1);
 }
