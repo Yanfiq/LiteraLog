@@ -142,7 +142,7 @@
                         </PasswordField>
                      </children>
                   </GridPane>
-                  <Button fx:id="loginButton" mnemonicParsing="false" onAction="#onLoginButtonClick" prefHeight="44.0" prefWidth="107.0" text="Login" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                  <Button fx:id="loginButton" mnemonicParsing="false" onAction="#onLoginButtonClick" prefHeight="44.0" prefWidth="107.0" text="Login" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                      <font>
                         <Font name="Segoe UI Semibold" size="24.0" />
                      </font>
