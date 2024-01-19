@@ -128,22 +128,22 @@
                                           <Font name="Segoe UI Semibold" size="14.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="instanceNameField" text="MSSQLEXPRESS" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                    <TextField fx:id="instanceNameField" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                        <font>
                                           <Font name="Segoe UI Semibold" size="14.0" />
                                        </font>
                                     </TextField>
-                                    <TextField fx:id="serverNameField" text="DESKTOP-6MQQH75" GridPane.columnIndex="1">
+                                    <TextField fx:id="serverNameField" GridPane.columnIndex="1">
                                        <font>
                                           <Font name="Segoe UI Semibold" size="14.0" />
                                        </font>
                                     </TextField>
-                                    <TextField fx:id="usernameField" text="nerd" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                    <TextField fx:id="usernameField" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                        <font>
                                           <Font name="Segoe UI Semibold" size="14.0" />
                                        </font>
                                     </TextField>
-                                    <PasswordField fx:id="passwordField" text="noreadnolife" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                    <PasswordField fx:id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
@@ -168,7 +168,7 @@
                                           <Font name="Segoe UI Semibold" size="14.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="portField" text="1433" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                    <TextField fx:id="portField" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                        <font>
                                           <Font name="Segoe UI Semibold" size="14.0" />
                                        </font>

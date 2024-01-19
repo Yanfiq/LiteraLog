@@ -8,7 +8,7 @@ import java.util.Properties;
 
 public class ConfigManager {
 
-    private static final String CONFIG_FILE = "config.properties";
+    private static final String CONFIG_FILE = "com/yanfiq/literalog/config/config.properties";
     private static Properties properties;
 
     static {
@@ -48,12 +48,10 @@ public class ConfigManager {
         return Boolean.parseBoolean(properties.getProperty("db.autoConnect"));
     }
 
-    public static String getTheme(){
-        return properties.getProperty("ui.theme");
+    public static String getTheme(){ return properties.getProperty("ui.theme");
     }
 
-    public static int getFontSize(){
-        return Integer.parseInt(properties.getProperty("ui.fontSize"));
+    public static String getFontSize(){ return properties.getProperty("ui.fontSize");
     }
 
     public static void setServerName(String serverName) {

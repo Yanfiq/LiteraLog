@@ -1,6 +1,7 @@
 package com.yanfiq.literalog.controllers;
 
 import com.yanfiq.literalog.Main;
+import com.yanfiq.literalog.config.ConfigManager;
 import com.yanfiq.literalog.utils.DatabaseUtils;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -38,11 +39,17 @@ public class SettingsController {
                 .then("Connected")
                 .otherwise("Not Connected"));
 
+        //load data from config file
         themeMenu.getItems().addAll("Dark Mode", "Light Mode");
-        themeMenu.setValue("Dark Mode");
-
+        themeMenu.setValue(ConfigManager.getTheme().equals("dark") ? "Dark Mode" : "Light Mode");
         fontSizeMenu.getItems().addAll("Small", "Medium", "Large");
-        fontSizeMenu.setValue("Small");
+        fontSizeMenu.setValue(ConfigManager.getFontSize().equals("small") ? "Small" : ConfigManager.getFontSize().equals("medium") ? "Medium" : "Large");
+
+        serverNameField.setText(ConfigManager.getServerName());
+        instanceNameField.setText(ConfigManager.getInstanceName());
+        portField.setText(Integer.toString(ConfigManager.getPort()));
+        usernameField.setText(ConfigManager.getUsername());
+        passwordField.setText(ConfigManager.getPassword());
     }
     @FXML
     private void onConnectButtonClick(){
