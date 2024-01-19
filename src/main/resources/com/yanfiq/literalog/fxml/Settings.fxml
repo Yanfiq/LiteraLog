@@ -148,7 +148,7 @@
                                           <Font size="14.0" />
                                        </font>
                                     </PasswordField>
-                                    <Button fx:id="connectButton" mnemonicParsing="false" onAction="#onConnectButtonClick" prefHeight="11.0" prefWidth="71.0" text="Connect" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                                    <Button fx:id="connectButton" mnemonicParsing="false" onAction="#onConnectButtonClick" text="Check Connection" GridPane.columnIndex="1" GridPane.rowIndex="6">
                                        <font>
                                           <Font name="Segoe UI Semibold" size="14.0" />
                                        </font>
@@ -183,17 +183,17 @@
             </ScrollPane>
             <HBox alignment="BOTTOM_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.rowIndex="2">
                <children>
-                  <Button mnemonicParsing="false" text="Apply">
+                  <Button fx:id="applyButton" mnemonicParsing="false" onAction="#onApplyButtonClick" text="Apply">
                      <font>
                         <Font name="Segoe UI Semibold" size="14.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" text="Save">
+                  <Button fx:id="saveButton" mnemonicParsing="false" text="Save">
                      <font>
                         <Font name="Segoe UI Semibold" size="14.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" text="Cancel">
+                  <Button fx:id="cancelButton" mnemonicParsing="false" text="Cancel">
                      <font>
                         <Font name="Segoe UI Semibold" size="14.0" />
                      </font>

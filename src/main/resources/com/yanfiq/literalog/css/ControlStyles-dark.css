@@ -22,13 +22,18 @@
     -fx-alignment: center-left;
 }
 
-Button {
-    -fx-background-color:   #4cc2ff;
+.button {
+    -fx-background-color:   rgb(76, 194, 255);
     -fx-background-radius:  5;
 }
 
-Button:hover {
-    -fx-background-color:  #41a6d9;
+.button:hover {
+    -fx-background-color:  rgb(71, 178, 233);
+    -fx-background-radius:  5;
+}
+
+.button:pressed {
+    -fx-background-color:  rgb(67, 161, 210);
     -fx-background-radius:  5;
 }
 
@@ -53,39 +58,162 @@ Button:hover {
     -fx-text-fill: rgb(255, 255, 255);
 }
 
-.combo-box {
+/* .combo-box {
     -fx-font-family: "Segoe UI SemiBold";
     -fx-font-size: 14;
     -fx-background-color : rgb(43, 43, 43);
 }
-
-/* outer combo-box text */
 .combo-box .list-cell {
     -fx-text-fill: white;
 }
-
 .combo-box .list-cell .combo-box-popup {
     -fx-background-color : rgb(43, 43, 43);
     -fx-text-fill: white;
 }
-
-/* combo-box list view text, not hovered or focused */
 .combo-box .list-view .list-cell {
     -fx-background-color : rgb(43, 43, 43);
     -fx-text-fill: rgb(255, 255, 255);
 }
-
-/* combo-box selected text */
 .combo-box .list-view .list-cell:focused {
     -fx-background-color : rgb(41, 88, 142);
     -fx-text-fill: rgb(255, 255, 255);
 }
-
-/* combo-box hover text */
 .combo-box .list-view .list-cell:hover {
     -fx-background-color : rgb(85, 85, 85);
     -fx-text-fill: rgb(255, 255, 255);
+} */
+
+.choice-box,
+.combo-box-base {
+    -fx-background-color: #1f1f1f, #2b2b2b, #333333;
+    -fx-background-insets: 0, 0 0 1 0, 1;
+    -fx-background-radius: 6, 6, 5;
+    -fx-text-fill: rgb(255, 255, 255);
+    -fx-font-size: 14px;
+    -fx-font-family: "Segoe UI SemiBold";
+    -fx-alignment: CENTER;
+    -fx-content-display: LEFT;
 }
+
+.choice-box:hover,
+.combo-box-base:hover {
+    -fx-background-color: #1f1f1f, #2b2b2b, #3a3a3a;
+    -fx-text-fill: rgb(255, 255, 255);
+    -fx-font-size: 14px;
+    -fx-font-family: "Segoe UI SemiBold";
+}
+
+.choice-box:armed,
+.combo-box-base:armed {
+    -fx-background-color: #2b2b2b, #2b2b2b, #3a3a3a;
+    -fx-text-fill: rgb(255, 255, 255);
+    -fx-font-size: 14px;
+    -fx-font-family: "Segoe UI SemiBold";
+}
+
+.choice-box:disabled,
+.combo-box-base:disabled {
+    -fx-opacity: 0.4;
+}
+
+.choice-box > .open-button,
+.combo-box-base > .arrow-button {
+    -fx-background-radius: 0 3 3 0, 0 2 2 0, 0 1 1 0;
+    -fx-padding: 0.5em 0.667em 0.5em 0.833333em;
+    -fx-background-color: transparent;
+}
+
+.choice-box > .open-button > .arrow,
+.combo-box-base > .arrow-button > .arrow {
+    -fx-background-color: rgb(255, 255, 255);
+    -fx-background-insets: 0 0 -1 0, 0;
+    -fx-padding: 0.166667em 0.333333em 0.166667em 0.333333em;
+    -fx-shape: "M 0 0.75 L 3.75 4.5 L 7.5 0.75 L 6.75 0 L 3.75 3 L 0.75 0 Z";
+    -fx-scale-shape: false;
+}
+
+.choice-box:armed > .open-button > .arrow,
+.combo-box-base:armed > .arrow-button > .arrow {
+    -fx-translate-y: 1;
+}
+
+.choice-box > .label {
+    -fx-padding: 0.333333em 0.666667em 0.333333em 0.666667em;
+}
+
+.combo-box > .list-cell {
+    -fx-padding: 0.333333em 0.666667em 0.333333em 0.666667em;
+    -fx-text-fill: rgb(255, 255, 255);
+    -fx-font-size: 14px;
+    -fx-font-family: "Segoe UI SemiBold";
+}
+
+.combo-box-popup > .list-view {
+    -fx-background-color: linear-gradient(to bottom, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.04)), #2b2b2b;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 8, 8;
+    -fx-padding: 6px 5px 6px 5px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.08), 12, 0, 0, 6);
+}
+
+.combo-box-popup > .list-view > .virtual-flow > .clipped-container > .sheet > .list-cell {
+    -fx-background-color: rgba(255, 255, 255, 0);
+    -fx-padding: 6px;
+    -fx-text-fill: rgb(255, 255, 255);
+    -fx-font-size: 14px;
+    -fx-font-family: "Segoe UI SemiBold";
+}
+
+.combo-box-popup > .list-view > .virtual-flow > .clipped-container > .sheet > .list-cell:filled:hover {
+    -fx-background: rgba(255, 255, 255, 0);
+    -fx-background-color: rgba(255, 255, 255, 0.04);
+    -fx-background-radius: 3;
+    -fx-background-insets: 2px 0 2px 0;
+    -fx-text-fill: -fx-text-base-color;
+    -fx-text-fill: rgb(255, 255, 255);
+    -fx-font-size: 14px;
+    -fx-font-family: "Segoe UI SemiBold";
+}
+
+.combo-box-popup > .list-view > .virtual-flow > .clipped-container > .sheet > .list-cell:filled:selected,
+.combo-box-popup > .list-view > .virtual-flow > .clipped-container > .sheet > .list-cell:filled:selected:hover {
+    -fx-background: rgba(255, 255, 255, 0);
+    -fx-background-color: rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0), rgba(255, 255, 255, 0);
+    -fx-background-radius: 3;
+    -fx-background-insets: 2px 0 2px 0;
+    -fx-text-fill: -fx-text-base-color;
+    -fx-text-fill: rgb(255, 255, 255);
+    -fx-font-size: 14px;
+    -fx-font-family: "Segoe UI SemiBold";
+}
+
+.combo-box-base:editable > .text-field {
+    -fx-background-color: #1f1f1f, #2b2b2b, #333333;
+    -fx-background-insets: 0, 0 0 1 0, 1 0 1 1;
+    -fx-background-radius: 5 0 0 5, 5 0 0 5, 4 0 0 4;
+}
+
+.combo-box-base:editable > .arrow-button {
+    -fx-background-color: #1f1f1f, #2b2b2b, #333333;
+    -fx-background-insets: 0, 0 0 1 0, 1 1 1 0;
+    -fx-background-radius: 0 5 5 0, 0 5 5 0, 0 4 4 0;
+}
+
+.combo-box-base:editable:hover > .text-field,
+.combo-box-base:editable:hover > .arrow-button {
+    -fx-background-color: #1f1f1f, #2b2b2b, #3a3a3a;
+}
+
+.combo-box-base:editable:focus-within > .text-field {
+    -fx-background-color: -fx-accent, #2b2b2b, #333333;
+    -fx-background-insets: 0, 0 0 2 0, 1 0 2 1;
+}
+
+.combo-box-base:editable:focus-within > .arrow-button {
+    -fx-background-color: -fx-accent, #2b2b2b, #333333;
+    -fx-background-insets: 0, 0 0 2 0, 1 1 2 0;
+}
+
 
 .progress-bar {
     -fx-accent: #4cc2ff;
@@ -103,4 +231,23 @@ Button:hover {
     -fx-text-box-border: transparent;
     -fx-control-inner-background: transparent;
     -fx-background-color: rgba(255, 255, 255, 0.1);
+}
+
+.spinner .increment-arrow-button, .spinner .decrement-arrow-button {
+    -fx-background-color: rgb(0, 0, 0);
+}
+
+.spinner .increment-arrow-button .increment-arrow, .spinner .decrement-arrow-button .decrement-arrow {
+    -fx-background-color: rgb(255, 255, 255);
+    -fx-background-insets: 0 0 -1 0, 0;
+    -fx-padding: 0.166667em 0.333333em 0.166667em 0.333333em;
+    -fx-scale-shape: false;
+}
+
+.spinner .increment-arrow-button .increment-arrow {
+    -fx-shape: "M 0 4.5 L 3.75 0.75 L 7.5 4.5 L 6.75 5.25 L 3.75 2.25 L 0.75 5.25 Z";
+}
+
+.spinner .decrement-arrow-button .decrement-arrow {
+    -fx-shape: "M 0 0.75 L 3.75 4.5 L 7.5 0.75 L 6.75 0 L 3.75 3 L 0.75 0 Z";
 }

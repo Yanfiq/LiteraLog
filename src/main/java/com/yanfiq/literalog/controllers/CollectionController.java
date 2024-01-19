@@ -91,15 +91,15 @@ public class CollectionController {
 
         searchField.textProperty().addListener((observable, oldValue, newValue) -> {
             ArrayList<Book> container = DatabaseUtils.getBooksData("SELECT * " +
-                            "FROM [BOOKS] A, [COLLECTION] B" +
-                            "WHERE A.ISBN = B.ISBN" +
+                            "FROM [BOOKS] A, [COLLECTION] B " +
+                            "WHERE A.ISBN = B.ISBN " +
                             "AND B.Username = '" + User.loggedInUser.get() + "' " +
                             "AND " +
-                            "(([ISBN] LIKE '%" +newValue+"%') OR "+
-                            "([Title] LIKE '%" +newValue+"%') OR "+
-                            "([Author] LIKE '%" +newValue+"%') OR "+
-                            "([Publisher] LIKE '%" +newValue+"%') OR "+
-                            "([Year] LIKE '%" +newValue+"%'));");
+                            "((A.ISBN LIKE '%" +newValue+"%') OR "+
+                            "(A.Title LIKE '%" +newValue+"%') OR "+
+                            "(A.Author LIKE '%" +newValue+"%') OR "+
+                            "(A.Publisher LIKE '%" +newValue+"%') OR "+
+                            "(A.Year LIKE '%" +newValue+"%'));");
             ObservableList<Book> bookList = collectionTable.getItems();
             bookList.clear();
             for(Book book : container){

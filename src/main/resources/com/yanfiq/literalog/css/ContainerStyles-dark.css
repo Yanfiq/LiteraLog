@@ -12,11 +12,11 @@
 
 .login-background{
     -fx-background-image: url("../images/login-background.jpeg");
-    -fx-opacity: 50;
 }
 
 .login-panel {
-    -fx-background-color: rgba(0, 0, 0, 0.6);
+    -fx-background-color: rgba(0, 0, 0, 0.432);
+    -fx-effect: dropshadow( gaussian, rgb(0, 0, 0) , 10 , 0.1 , 0 , 0 );
 }
 
 

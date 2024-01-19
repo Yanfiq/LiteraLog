@@ -124,7 +124,7 @@
                   </TextField>
                   <Button fx:id="wishlistButton" mnemonicParsing="false" onAction="#addWishlist" prefHeight="36.0" prefWidth="105.0" styleClass="button" text="Wishlist" GridPane.columnIndex="7" GridPane.rowIndex="1">
                      <font>
-                        <Font name="Segoe UI Historic" size="16.0" />
+                        <Font name="Segoe UI SemiBold" size="16.0" />
                      </font>
                   </Button>
                </children>

@@ -56,17 +56,48 @@ public class BookmarksController {
         authorColumn.prefWidthProperty().bind(bookmarksTable.widthProperty().divide(7));
         lastPageReadColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().lastPage.get()).asObject());
         lastPageReadColumn.prefWidthProperty().bind(bookmarksTable.widthProperty().divide(7));
-        lastPageReadColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-        lastPageReadColumn.setOnEditCommit(event -> {
-            Book book = event.getTableView().getItems().get(event.getTablePosition().getRow());
-            book.lastPage.set(event.getNewValue());
-            book.lastTimeRead.set(LocalDateTime.now());
-            LocalDateTime localDateTime = LocalDateTime.now();
-            java.sql.Timestamp sqlTimestamp = java.sql.Timestamp.valueOf(localDateTime);
+        //lastPageReadColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        lastPageReadColumn.setCellFactory(column -> {
+            return new TableCell<Book, Integer>() {
+                private final Spinner<Integer> spinner = new Spinner<>();
 
-            DatabaseUtils.manipulateTable("UPDATE [BOOKMARKS] SET [LastPage] = "+event.getNewValue()+" WHERE [ISBN] = "+book.isbn.get());
-            DatabaseUtils.manipulateTable("UPDATE [BOOKMARKS] SET [LastTimeRead] = '"+sqlTimestamp.toString()+"' WHERE [ISBN] = "+book.isbn.get());
+                {
+                    spinner.setEditable(true);
+                    spinner.valueProperty().addListener((observable, oldValue, newValue) -> {
+                        Book book = getTableView().getItems().get(getIndex());
+                        LocalDateTime localDateTime = LocalDateTime.now();
+                        java.sql.Timestamp sqlTimestamp = java.sql.Timestamp.valueOf(localDateTime);
+                        book.lastPage.set(newValue);
+                        DatabaseUtils.manipulateTable("UPDATE [BOOKMARKS] SET [LastPage] = "+ newValue +" WHERE [ISBN] = " + book.isbn.get());
+                        DatabaseUtils.manipulateTable("UPDATE [BOOKMARKS] SET [LastTimeRead] = '" + sqlTimestamp + "' WHERE [ISBN] = "+book.isbn.get());
+                    });
+                }
+
+                @Override
+                protected void updateItem(Integer item, boolean empty) {
+                    super.updateItem(item, empty);
+
+                    if (empty) {
+                        setGraphic(null);
+                    } else {
+                        Book book = getTableView().getItems().get(getIndex());
+                        spinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, book.totalPage.get(), book.lastPage.get()));
+
+                        setGraphic(spinner);
+                    }
+                }
+            };
         });
+//        lastPageReadColumn.setOnEditCommit(event -> {
+//            Book book = event.getTableView().getItems().get(event.getTablePosition().getRow());
+//            book.lastPage.set(event.getNewValue());
+//            book.lastTimeRead.set(LocalDateTime.now());
+//            LocalDateTime localDateTime = LocalDateTime.now();
+//            java.sql.Timestamp sqlTimestamp = java.sql.Timestamp.valueOf(localDateTime);
+//
+//            DatabaseUtils.manipulateTable("UPDATE [BOOKMARKS] SET [LastPage] = "+event.getNewValue()+" WHERE [ISBN] = "+book.isbn.get());
+//            DatabaseUtils.manipulateTable("UPDATE [BOOKMARKS] SET [LastTimeRead] = '"+sqlTimestamp.toString()+"' WHERE [ISBN] = "+book.isbn.get());
+//        });
         lastTimeReadColumn.setCellValueFactory(cellData -> cellData.getValue().lastTimeRead);
         lastTimeReadColumn.prefWidthProperty().bind(bookmarksTable.widthProperty().divide(7));
         lastTimeReadColumn.setCellFactory(column -> {

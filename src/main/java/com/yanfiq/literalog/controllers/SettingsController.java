@@ -1,5 +1,6 @@
 package com.yanfiq.literalog.controllers;
 
+import com.yanfiq.literalog.Main;
 import com.yanfiq.literalog.utils.DatabaseUtils;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -23,6 +24,12 @@ public class SettingsController {
     private ComboBox<String> themeMenu = new ComboBox<>();
     @FXML
     private ComboBox<String> fontSizeMenu = new ComboBox<>();
+    @FXML
+    private Button applyButton;
+    @FXML
+    private Button saveButton;
+    @FXML
+    private Button cancelButton;
 
 
     @FXML
@@ -42,5 +49,23 @@ public class SettingsController {
         if(!DatabaseUtils.isConnected.get()){
             DatabaseUtils.openConnection(serverNameField.getText(), instanceNameField.getText(), portField.getText(), usernameField.getText(), passwordField.getText());
         }
+    }
+    @FXML
+    private void onApplyButtonClick(){
+        String cssDir = "com/yanfiq/literalog/css/";
+        Main.getPrimaryStage().getScene().getStylesheets().clear();
+        Main.getPrimaryStage().getScene().getStylesheets().add( themeMenu.getValue().equals("Dark Mode") ? cssDir+"ContainerStyles-dark.css" : cssDir+"ContainerStyles-light.css");
+        Main.getPrimaryStage().getScene().getStylesheets().add( themeMenu.getValue().equals("Dark Mode") ? cssDir+"ControlStyles-dark.css" : cssDir+"ControlStyles-light.css");
+
+        DatabaseUtils.closeConnection();
+        DatabaseUtils.openConnection(serverNameField.getText(), instanceNameField.getText(), portField.getText(), usernameField.getText(), passwordField.getText());
+    }
+    @FXML
+    private void onSaveButtonCLick(){
+
+    }
+    @FXML
+    private void onCancelButtonCLick(){
+
     }
 }
