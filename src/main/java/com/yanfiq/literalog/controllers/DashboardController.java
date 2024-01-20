@@ -20,7 +20,7 @@ import static javafx.scene.paint.Color.rgb;
 
 public class DashboardController {
     @FXML
-    private Pane loginPane;
+    private GridPane loginPane;
     @FXML
     private TextField usernameField;
     @FXML

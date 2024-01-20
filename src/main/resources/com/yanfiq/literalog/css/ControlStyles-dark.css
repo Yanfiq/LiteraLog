@@ -216,7 +216,7 @@
 
 
 .progress-bar {
-    -fx-accent: #4cc2ff;
+    -fx-accent: #00aaff;
 }
 
 .progress-bar .bar {
@@ -250,4 +250,8 @@
 
 .spinner .decrement-arrow-button .decrement-arrow {
     -fx-shape: "M 0 0.75 L 3.75 4.5 L 7.5 0.75 L 6.75 0 L 3.75 3 L 0.75 0 Z";
+}
+
+.connectable {
+    -fx-opacity: 1.0;
 }

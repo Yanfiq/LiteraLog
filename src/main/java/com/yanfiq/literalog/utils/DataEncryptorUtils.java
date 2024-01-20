@@ -10,16 +10,17 @@ import java.util.Base64;
 public class DataEncryptorUtils {
 
     // Simulate a secret key
-    private static final String SECRET_KEY = "mysecretkey";
+    private static final String SECRET_KEY = "1779751779751779";
 
     public static void main(String[] args) {
-        // Serialize and encrypt data
-        String serializedData = serializeDataToXML();
-        String encryptedData = encryptData(serializedData);
-
-        // Decrypt and deserialize data
-        String decryptedData = decryptData(encryptedData);
-        deserializeDataFromXML(decryptedData);
+//        // Serialize and encrypt data
+//        String serializedData = serializeDataToXML();
+//        String encryptedData = encryptData(serializedData);
+//
+//        // Decrypt and deserialize data
+//        String decryptedData = decryptData(encryptedData);
+//        deserializeDataFromXML(decryptedData);
+        //System.out.println(encryptData("Hello"));
     }
 
     private static String serializeDataToXML() {

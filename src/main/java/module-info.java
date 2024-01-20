@@ -1,4 +1,4 @@
-module com.literalog.literalog {
+module com.yanfiq.literalog {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.sql;

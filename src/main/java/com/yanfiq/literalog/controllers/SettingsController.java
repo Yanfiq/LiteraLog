@@ -4,9 +4,15 @@ import com.yanfiq.literalog.Main;
 import com.yanfiq.literalog.config.ConfigManager;
 import com.yanfiq.literalog.utils.DatabaseUtils;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.Property;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public class SettingsController {
     @FXML
@@ -31,6 +37,10 @@ public class SettingsController {
     private Button saveButton;
     @FXML
     private Button cancelButton;
+    @FXML
+    private CheckBox autoconnectCheckbox;
+    @FXML
+    private ProgressIndicator connectionProgressIndicator;
 
 
     @FXML
@@ -38,7 +48,10 @@ public class SettingsController {
         statusDB.textProperty().bind(Bindings.when((SimpleBooleanProperty) DatabaseUtils.isConnected)
                 .then("Connected")
                 .otherwise("Not Connected"));
+        loadSetting();
+    }
 
+    private void loadSetting(){
         //load data from config file
         themeMenu.getItems().addAll("Dark Mode", "Light Mode");
         themeMenu.setValue(ConfigManager.getTheme().equals("dark") ? "Dark Mode" : "Light Mode");
@@ -50,12 +63,56 @@ public class SettingsController {
         portField.setText(Integer.toString(ConfigManager.getPort()));
         usernameField.setText(ConfigManager.getUsername());
         passwordField.setText(ConfigManager.getPassword());
+
+        autoconnectCheckbox.setSelected(ConfigManager.isAutoConnectEnabled());
     }
     @FXML
-    private void onConnectButtonClick(){
-        if(!DatabaseUtils.isConnected.get()){
-            DatabaseUtils.openConnection(serverNameField.getText(), instanceNameField.getText(), portField.getText(), usernameField.getText(), passwordField.getText());
-        }
+    private void onConnectButtonClick() {
+        connectionProgressIndicator.setProgress(ProgressBar.INDETERMINATE_PROGRESS);
+        Task<Void> connectionTask = new Task<>() {
+            @Override
+            protected Void call() {
+                try {
+                    Connection connection = null;
+                    String dbUrl = "jdbc:sqlserver://" + serverNameField.getText() + "\\" + instanceNameField.getText() + ":" + portField.getText() + ";databaseName=LiteraLog;Encrypt=true;trustServerCertificate=true";
+
+                    Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+
+                    try {
+                        connection = DriverManager.getConnection(dbUrl, usernameField.getText(), passwordField.getText());
+                        updateUI(true);
+                    } catch (SQLException e) {
+                        updateUI(false);
+                    } finally {
+                        try {
+                            if (connection != null) connection.close();
+                        } catch (SQLException e) {
+                            return null;
+                        }
+                    }
+                } catch (ClassNotFoundException e) {
+                    updateUI(false);
+                }
+
+                return null;
+            }
+        };
+
+        connectionProgressIndicator.progressProperty().bind(connectionTask.progressProperty());
+
+        connectionTask.setOnSucceeded(event -> {
+            connectionProgressIndicator.progressProperty().unbind();
+            connectionProgressIndicator.setProgress(1.0);
+        });
+
+        Thread thread = new Thread(connectionTask);
+        thread.setDaemon(true);
+        thread.start();
+    }
+
+    private void updateUI(boolean isConnected) {
+        String progressBarStyle = isConnected ? "-fx-accent: rgb(108, 203, 95);" : "-fx-accent: rgb(255, 153, 164);";
+        connectionProgressIndicator.setStyle(progressBarStyle);
     }
     @FXML
     private void onApplyButtonClick(){
@@ -68,11 +125,17 @@ public class SettingsController {
         DatabaseUtils.openConnection(serverNameField.getText(), instanceNameField.getText(), portField.getText(), usernameField.getText(), passwordField.getText());
     }
     @FXML
-    private void onSaveButtonCLick(){
-
+    private void onSaveButtonClick(){
+        ConfigManager.setServerName(serverNameField.getText());
+        ConfigManager.setInstanceName(instanceNameField.getText());
+        ConfigManager.setPort(Integer.parseInt(portField.getText()));
+        ConfigManager.setUsername(usernameField.getText());
+        ConfigManager.setPassword(passwordField.getText());
+        ConfigManager.setAutoConnect(autoconnectCheckbox.isSelected());
+        ConfigManager.setTheme(themeMenu.getValue());
     }
     @FXML
-    private void onCancelButtonCLick(){
-
+    private void onCancelButtonClick(){
+        loadSetting();
     }
 }

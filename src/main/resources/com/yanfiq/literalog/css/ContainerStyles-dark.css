@@ -11,7 +11,8 @@
 }
 
 .login-background{
-    -fx-background-image: url("../images/login-background.jpeg");
+    -fx-background-image: url("../images/5172658.jpg");
+    -fx-background-size: cover;
 }
 
 .login-panel {
@@ -127,4 +128,12 @@
 }
 .scroll-bar:vertical > .increment-button > .increment-arrow {
     -fx-padding: 0 0 0 0;
+}
+
+#mainScrollPane > .viewport {
+    -fx-background-color: transparent;
+}
+
+#mainScrollPane {
+    -fx-background-color: transparent;
 }
