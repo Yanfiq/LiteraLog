@@ -9,6 +9,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.control.TableColumn;
@@ -68,7 +69,10 @@ public class BookmarksController {
                         LocalDateTime localDateTime = LocalDateTime.now();
                         java.sql.Timestamp sqlTimestamp = java.sql.Timestamp.valueOf(localDateTime);
                         book.lastPage.set(newValue);
+                        int lastTotalPage = User.loggedInUser.totalPagesRead.get();
+                        User.loggedInUser.totalPagesRead.set((lastTotalPage-oldValue)+newValue);
                         DatabaseUtils.manipulateTable("UPDATE [BOOKMARKS] SET [LastPage] = "+ newValue +" WHERE [ISBN] = " + book.isbn.get());
+                        DatabaseUtils.manipulateTable("UPDATE [USER] SET [TotalPagesRead] = "+((lastTotalPage-oldValue)+newValue)+";");
                         DatabaseUtils.manipulateTable("UPDATE [BOOKMARKS] SET [LastTimeRead] = '" + sqlTimestamp + "' WHERE [ISBN] = "+book.isbn.get());
                     });
                 }
