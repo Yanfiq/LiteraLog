@@ -14,6 +14,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -193,7 +194,16 @@
                                                 <Font name="Segoe UI Semibold" size="14.0" />
                                              </font>
                                           </Button>
-                                          <ProgressBar fx:id="connectionProgressIndicator" prefHeight="18.0" prefWidth="368.0" progress="0.0" />
+                                          <StackPane prefHeight="38.0" prefWidth="367.0">
+                                             <children>
+                                                <ProgressBar fx:id="connectionProgressIndicator" prefHeight="18.0" prefWidth="368.0" progress="0.0" />
+                                                <Label fx:id="connectabilityLabel" text="Not Connectable">
+                                                   <font>
+                                                      <Font name="Segoe UI Semibold" size="14.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </StackPane>
                                        </children>
                                     </HBox>
                                  </children>

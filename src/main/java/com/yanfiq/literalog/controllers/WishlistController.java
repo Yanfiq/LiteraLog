@@ -92,22 +92,22 @@ public class WishlistController {
                 String isbn = book.isbn.get();
                 wishlistTable.getItems().remove(book);
 
-                DatabaseUtils.manipulateTable("DELETE FROM [WISHLIST] WHERE [ISBN] = " + isbn + " AND [Username] = '" + User.loggedInUser.get() + "';");
+                DatabaseUtils.manipulateTable("DELETE FROM [WISHLIST] WHERE [ISBN] = " + isbn + " AND [Username] = '" + User.loggedInUser.Username.get() + "';");
                 DatabaseUtils.manipulateTable("DELETE FROM [BOOKS] WHERE [ISBN] = " + isbn);
             });
             buyButton.setOnAction(event -> {
                 Book book = wishlistTable.getItems().get(cell.getIndex());
                 String isbn = book.isbn.get();
                 wishlistTable.getItems().remove(book);
-                DatabaseUtils.manipulateTable("DELETE FROM [WISHLIST] WHERE [ISBN] = "+isbn + " AND [Username] = '" + User.loggedInUser.get() + "';");
-                DatabaseUtils.manipulateTable("INSERT INTO [COLLECTION] VALUES ('" + User.loggedInUser.get() + "', '" + isbn + "');");
+                DatabaseUtils.manipulateTable("DELETE FROM [WISHLIST] WHERE [ISBN] = "+isbn + " AND [Username] = '" + User.loggedInUser.Username.get() + "';");
+                DatabaseUtils.manipulateTable("INSERT INTO [COLLECTION] VALUES ('" + User.loggedInUser.Username.get() + "', '" + isbn + "');");
             });
             return cell;
         });
         actionColumn.prefWidthProperty().bind(wishlistTable.widthProperty().divide(8));
 
         //get data from database
-        ArrayList<Book> container = DatabaseUtils.getBooksData("SELECT * FROM [BOOKS] B, [WISHLIST] W WHERE B.ISBN = W.ISBN AND W.Username = '"+ User.loggedInUser.get() + "';");
+        ArrayList<Book> container = DatabaseUtils.getBooksData("SELECT * FROM [BOOKS] B, [WISHLIST] W WHERE B.ISBN = W.ISBN AND W.Username = '"+ User.loggedInUser.Username.get() + "';");
         if(container != null){
             for(Book book : container){
                 ObservableList<Book> bookList = wishlistTable.getItems();

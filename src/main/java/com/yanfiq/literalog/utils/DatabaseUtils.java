@@ -111,6 +111,8 @@ public final class DatabaseUtils {
             int columnCount = metaData.getColumnCount();
             while (resultSet.next()) {
                 String _username = null, _password = null;
+                LocalDateTime _accountCreated = null;
+                int _totalPagesRead = 0;
 
                 for (int i = 1; i <= columnCount; i++) {
                     String columnName = metaData.getColumnName(i);
@@ -119,9 +121,15 @@ public final class DatabaseUtils {
                     switch (columnName){
                         case "Name": _username = columnValue.toString(); break;
                         case "Password": _password = columnValue.toString(); break;
+                        case "TotalPagesRead": _totalPagesRead = Integer.parseInt(columnValue.toString()); break;
+                        case "AccountCreated": {
+                            java.sql.Timestamp sqlTimestamp = resultSet.getTimestamp(columnName);
+                            _accountCreated = sqlTimestamp.toLocalDateTime();
+                            break;
+                        }
                     }
                 }
-                User user = new User(_username, _password);
+                User user = new User(_username, _password, _accountCreated, _totalPagesRead);
                 container.add(user);
             }
             return container;

@@ -163,15 +163,15 @@ public class BookmarksController {
 
             removeButton.setOnAction(event -> {
                 Book book = bookmarksTable.getItems().get(cell.getIndex());
-                DatabaseUtils.manipulateTable("DELETE FROM [BOOKMARKS] WHERE [ISBN] = " + book.isbn.get() + " AND [Username] = '" + User.loggedInUser.get() + "';");
-                DatabaseUtils.manipulateTable("DELETE FROM [COLLECTION] WHERE [ISBN] = " + book.isbn.get() + " AND [Username] = '" + User.loggedInUser.get() + "';");
+                DatabaseUtils.manipulateTable("DELETE FROM [BOOKMARKS] WHERE [ISBN] = " + book.isbn.get() + " AND [Username] = '" + User.loggedInUser.Username.get() + "';");
+                DatabaseUtils.manipulateTable("DELETE FROM [COLLECTION] WHERE [ISBN] = " + book.isbn.get() + " AND [Username] = '" + User.loggedInUser.Username.get() + "';");
                 DatabaseUtils.manipulateTable("DELETE FROM [BOOKS] WHERE [ISBN] = " + book.isbn.get());
                 bookmarksTable.getItems().remove(book);
             });
             unreadButton.setOnAction(event -> {
                 Book book = bookmarksTable.getItems().get(cell.getIndex());
                 book.lastPage.set(0);
-                DatabaseUtils.manipulateTable("DELETE FROM [BOOKMARKS] WHERE [ISBN] = " + book.isbn.get() + " AND [Username] = '" + User.loggedInUser.get() + "';");
+                DatabaseUtils.manipulateTable("DELETE FROM [BOOKMARKS] WHERE [ISBN] = " + book.isbn.get() + " AND [Username] = '" + User.loggedInUser.Username.get() + "';");
                 bookmarksTable.getItems().remove(book);
             });
             return cell;
@@ -182,7 +182,7 @@ public class BookmarksController {
             ArrayList<Book> container = DatabaseUtils.getBooksData("SELECT * " +
                     "FROM [BOOKS] A, [BOOKMARKS] B " +
                     "WHERE A.ISBN = B.ISBN " +
-                    "AND B.Username = '" + User.loggedInUser.get() + "' " +
+                    "AND B.Username = '" + User.loggedInUser.Username.get() + "' " +
                     "AND " +
                     "((A.ISBN LIKE '%" +newValue+"%') OR "+
                     "(A.Title LIKE '%" +newValue+"%') OR "+

@@ -74,8 +74,8 @@ public class CollectionController {
 
             removeButton.setOnAction(event -> {
                 Book book = collectionTable.getItems().get(cell.getIndex());
-                DatabaseUtils.manipulateTable("DELETE FROM [BOOKMARKS] WHERE [ISBN] = " + book.isbn.get() + " AND [Username] = '" + User.loggedInUser.get() + "';");
-                DatabaseUtils.manipulateTable("DELETE FROM [COLLECTION] WHERE [ISBN] = " + book.isbn.get() + " AND [Username] = '" + User.loggedInUser.get() + "';");
+                DatabaseUtils.manipulateTable("DELETE FROM [BOOKMARKS] WHERE [ISBN] = " + book.isbn.get() + " AND [Username] = '" + User.loggedInUser.Username.get() + "';");
+                DatabaseUtils.manipulateTable("DELETE FROM [COLLECTION] WHERE [ISBN] = " + book.isbn.get() + " AND [Username] = '" + User.loggedInUser.Username.get() + "';");
                 DatabaseUtils.manipulateTable("DELETE FROM [BOOKS] WHERE [ISBN] = "+book.isbn.get());
                 collectionTable.getItems().remove(book);
             });
@@ -83,7 +83,7 @@ public class CollectionController {
                 Book book = collectionTable.getItems().get(cell.getIndex());
                 LocalDateTime localDateTime = LocalDateTime.now();
                 java.sql.Timestamp sqlTimestamp = java.sql.Timestamp.valueOf(localDateTime);
-                DatabaseUtils.manipulateTable("INSERT INTO [BOOKMARKS] VALUES "+String.format("('%s', '%s', '%s', %d)", User.loggedInUser.get(), book.isbn.get(), sqlTimestamp.toString(), 0));
+                DatabaseUtils.manipulateTable("INSERT INTO [BOOKMARKS] VALUES "+String.format("('%s', '%s', '%s', %d)", User.loggedInUser.Username.get(), book.isbn.get(), sqlTimestamp.toString(), 0));
             });
             return cell;
         });
@@ -93,7 +93,7 @@ public class CollectionController {
             ArrayList<Book> container = DatabaseUtils.getBooksData("SELECT * " +
                             "FROM [BOOKS] A, [COLLECTION] B " +
                             "WHERE A.ISBN = B.ISBN " +
-                            "AND B.Username = '" + User.loggedInUser.get() + "' " +
+                            "AND B.Username = '" + User.loggedInUser.Username.get() + "' " +
                             "AND " +
                             "((A.ISBN LIKE '%" +newValue+"%') OR "+
                             "(A.Title LIKE '%" +newValue+"%') OR "+
@@ -112,7 +112,7 @@ public class CollectionController {
         ArrayList<Book> container = DatabaseUtils.getBooksData("SELECT * " +
                 "FROM [BOOKS] B, [COLLECTION] C " +
                 "WHERE B.ISBN = C.ISBN " +
-                "AND C.Username = '" + User.loggedInUser.get() + "';");
+                "AND C.Username = '" + User.loggedInUser.Username.get() + "';");
         if(container != null){
             for(Book book : container){
                 ObservableList<Book> bookList = collectionTable.getItems();

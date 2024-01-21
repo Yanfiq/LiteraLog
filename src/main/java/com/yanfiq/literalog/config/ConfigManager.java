@@ -1,25 +1,51 @@
 package com.yanfiq.literalog.config;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Properties;
 
 public class ConfigManager {
-
     private static final String CONFIG_FILE = "com/yanfiq/literalog/config/config.properties";
+    private static Path configLocation = Paths.get(System.getProperty("user.home"), ".literalog", "config.properties");
     private static Properties properties;
 
     static {
-        properties = new Properties();
-        try (InputStream input = ConfigManager.class.getClassLoader().getResourceAsStream(CONFIG_FILE)) {
-            if (input != null) {
-                properties.load(input);
-            } else {
-                System.err.println("Unable to load " + CONFIG_FILE);
+        if (! Files.exists(configLocation)) {
+            // create directory if needed
+            if (! Files.exists(configLocation.getParent())) {
+                try {
+                    Files.createDirectory(configLocation.getParent());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
+
+            // extract default config from jar and copy to config location:
+            try (
+                    BufferedReader in = new BufferedReader(new InputStreamReader(ConfigManager.class.getClassLoader().getResourceAsStream(CONFIG_FILE)));
+                    BufferedWriter out = Files.newBufferedWriter(configLocation);) {
+
+                in.lines().forEach(line -> {
+                    try {
+                        out.append(line);
+                        out.newLine();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+            } catch (IOException exc) {
+                // handle exception, e.g. log and warn user config could not be created
+                exc.printStackTrace();
+            }
+        }
+
+        properties = new Properties();
+        try (InputStream input = Files.newInputStream(configLocation)) {
+            properties.load(input);
         } catch (IOException e) {
+            System.err.println("Unable to load " + configLocation);
             e.printStackTrace();
         }
     }
@@ -95,7 +121,7 @@ public class ConfigManager {
     }
 
     private static void saveProperties() {
-        try (OutputStream output = new FileOutputStream(CONFIG_FILE)) {
+        try (OutputStream output = new FileOutputStream(configLocation.toString())) {
             properties.store(output, null);
         } catch (IOException e) {
             e.printStackTrace();

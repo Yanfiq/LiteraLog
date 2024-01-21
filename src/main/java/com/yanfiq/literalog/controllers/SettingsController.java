@@ -3,6 +3,7 @@ package com.yanfiq.literalog.controllers;
 import com.yanfiq.literalog.Main;
 import com.yanfiq.literalog.config.ConfigManager;
 import com.yanfiq.literalog.utils.DatabaseUtils;
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -41,6 +42,8 @@ public class SettingsController {
     private CheckBox autoconnectCheckbox;
     @FXML
     private ProgressIndicator connectionProgressIndicator;
+    @FXML
+    private Label connectabilityLabel;
 
 
     @FXML
@@ -52,7 +55,6 @@ public class SettingsController {
     }
 
     private void loadSetting(){
-        //load data from config file
         themeMenu.getItems().addAll("Dark Mode", "Light Mode");
         themeMenu.setValue(ConfigManager.getTheme().equals("dark") ? "Dark Mode" : "Light Mode");
         fontSizeMenu.getItems().addAll("Small", "Medium", "Large");
@@ -69,6 +71,7 @@ public class SettingsController {
     @FXML
     private void onConnectButtonClick() {
         connectionProgressIndicator.setProgress(ProgressBar.INDETERMINATE_PROGRESS);
+        connectabilityLabel.setText("Establishing database connection");
         Task<Void> connectionTask = new Task<>() {
             @Override
             protected Void call() {
@@ -111,8 +114,11 @@ public class SettingsController {
     }
 
     private void updateUI(boolean isConnected) {
-        String progressBarStyle = isConnected ? "-fx-accent: rgb(108, 203, 95);" : "-fx-accent: rgb(255, 153, 164);";
-        connectionProgressIndicator.setStyle(progressBarStyle);
+        Platform.runLater(() -> {
+            connectabilityLabel.setText(isConnected ? "Connectable" : "Not Connectable");
+            String progressBarStyle = isConnected ? "-fx-accent: rgb(108, 203, 95);" : "-fx-accent: rgb(255, 153, 164);";
+            connectionProgressIndicator.setStyle(progressBarStyle);
+        });
     }
     @FXML
     private void onApplyButtonClick(){
