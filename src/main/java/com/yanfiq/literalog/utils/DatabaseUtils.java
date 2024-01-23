@@ -1,56 +1,157 @@
 package com.yanfiq.literalog.utils;
 
+import com.yanfiq.literalog.config.ConfigManager;
 import com.yanfiq.literalog.models.Book;
 import com.yanfiq.literalog.models.User;
 import javafx.beans.property.SimpleBooleanProperty;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public final class DatabaseUtils {
-    private static String serverName;
-    private static String instanceName;
-    private static String port;
-    private static String username;
-    private static String password;
+    private static String dbEngine, serverName, instanceName, port, username, password;
     private static Connection connection = null;
+    private static Path localDB = Paths.get(System.getProperty("user.home"), ".literalog/data", "bookData.db");
     public static SimpleBooleanProperty isConnected = new SimpleBooleanProperty(false);
     private DatabaseUtils(){}
     public static String getServerName() {
         return serverName;
     }
-
     public static String getInstanceName() {
         return instanceName;
     }
-
     public static String getPort() {
         return port;
     }
-
     public static String getUsername() {
         return username;
     }
 
-    public static boolean openConnection(String _serverName, String _instanceName, String _port, String _username, String _password){
-        serverName = _serverName; instanceName = _instanceName; port = _port; username = _username; password = _password;
+    public static boolean openConnection(String _dbEngine, String _serverName, String _instanceName, String _port, String _username, String _password){
+        dbEngine = _dbEngine; serverName = _serverName; instanceName = _instanceName; port = _port; username = _username; password = _password;
         try {
-            String dbUrl = "jdbc:sqlserver://"+serverName+"\\"+instanceName+":"+port+";databaseName=LiteraLog;Encrypt=true;trustServerCertificate=true";
-
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-
-            connection = DriverManager.getConnection(dbUrl, username, password);
+            switch (dbEngine){
+                case "SQLite":
+                {
+                    if (! Files.exists(localDB)) {
+                        // create directory if needed
+                        if (! Files.exists(localDB.getParent())) {
+                            try {
+                                Files.createDirectory(localDB.getParent());
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                    }
+                    String dbUrl = "jdbc:sqlite:" + localDB;
+                    connection = DriverManager.getConnection(dbUrl);
+                    break;
+                }
+                case "MSSQL":
+                {
+                    String dbUrl = "jdbc:sqlserver://"+serverName+"\\"+instanceName+":"+port+";Encrypt=true;trustServerCertificate=true";
+                    connection = DriverManager.getConnection(dbUrl, username, password);
+                    Statement statement = connection.createStatement();
+                    ResultSet rs = statement.executeQuery("SELECT name FROM sys.databases;");
+                    boolean dbFound = false;
+                    while(rs.next()){
+                        if(rs.getObject(0).toString().equals("LiteraLog")){
+                            dbFound = true;
+                            break;
+                        }
+                    }
+                    if(!dbFound){
+                        Statement statement1 = connection.createStatement();
+                        statement1.executeUpdate("CREATE DATABASE [LiteraLog];");
+                    }
+                    connection.close();
+                    dbUrl = "jdbc:sqlserver://"+serverName+"\\"+instanceName+":"+port+";databaseName=LiteraLog;Encrypt=true;trustServerCertificate=true";
+                    connection = DriverManager.getConnection(dbUrl, username, password);
+                }
+            }
             isConnected.set(true);
+//            DatabaseMetaData md = connection.getMetaData();
+//            int tableCount = 0;
+//            ResultSet rs = md.getTables(null, null, "%", null);
+//            while (rs.next()) {
+//                System.out.println(rs.getString(3));
+//                tableCount++;
+//            }
+//            if(tableCount==0)
+            createTable();
             return true;
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            isConnected.set(false);
-            return false;
         } catch (SQLException e) {
             connection = null;
             isConnected.set(false);
             return false;
+        }
+    }
+    private static void createTable(){
+        String[] queries = {"CREATE TABLE IF NOT EXISTS [USER](" +
+                "[Name] VARCHAR(128)," +
+                "[Password] VARCHAR(128)," +
+                "[TotalPagesRead] int," +
+                "[AccountCreated] DATETIME2," +
+                "CONSTRAINT PK_USER PRIMARY KEY([Name])" +
+                ");",
+                "CREATE TABLE IF NOT EXISTS [BOOKS](" +
+                "[ISBN] VARCHAR(128)," +
+                "[Title] VARCHAR(128)," +
+                "[Author] VARCHAR(128)," +
+                "[TotalPage] INT," +
+                "[Publisher] VARCHAR(128)," +
+                "[Year] INT," +
+                "[Price] INT," +
+                "CONSTRAINT PK_BOOKS PRIMARY KEY([ISBN])" +
+                ");",
+                "CREATE TABLE IF NOT EXISTS [COLLECTION](" +
+                "[Username] VARCHAR(128)," +
+                "[ISBN] VARCHAR(128)," +
+                "CONSTRAINT PK_COLLECTION PRIMARY KEY([Username], [ISBN])," +
+                "CONSTRAINT FK_COLLECTION_BOOK FOREIGN KEY([ISBN]) REFERENCES [BOOKS]([ISBN])," +
+                "CONSTRAINT FK_COLLECTION_USER FOREIGN KEY([Username]) REFERENCES [USER]([Name])" +
+                ");",
+                "CREATE TABLE IF NOT EXISTS [WISHLIST](" +
+                "[Username] VARCHAR(128)," +
+                "[ISBN] VARCHAR(128)," +
+                "CONSTRAINT PK_WISHLIST PRIMARY KEY([Username], [ISBN])," +
+                "CONSTRAINT FK_WISHLIST_BOOK FOREIGN KEY([ISBN]) REFERENCES [BOOKS]([ISBN])," +
+                "CONSTRAINT FK_WISHLIST_USER FOREIGN KEY([Username]) REFERENCES [USER]([Name])" +
+                ");",
+                "CREATE TABLE IF NOT EXISTS [BOOKMARKS](" +
+                "[Username] VARCHAR(128)," +
+                "[ISBN] VARCHAR(128)," +
+                "[LastTimeRead] DATETIME2," +
+                "[LastPage] INT," +
+                "CONSTRAINT PK_BOOKMARKS PRIMARY KEY([Username], [ISBN])," +
+                "CONSTRAINT FK_BOOKMARKS_BOOK FOREIGN KEY([ISBN]) REFERENCES [BOOKS]([ISBN])," +
+                "CONSTRAINT FK_BOOKMARKS_USER FOREIGN KEY([Username]) REFERENCES [USER]([Name])" +
+                ");"};
+        for(String it : queries){
+            try {
+                PreparedStatement statement = connection.prepareStatement(it);
+                statement.execute();
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private static void resetTable() throws SQLException {
+        DatabaseMetaData md = connection.getMetaData();
+        ResultSet rs = md.getTables(null, null, "%", null);
+        while (rs.next()) {
+            String tableName = rs.getString(3);
+            Statement statement = connection.createStatement();
+            statement.executeUpdate("DROP TABLE ["+tableName+"];");
         }
     }
 
@@ -111,7 +212,7 @@ public final class DatabaseUtils {
             int columnCount = metaData.getColumnCount();
             while (resultSet.next()) {
                 String _username = null, _password = null;
-                LocalDateTime _accountCreated = null;
+                LocalDateTime _accountCreated = LocalDateTime.now();
                 int _totalPagesRead = 0;
 
                 for (int i = 1; i <= columnCount; i++) {

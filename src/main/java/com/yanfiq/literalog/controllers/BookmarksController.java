@@ -92,16 +92,6 @@ public class BookmarksController {
                 }
             };
         });
-//        lastPageReadColumn.setOnEditCommit(event -> {
-//            Book book = event.getTableView().getItems().get(event.getTablePosition().getRow());
-//            book.lastPage.set(event.getNewValue());
-//            book.lastTimeRead.set(LocalDateTime.now());
-//            LocalDateTime localDateTime = LocalDateTime.now();
-//            java.sql.Timestamp sqlTimestamp = java.sql.Timestamp.valueOf(localDateTime);
-//
-//            DatabaseUtils.manipulateTable("UPDATE [BOOKMARKS] SET [LastPage] = "+event.getNewValue()+" WHERE [ISBN] = "+book.isbn.get());
-//            DatabaseUtils.manipulateTable("UPDATE [BOOKMARKS] SET [LastTimeRead] = '"+sqlTimestamp.toString()+"' WHERE [ISBN] = "+book.isbn.get());
-//        });
         lastTimeReadColumn.setCellValueFactory(cellData -> cellData.getValue().lastTimeRead);
         lastTimeReadColumn.prefWidthProperty().bind(bookmarksTable.widthProperty().divide(7));
         lastTimeReadColumn.setCellFactory(column -> {

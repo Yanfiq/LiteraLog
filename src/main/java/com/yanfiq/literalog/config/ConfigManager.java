@@ -50,6 +50,7 @@ public class ConfigManager {
         }
     }
 
+    public static String getDatabaseEngine() { return properties.getProperty("db.engine"); }
     public static String getServerName() {
         return properties.getProperty("db.serverName");
     }
@@ -78,6 +79,11 @@ public class ConfigManager {
     }
 
     public static String getFontSize(){ return properties.getProperty("ui.fontSize");
+    }
+
+    public static void setDatabaseEngine(String dbEngine){
+        properties.setProperty("db.ending", dbEngine);
+        saveProperties();
     }
 
     public static void setServerName(String serverName) {

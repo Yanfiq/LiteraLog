@@ -8,6 +8,7 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.concurrent.Task;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
@@ -29,9 +30,11 @@ public class SettingsController {
     @FXML
     private Label statusDB;
     @FXML
-    private ComboBox<String> themeMenu = new ComboBox<>();
+    private ComboBox<String> themeSelection = new ComboBox<>();
     @FXML
-    private ComboBox<String> fontSizeMenu = new ComboBox<>();
+    private ComboBox<String> fontSizeSelection = new ComboBox<>();
+    @FXML
+    private ComboBox<String> databaseEngineSelection = new ComboBox<>();
     @FXML
     private Button applyButton;
     @FXML
@@ -52,13 +55,41 @@ public class SettingsController {
                 .then("Connected")
                 .otherwise("Not Connected"));
         loadSetting();
+        databaseEngineSelection.setOnAction(this::changeDbEngineAction);
+    }
+
+    @FXML
+    private void changeDbEngineAction(ActionEvent event){
+        String engine = databaseEngineSelection.getValue();
+        switch (engine){
+            case "SQLite":
+            {
+                serverNameField.setDisable(true);
+                instanceNameField.setDisable(true);
+                portField.setDisable(true);
+                usernameField.setDisable(true);
+                passwordField.setDisable(true);
+                break;
+            }
+            default:
+            {
+                serverNameField.setDisable(false);
+                instanceNameField.setDisable(false);
+                portField.setDisable(false);
+                usernameField.setDisable(false);
+                passwordField.setDisable(false);
+                break;
+            }
+        }
     }
 
     private void loadSetting(){
-        themeMenu.getItems().addAll("Dark Mode", "Light Mode");
-        themeMenu.setValue(ConfigManager.getTheme().equals("dark") ? "Dark Mode" : "Light Mode");
-        fontSizeMenu.getItems().addAll("Small", "Medium", "Large");
-        fontSizeMenu.setValue(ConfigManager.getFontSize().equals("small") ? "Small" : ConfigManager.getFontSize().equals("medium") ? "Medium" : "Large");
+        themeSelection.getItems().addAll("Dark Mode", "Light Mode");
+        themeSelection.setValue(ConfigManager.getTheme());
+        fontSizeSelection.getItems().addAll("Small", "Medium", "Large");
+        fontSizeSelection.setValue(ConfigManager.getFontSize());
+        databaseEngineSelection.getItems().addAll("SQLite", "MSSQL");
+        databaseEngineSelection.setValue(ConfigManager.getDatabaseEngine());
 
         serverNameField.setText(ConfigManager.getServerName());
         instanceNameField.setText(ConfigManager.getInstanceName());
@@ -124,21 +155,22 @@ public class SettingsController {
     private void onApplyButtonClick(){
         String cssDir = "com/yanfiq/literalog/css/";
         Main.getPrimaryStage().getScene().getStylesheets().clear();
-        Main.getPrimaryStage().getScene().getStylesheets().add( themeMenu.getValue().equals("Dark Mode") ? cssDir+"ContainerStyles-dark.css" : cssDir+"ContainerStyles-light.css");
-        Main.getPrimaryStage().getScene().getStylesheets().add( themeMenu.getValue().equals("Dark Mode") ? cssDir+"ControlStyles-dark.css" : cssDir+"ControlStyles-light.css");
+        Main.getPrimaryStage().getScene().getStylesheets().add( themeSelection.getValue().equals("Dark Mode") ? cssDir+"ContainerStyles-dark.css" : cssDir+"ContainerStyles-light.css");
+        Main.getPrimaryStage().getScene().getStylesheets().add( themeSelection.getValue().equals("Dark Mode") ? cssDir+"ControlStyles-dark.css" : cssDir+"ControlStyles-light.css");
 
         DatabaseUtils.closeConnection();
-        DatabaseUtils.openConnection(serverNameField.getText(), instanceNameField.getText(), portField.getText(), usernameField.getText(), passwordField.getText());
+        DatabaseUtils.openConnection(databaseEngineSelection.getValue(), serverNameField.getText(), instanceNameField.getText(), portField.getText(), usernameField.getText(), passwordField.getText());
     }
     @FXML
     private void onSaveButtonClick(){
+        ConfigManager.setTheme(themeSelection.getValue());
+        ConfigManager.setDatabaseEngine(databaseEngineSelection.getValue());
         ConfigManager.setServerName(serverNameField.getText());
         ConfigManager.setInstanceName(instanceNameField.getText());
         ConfigManager.setPort(Integer.parseInt(portField.getText()));
         ConfigManager.setUsername(usernameField.getText());
         ConfigManager.setPassword(passwordField.getText());
         ConfigManager.setAutoConnect(autoconnectCheckbox.isSelected());
-        ConfigManager.setTheme(themeMenu.getValue());
     }
     @FXML
     private void onCancelButtonClick(){

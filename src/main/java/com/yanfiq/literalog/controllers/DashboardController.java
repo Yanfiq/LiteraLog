@@ -81,24 +81,24 @@ public class DashboardController {
                 User.loggedInUser = user;
                 User.isLoggedIn.set(true);
 
-                ArrayList<Book> container_collection = DatabaseUtils.getBooksData("SELECT * " +
-                        "FROM [BOOKS] B, [COLLECTION] C " +
-                        "WHERE B.ISBN = C.ISBN " +
-                        "AND C.Username = '" + User.loggedInUser.Username.get() + "';");
-                ArrayList<Book> container_wishlist = DatabaseUtils.getBooksData("SELECT * " +
-                        "FROM [BOOKS] B, [WISHLIST] W " +
-                        "WHERE B.ISBN = W.ISBN " +
-                        "AND W.Username = '" + User.loggedInUser.Username.get() + "';");
-
-                welcomeText.setText("Welcome to your heaven, " + User.loggedInUser.Username.get());
-                stats_totalBookCollection.setText(Integer.toString(container_collection.size()));
-                stats_totalBooksOnWishlist.setText(Integer.toString(container_wishlist.size()));
-                stats_totalPagesRead.setText(Integer.toString(User.loggedInUser.totalPagesRead.get()));
-
-                //date
-                LocalDateTime fromDateTime = User.loggedInUser.accountCreated.get();
-                LocalDateTime toDateTime = LocalDateTime.now();
-                stats_totalTimeSpentAsANerd.setText(Integer.toString((int) ChronoUnit.SECONDS.between(fromDateTime, toDateTime)));
+//                ArrayList<Book> container_collection = DatabaseUtils.getBooksData("SELECT * " +
+//                        "FROM [BOOKS] B, [COLLECTION] C " +
+//                        "WHERE B.ISBN = C.ISBN " +
+//                        "AND C.Username = '" + User.loggedInUser.Username.get() + "';");
+//                ArrayList<Book> container_wishlist = DatabaseUtils.getBooksData("SELECT * " +
+//                        "FROM [BOOKS] B, [WISHLIST] W " +
+//                        "WHERE B.ISBN = W.ISBN " +
+//                        "AND W.Username = '" + User.loggedInUser.Username.get() + "';");
+//
+//                welcomeText.setText("Welcome to your heaven, " + User.loggedInUser.Username.get());
+//                stats_totalBookCollection.setText(Integer.toString(container_collection.size()));
+//                stats_totalBooksOnWishlist.setText(Integer.toString(container_wishlist.size()));
+//                stats_totalPagesRead.setText(Integer.toString(User.loggedInUser.totalPagesRead.get()));
+//
+//                //date
+//                LocalDateTime fromDateTime = User.loggedInUser.accountCreated.get();
+//                LocalDateTime toDateTime = LocalDateTime.now();
+//                stats_totalTimeSpentAsANerd.setText(Integer.toString((int) ChronoUnit.SECONDS.between(fromDateTime, toDateTime)));
                 return;
             }
         }

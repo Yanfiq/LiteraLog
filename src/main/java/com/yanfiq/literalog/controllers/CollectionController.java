@@ -7,6 +7,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
@@ -40,6 +41,7 @@ public class CollectionController {
         // Initialize your table columns with property values from Book class
         isbnColumn.setCellValueFactory(cellData -> cellData.getValue().isbn);
         isbnColumn.prefWidthProperty().bind(collectionTable.widthProperty().divide(8));
+        isbnColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         titleColumn.setCellValueFactory(cellData -> cellData.getValue().title);
         titleColumn.prefWidthProperty().bind(collectionTable.widthProperty().divide(8));
         authorColumn.setCellValueFactory(cellData -> cellData.getValue().author);

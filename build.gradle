@@ -51,6 +51,8 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
     implementation 'com.microsoft.sqlserver:mssql-jdbc:12.4.2.jre8'
     implementation 'org.jasypt:jasypt:1.9.3'
+    implementation 'org.xerial:sqlite-jdbc:3.45.0.0'
+    implementation 'ch.qos.logback:logback-classic:1.2.6'
 }
 
 test {
