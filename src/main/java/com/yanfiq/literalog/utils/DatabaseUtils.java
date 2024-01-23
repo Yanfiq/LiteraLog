@@ -59,34 +59,42 @@ public final class DatabaseUtils {
                 {
                     String dbUrl = "jdbc:sqlserver://"+serverName+"\\"+instanceName+":"+port+";Encrypt=true;trustServerCertificate=true";
                     connection = DriverManager.getConnection(dbUrl, username, password);
-                    Statement statement = connection.createStatement();
-                    ResultSet rs = statement.executeQuery("SELECT name FROM sys.databases;");
+//                    Statement statement = connection.createStatement();
+//                    ResultSet rs = statement.executeQuery("SELECT name FROM sys.databases;");
                     boolean dbFound = false;
+                    DatabaseMetaData meta = connection.getMetaData();
+                    ResultSet rs = meta.getCatalogs();
                     while(rs.next()){
-                        if(rs.getObject(0).toString().equals("LiteraLog")){
+                        if(rs.getString("TABLE_CAT").equals("LiteraLog")){
                             dbFound = true;
-                            break;
                         }
                     }
                     if(!dbFound){
+                        System.out.println("Database dibuat");
                         Statement statement1 = connection.createStatement();
                         statement1.executeUpdate("CREATE DATABASE [LiteraLog];");
                     }
                     connection.close();
                     dbUrl = "jdbc:sqlserver://"+serverName+"\\"+instanceName+":"+port+";databaseName=LiteraLog;Encrypt=true;trustServerCertificate=true";
                     connection = DriverManager.getConnection(dbUrl, username, password);
+                    break;
                 }
             }
             isConnected.set(true);
-//            DatabaseMetaData md = connection.getMetaData();
-//            int tableCount = 0;
-//            ResultSet rs = md.getTables(null, null, "%", null);
-//            while (rs.next()) {
-//                System.out.println(rs.getString(3));
-//                tableCount++;
-//            }
-//            if(tableCount==0)
-            createTable();
+            DatabaseMetaData md = connection.getMetaData();
+            boolean bookTable = false, collectionTable = false, bookmarkTable = false, wishlistTable = false, userTable = false;
+            ResultSet rs = md.getTables(null, null, "%", null);
+            while (rs.next()) {
+                switch (rs.getString(3)){
+                    case "BOOKS": bookTable = true; break;
+                    case "COLLECTION": collectionTable = true; break;
+                    case "WISHLIST": wishlistTable = true; break;
+                    case "BOOKMARK": bookmarkTable = true; break;
+                    case "USER": userTable = true; break;
+                }
+                System.out.println(rs.getString(3));
+            }
+            if(!(bookTable && collectionTable && wishlistTable && bookmarkTable && userTable)) createTable();
             return true;
         } catch (SQLException e) {
             connection = null;
@@ -95,14 +103,15 @@ public final class DatabaseUtils {
         }
     }
     private static void createTable(){
-        String[] queries = {"CREATE TABLE IF NOT EXISTS [USER](" +
+        System.out.println("tabel dibuat");
+        String[] queries = {"CREATE TABLE [USER](" +
                 "[Name] VARCHAR(128)," +
                 "[Password] VARCHAR(128)," +
                 "[TotalPagesRead] int," +
                 "[AccountCreated] DATETIME2," +
                 "CONSTRAINT PK_USER PRIMARY KEY([Name])" +
                 ");",
-                "CREATE TABLE IF NOT EXISTS [BOOKS](" +
+                "CREATE TABLE [BOOKS](" +
                 "[ISBN] VARCHAR(128)," +
                 "[Title] VARCHAR(128)," +
                 "[Author] VARCHAR(128)," +
@@ -112,21 +121,21 @@ public final class DatabaseUtils {
                 "[Price] INT," +
                 "CONSTRAINT PK_BOOKS PRIMARY KEY([ISBN])" +
                 ");",
-                "CREATE TABLE IF NOT EXISTS [COLLECTION](" +
+                "CREATE TABLE [COLLECTION](" +
                 "[Username] VARCHAR(128)," +
                 "[ISBN] VARCHAR(128)," +
                 "CONSTRAINT PK_COLLECTION PRIMARY KEY([Username], [ISBN])," +
                 "CONSTRAINT FK_COLLECTION_BOOK FOREIGN KEY([ISBN]) REFERENCES [BOOKS]([ISBN])," +
                 "CONSTRAINT FK_COLLECTION_USER FOREIGN KEY([Username]) REFERENCES [USER]([Name])" +
                 ");",
-                "CREATE TABLE IF NOT EXISTS [WISHLIST](" +
+                "CREATE TABLE [WISHLIST](" +
                 "[Username] VARCHAR(128)," +
                 "[ISBN] VARCHAR(128)," +
                 "CONSTRAINT PK_WISHLIST PRIMARY KEY([Username], [ISBN])," +
                 "CONSTRAINT FK_WISHLIST_BOOK FOREIGN KEY([ISBN]) REFERENCES [BOOKS]([ISBN])," +
                 "CONSTRAINT FK_WISHLIST_USER FOREIGN KEY([Username]) REFERENCES [USER]([Name])" +
                 ");",
-                "CREATE TABLE IF NOT EXISTS [BOOKMARKS](" +
+                "CREATE TABLE [BOOKMARKS](" +
                 "[Username] VARCHAR(128)," +
                 "[ISBN] VARCHAR(128)," +
                 "[LastTimeRead] DATETIME2," +
