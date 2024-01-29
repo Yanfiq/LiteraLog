@@ -82,7 +82,7 @@ public class ConfigManager {
     }
 
     public static void setDatabaseEngine(String dbEngine){
-        properties.setProperty("db.ending", dbEngine);
+        properties.setProperty("db.engine", dbEngine);
         saveProperties();
     }
 

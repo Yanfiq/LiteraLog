@@ -173,14 +173,7 @@ public class BookmarksController {
         actionColumn.prefWidthProperty().bind(bookmarksTable.widthProperty().divide(7));
 
         searchField.textProperty().addListener((observable, oldValue, newValue) -> {
-            ArrayList<Book> container = DatabaseUtils.getBooksData("SELECT * " +
-                    "FROM [BOOKS] A, [BOOKMARKS] B " +
-                    "WHERE A.ISBN = B.ISBN " +
-                    "AND B.Username = '" + User.loggedInUser.Username.get() + "' " +
-                    "AND " +
-                    "((A.ISBN LIKE '%" +newValue+"%') OR "+
-                    "(A.Title LIKE '%" +newValue+"%') OR "+
-                    "(A.Author LIKE '%" +newValue+"%'));");
+            ArrayList<Book> container = DatabaseUtils.getBooks("BOOKMARK", User.loggedInUser.Username.get(), newValue);
             ObservableList<Book> bookList = bookmarksTable.getItems();
             bookList.clear();
             if(container != null){
@@ -192,7 +185,7 @@ public class BookmarksController {
         });
 
         //get data from database
-        ArrayList<Book> container = DatabaseUtils.getBooksData("SELECT * FROM [BOOKS] A, [BOOKMARKS] B WHERE A.ISBN = B.ISBN;");
+        ArrayList<Book> container = DatabaseUtils.getBooks("BOOKMARKS", User.loggedInUser.Username.get());
         if(container != null){
             for(Book book : container){
                 ObservableList<Book> bookList = bookmarksTable.getItems();

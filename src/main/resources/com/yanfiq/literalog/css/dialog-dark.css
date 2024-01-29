@@ -1,0 +1,38 @@
+.dialog-pane {
+    -fx-background-color: rgb(32, 32, 32);
+}
+
+.dialog-pane .label {
+    -fx-text-fill: white;
+    -fx-font-family: "Segoe UI Semibold";
+}
+
+.dialog-pane:header .header-panel {
+    -fx-background-color: rgb(32, 32, 32);
+}
+
+.dialog-pane:header .header-panel .label {
+    -fx-font-size: 2em;
+}
+
+.dialog-pane .button{
+    -fx-background-color:   rgb(76, 194, 255);
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-background-radius:  5;
+  }
+ 
+ .dialog-pane .button:hover{     
+    -fx-background-color:  rgb(71, 178, 233);
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-background-radius:  5;
+  }
+
+  .text-area {
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-text-fill: white;
+    -fx-display-caret:true;
+}
+
+.text-area .content {
+    -fx-background-color: rgb(32, 32, 32);;
+}

@@ -46,13 +46,12 @@ javafx {
 }
 
 dependencies {
-
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
     implementation 'com.microsoft.sqlserver:mssql-jdbc:12.4.2.jre8'
-    implementation 'org.jasypt:jasypt:1.9.3'
     implementation 'org.xerial:sqlite-jdbc:3.45.0.0'
-    implementation 'ch.qos.logback:logback-classic:1.2.6'
+    implementation 'ch.qos.logback:logback-classic:1.4.12'
+    implementation 'com.dustinredmond.fxalert:FXAlert:2.4.1'
 }
 
 test {

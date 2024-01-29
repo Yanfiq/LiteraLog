@@ -1,5 +1,6 @@
 package com.yanfiq.literalog.controllers;
 
+import com.yanfiq.literalog.models.User;
 import com.yanfiq.literalog.utils.FXMLUtils;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -52,8 +53,8 @@ public class MainController {
         initializeButton(settingsButton, "Settings.fxml");
 
         try {
-            loadPage("Dashboard.fxml");
-            setButtonChosen(dashboardButton);
+            loadPage(User.isLoggedIn.get() ? "Dashboard.fxml" : "Settings.fxml");
+            setButtonChosen(User.isLoggedIn.get() ? dashboardButton : settingsButton);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -99,8 +100,10 @@ public class MainController {
 
     @FXML
     private void onButtonClick(Button button) throws IOException {
-        loadPage(buttonFXMLMap.get(button));
-        setButtonChosen(button);
+        if(User.isLoggedIn.get()){
+            loadPage(buttonFXMLMap.get(button));
+            setButtonChosen(button);
+        }
     }
 
     private void setButtonChosen(Button chosenButton) {

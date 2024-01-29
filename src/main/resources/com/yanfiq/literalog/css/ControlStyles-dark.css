@@ -37,6 +37,18 @@
     -fx-background-radius:  5;
 }
 
+.button-login-page {
+    -fx-background-color: rgba(255, 255, 255, 0);
+}
+
+.button-login-page:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.235);
+}
+
+.button-login-page:pressed {
+    -fx-background-color: rgba(255, 255, 255, 0.578);
+}
+
 .text-field, .password-field {
     -fx-background-color:  rgb(45, 45, 45);
     -fx-background-radius: 5;

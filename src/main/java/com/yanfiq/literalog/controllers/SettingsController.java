@@ -47,13 +47,19 @@ public class SettingsController {
     private ProgressIndicator connectionProgressIndicator;
     @FXML
     private Label connectabilityLabel;
+    private SimpleBooleanProperty connecting = new SimpleBooleanProperty(false);
 
 
     @FXML
     public void initialize(){
-        statusDB.textProperty().bind(Bindings.when((SimpleBooleanProperty) DatabaseUtils.isConnected)
+//        statusDB.textProperty().bind(Bindings.when(DatabaseUtils.isConnected)
+//                .then("Connected")
+//                .otherwise(connecting.get() ? "Connecting" : "Not Connected"));
+        statusDB.textProperty().bind(Bindings.when(DatabaseUtils.isConnected)
                 .then("Connected")
-                .otherwise("Not Connected"));
+                .otherwise(Bindings.when(DatabaseUtils.isConnecting)
+                        .then("Connecting")
+                        .otherwise("Not Connected")));
         loadSetting();
         databaseEngineSelection.setOnAction(this::changeDbEngineAction);
     }
@@ -98,6 +104,28 @@ public class SettingsController {
         passwordField.setText(ConfigManager.getPassword());
 
         autoconnectCheckbox.setSelected(ConfigManager.isAutoConnectEnabled());
+
+        String engine = databaseEngineSelection.getValue();
+        switch (engine){
+            case "SQLite":
+            {
+                serverNameField.setDisable(true);
+                instanceNameField.setDisable(true);
+                portField.setDisable(true);
+                usernameField.setDisable(true);
+                passwordField.setDisable(true);
+                break;
+            }
+            default:
+            {
+                serverNameField.setDisable(false);
+                instanceNameField.setDisable(false);
+                portField.setDisable(false);
+                usernameField.setDisable(false);
+                passwordField.setDisable(false);
+                break;
+            }
+        }
     }
     @FXML
     private void onConnectButtonClick() {
@@ -159,7 +187,7 @@ public class SettingsController {
         Main.getPrimaryStage().getScene().getStylesheets().add( themeSelection.getValue().equals("Dark Mode") ? cssDir+"ControlStyles-dark.css" : cssDir+"ControlStyles-light.css");
 
         DatabaseUtils.closeConnection();
-        DatabaseUtils.openConnection(databaseEngineSelection.getValue(), serverNameField.getText(), instanceNameField.getText(), portField.getText(), usernameField.getText(), passwordField.getText());
+        DatabaseUtils.openConnection(databaseEngineSelection.getValue(), serverNameField.getText(), instanceNameField.getText(), Integer.parseInt(portField.getText()), usernameField.getText(), passwordField.getText());
     }
     @FXML
     private void onSaveButtonClick(){

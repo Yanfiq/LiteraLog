@@ -107,7 +107,7 @@ public class WishlistController {
         actionColumn.prefWidthProperty().bind(wishlistTable.widthProperty().divide(8));
 
         //get data from database
-        ArrayList<Book> container = DatabaseUtils.getBooksData("SELECT * FROM [BOOKS] B, [WISHLIST] W WHERE B.ISBN = W.ISBN AND W.Username = '"+ User.loggedInUser.Username.get() + "';");
+        ArrayList<Book> container = DatabaseUtils.getBooks("WISHLIST", User.loggedInUser.Username.get());
         if(container != null){
             for(Book book : container){
                 ObservableList<Book> bookList = wishlistTable.getItems();

@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.dustinredmond.fxalert/FXAlert/2.4.1/20aadc11d33bb22953df980bb8e826ad249caa68/FXAlert-2.4.1.pom" />
+      </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.dustinredmond.fxalert/FXAlert/2.4.1/20aadc11d33bb22953df980bb8e826ad249caa68/FXAlert-2.4.1.pom" />
+      </set>
+    </option>
+    <option name="workspaceImportForciblyTurnedOn" value="true" />
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_21" default="true" project-jdk-name="liberica-21" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>

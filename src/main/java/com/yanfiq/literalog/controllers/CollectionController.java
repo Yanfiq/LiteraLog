@@ -92,16 +92,7 @@ public class CollectionController {
         actionColumn.prefWidthProperty().bind(collectionTable.widthProperty().divide(8));
 
         searchField.textProperty().addListener((observable, oldValue, newValue) -> {
-            ArrayList<Book> container = DatabaseUtils.getBooksData("SELECT * " +
-                            "FROM [BOOKS] A, [COLLECTION] B " +
-                            "WHERE A.ISBN = B.ISBN " +
-                            "AND B.Username = '" + User.loggedInUser.Username.get() + "' " +
-                            "AND " +
-                            "((A.ISBN LIKE '%" +newValue+"%') OR "+
-                            "(A.Title LIKE '%" +newValue+"%') OR "+
-                            "(A.Author LIKE '%" +newValue+"%') OR "+
-                            "(A.Publisher LIKE '%" +newValue+"%') OR "+
-                            "(A.Year LIKE '%" +newValue+"%'));");
+            ArrayList<Book> container = DatabaseUtils.getBooks("COLLECTION", User.loggedInUser.Username.get(), newValue);
             ObservableList<Book> bookList = collectionTable.getItems();
             bookList.clear();
             for(Book book : container){
@@ -111,10 +102,7 @@ public class CollectionController {
         });
 
         //get data from database
-        ArrayList<Book> container = DatabaseUtils.getBooksData("SELECT * " +
-                "FROM [BOOKS] B, [COLLECTION] C " +
-                "WHERE B.ISBN = C.ISBN " +
-                "AND C.Username = '" + User.loggedInUser.Username.get() + "';");
+        ArrayList<Book> container = DatabaseUtils.getBooks("COLLECTION", User.loggedInUser.Username.get());
         if(container != null){
             for(Book book : container){
                 ObservableList<Book> bookList = collectionTable.getItems();
