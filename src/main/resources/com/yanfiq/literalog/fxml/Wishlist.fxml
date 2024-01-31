@@ -20,7 +20,7 @@
          </columnConstraints>
          <rowConstraints>
             <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="25.0" vgrow="NEVER" />
-            <RowConstraints maxHeight="334.66668701171875" minHeight="0.0" prefHeight="60.0" vgrow="NEVER" />
+            <RowConstraints maxHeight="334.66668701171875" minHeight="0.0" prefHeight="30.0" vgrow="NEVER" />
             <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="553.3333231608073" vgrow="ALWAYS" />
          </rowConstraints>
          <children>
@@ -36,7 +36,7 @@
                   <TableColumn fx:id="actionColumn" maxWidth="1.7976931348623157E308" minWidth="130.0" prefWidth="-1.0" text="Action" />
                </columns>
             </TableView>
-            <GridPane hgap="5.0" maxWidth="1.7976931348623157E308" prefHeight="60.0" prefWidth="1116.0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="NEVER">
+            <GridPane hgap="5.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="30.0" prefWidth="1040.0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="NEVER">
                <columnConstraints>
                   <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="120.0" />
                   <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="120.0" />
@@ -49,80 +49,44 @@
                </columnConstraints>
                <rowConstraints>
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
                </rowConstraints>
                <children>
-                  <Label text="ISBN" textFill="WHITE" GridPane.halignment="CENTER">
-                     <font>
-                        <Font name="Segoe UI Semibold" size="16.0" />
-                     </font>
-                  </Label>
-                  <Label text="Title" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER">
-                     <font>
-                        <Font name="Segoe UI Semibold" size="16.0" />
-                     </font>
-                  </Label>
-                  <Label text="Author" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER">
-                     <font>
-                        <Font name="Segoe UI Semibold" size="16.0" />
-                     </font>
-                  </Label>
-                  <Label text="Publisher" textFill="WHITE" GridPane.columnIndex="4" GridPane.halignment="CENTER">
-                     <font>
-                        <Font name="Segoe UI Semibold" size="16.0" />
-                     </font>
-                  </Label>
-                  <Label text="Year" textFill="WHITE" GridPane.columnIndex="5" GridPane.halignment="CENTER">
-                     <font>
-                        <Font name="Segoe UI Semibold" size="16.0" />
-                     </font>
-                  </Label>
-                  <Label text="Price" textFill="WHITE" GridPane.columnIndex="6" GridPane.halignment="CENTER">
-                     <font>
-                        <Font name="Segoe UI Semibold" size="16.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="isbnInput" GridPane.rowIndex="1">
+                  <TextField fx:id="isbnInput" promptText="ISBN">
                      <font>
                         <Font name="Segoe UI Semibold" size="16.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="titleInput" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <TextField fx:id="titleInput" promptText="Title" GridPane.columnIndex="1">
                      <font>
                         <Font name="Segoe UI Semibold" size="16.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="authorInput" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                  <TextField fx:id="authorInput" promptText="Author" GridPane.columnIndex="2">
                      <font>
                         <Font name="Segoe UI Semibold" size="16.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="publisherInput" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                  <TextField fx:id="publisherInput" promptText="Publisher" GridPane.columnIndex="4">
                      <font>
                         <Font name="Segoe UI Semibold" size="16.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="yearInput" GridPane.columnIndex="5" GridPane.rowIndex="1">
+                  <TextField fx:id="yearInput" promptText="Year" GridPane.columnIndex="5">
                      <font>
                         <Font name="Segoe UI Semibold" size="16.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="priceInput" prefHeight="30.0" prefWidth="147.0" GridPane.columnIndex="6" GridPane.rowIndex="1">
+                  <TextField fx:id="priceInput" prefHeight="30.0" prefWidth="147.0" promptText="Price" GridPane.columnIndex="6">
                      <font>
                         <Font name="Segoe UI Semibold" size="16.0" />
                      </font>
                   </TextField>
-                  <Label text="Total Page" textFill="WHITE" GridPane.columnIndex="3" GridPane.halignment="CENTER">
-                     <font>
-                        <Font name="Segoe UI Semibold" size="16.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="totalPageInput" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                  <TextField fx:id="totalPageInput" promptText="Total Page" GridPane.columnIndex="3">
                      <font>
                         <Font name="Segoe UI Semibold" size="16.0" />
                      </font>
                   </TextField>
-                  <Button fx:id="wishlistButton" mnemonicParsing="false" onAction="#addWishlist" prefHeight="36.0" prefWidth="105.0" styleClass="button" text="Wishlist" GridPane.columnIndex="7" GridPane.rowIndex="1">
+                  <Button fx:id="wishlistButton" mnemonicParsing="false" onAction="#addWishlist" prefHeight="36.0" prefWidth="105.0" styleClass="button" text="Wishlist" GridPane.columnIndex="7">
                      <font>
                         <Font name="Segoe UI SemiBold" size="16.0" />
                      </font>

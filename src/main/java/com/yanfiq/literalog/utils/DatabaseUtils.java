@@ -1,6 +1,5 @@
 package com.yanfiq.literalog.utils;
 
-import com.dustinredmond.fxalert.FXAlert;
 import com.yanfiq.literalog.models.Book;
 import com.yanfiq.literalog.models.User;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -13,9 +12,12 @@ import java.nio.file.Paths;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 public final class DatabaseUtils {
     private static String dbEngine, serverName, instanceName, username, password;
+
+    private static final ArrayList<String> tablesName = new ArrayList<>(List.of("BOOK", "COLLECTION", "WISHLIST", "BOOKMARK"));
     private static int port;
     private static Connection connection = null;
     private static Path localDB = Paths.get(System.getProperty("user.home"), ".literalog/data", "bookData.db");
@@ -124,6 +126,15 @@ public final class DatabaseUtils {
         thread.setDaemon(true);
         thread.start();
     }
+
+    private static void executeStatement(String query){
+        try{
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(query);
+        } catch (SQLException e) {
+            DialogUtils.showException(e);
+        }
+    }
     private static void createTableUser(){
         String query = "CREATE TABLE [USER](" +
                 "[Name] VARCHAR(128)," +
@@ -132,7 +143,7 @@ public final class DatabaseUtils {
                 "[AccountCreated] DATETIME2," +
                 "CONSTRAINT PK_USER PRIMARY KEY([Name])" +
                 ");";
-        manipulateTable(query);
+        executeStatement(query);
     }
 
     private static void createTableBook(){
@@ -146,7 +157,7 @@ public final class DatabaseUtils {
                 "[Price] INT," +
                 "CONSTRAINT PK_BOOKS PRIMARY KEY([ISBN])" +
                 ");";
-        manipulateTable(query);
+        executeStatement(query);
     }
 
     private static void createTableCollection(){
@@ -157,7 +168,7 @@ public final class DatabaseUtils {
                 "CONSTRAINT FK_COLLECTION_BOOK FOREIGN KEY([ISBN]) REFERENCES [BOOKS]([ISBN])," +
                 "CONSTRAINT FK_COLLECTION_USER FOREIGN KEY([Username]) REFERENCES [USER]([Name])" +
                 ");";
-        manipulateTable(query);
+        executeStatement(query);
     }
 
     private static void createTableWishlist(){
@@ -168,7 +179,7 @@ public final class DatabaseUtils {
                 "CONSTRAINT FK_WISHLIST_BOOK FOREIGN KEY([ISBN]) REFERENCES [BOOKS]([ISBN])," +
                 "CONSTRAINT FK_WISHLIST_USER FOREIGN KEY([Username]) REFERENCES [USER]([Name])" +
                 ");";
-        manipulateTable(query);
+        executeStatement(query);
     }
 
     private static void createTableBookmark(){
@@ -181,7 +192,7 @@ public final class DatabaseUtils {
                 "CONSTRAINT FK_BOOKMARKS_BOOK FOREIGN KEY([ISBN]) REFERENCES [BOOKS]([ISBN])," +
                 "CONSTRAINT FK_BOOKMARKS_USER FOREIGN KEY([Username]) REFERENCES [USER]([Name])" +
                 ");";
-        manipulateTable(query);
+        executeStatement(query);
     }
 
     private static void resetTable() throws SQLException {
@@ -194,12 +205,12 @@ public final class DatabaseUtils {
         }
     }
 
-    public static ArrayList<Book> getBooks(String tableNames, String username){
+    public static ArrayList<Book> getBooks(String tableNames){
         String query = "SELECT * FROM BOOK A, "+tableNames+" B WHERE A.ISBN = B.ISBN AND B.Username = ?;";
         ArrayList<Book> container = new ArrayList<>();
         try{
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, username);
+            preparedStatement.setString(1, User.loggedInUser.Username.get());
 
             ResultSet resultSet = preparedStatement.executeQuery();
             ResultSetMetaData metaData = resultSet.getMetaData();
@@ -241,21 +252,19 @@ public final class DatabaseUtils {
         return container;
     }
 
-    public static ArrayList<Book> getBooks(String tableNames, String username, String keyword){
-
+    public static ArrayList<Book> getBooks(String tableNames, String keyword){
         //structuring query
         String query = "SELECT * " +
                 "FROM [BOOK] A, "+ tableNames + " B " +
                 "WHERE A.ISBN = B.ISBN AND " +
                 "B.Username = ? AND " +
-                "A.ISBN + A.Title + A.Author LIKE '%?%';";
+                "A.ISBN + A.Title + A.Author LIKE '%"+keyword+"%';";
 
         ArrayList<Book> container = new ArrayList<>();
         try{
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(0, "["+tableNames+"]");
-            preparedStatement.setString(1, username);
-            preparedStatement.setString(2, keyword);
+            preparedStatement.setString(1, User.loggedInUser.Username.get());
+//            preparedStatement.setString(2, keyword);
 
             ResultSet resultSet = preparedStatement.executeQuery();
             ResultSetMetaData metaData = resultSet.getMetaData();
@@ -292,9 +301,22 @@ public final class DatabaseUtils {
                 container.add(book);
             }
         } catch (SQLException e) {
-            FXAlert.exception(e);
+            DialogUtils.showException(e);
         }
         return container;
+    }
+
+    private static boolean isInRecord(String ISBN){
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT ISBN FROM BOOK WHERE ISBN = ?");
+            ResultSet resultSet = preparedStatement.executeQuery();
+            int count = 0;
+            while (resultSet.next())count++;
+            return count > 0;
+        } catch (SQLException e) {
+            DialogUtils.showException(e);
+        }
+        return false;
     }
 
     private static ArrayList<String> getColumn(String tableName){
@@ -309,57 +331,10 @@ public final class DatabaseUtils {
             }
             return container;
         } catch (Exception e) {
-            e.printStackTrace();
+            DialogUtils.showException(e);
             return null;
         }
     }
-
-//    public static ArrayList<Book> getBooksData(String query){
-//        if(connection == null) return null;
-//        ArrayList<Book> container = new ArrayList<>();
-//        try {
-//            Statement statement = connection.createStatement();
-//            ResultSet resultSet = statement.executeQuery(query);
-//
-//            ResultSetMetaData metaData = resultSet.getMetaData();
-//            int columnCount = metaData.getColumnCount();
-//            while (resultSet.next()) {
-//                String ISBN = null, Title = null, Author = null, Publisher = null;
-//                int Year = 0, Price = 0, TotalPage = 0, LastPage = 0;
-//                LocalDateTime LastTimeRead = null;
-//
-//                for (int i = 1; i <= columnCount; i++) {
-//                    String columnName = metaData.getColumnName(i);
-//                    Object columnValue = resultSet.getObject(i);
-//
-//                    switch (columnName){
-//                        case "ISBN": ISBN = columnValue.toString(); break;
-//                        case "Title": Title = columnValue.toString(); break;
-//                        case "Author": Author = columnValue.toString(); break;
-//                        case "TotalPage": TotalPage = Integer.parseInt(columnValue.toString()); break;
-//                        case "Publisher": Publisher = columnValue.toString(); break;
-//                        case "Year": Year = Integer.parseInt(columnValue.toString()); break;
-//                        case "Price": Price = Integer.parseInt(columnValue.toString()); break;
-//                        case "LastPage": LastPage = Integer.parseInt(columnValue.toString()); break;
-//                        case "LastTimeRead": {
-//                            java.sql.Timestamp sqlTimestamp = resultSet.getTimestamp("LastTimeRead");
-//                            LastTimeRead = sqlTimestamp.toLocalDateTime();
-//                            break;
-//                        }
-//                    }
-//                }
-//                Book book = new Book(ISBN, Title, Author, TotalPage, Publisher, Year, Price);
-//                book.lastTimeRead.set(LastTimeRead);
-//                book.lastPage.set(LastPage);
-//                container.add(book);
-//            }
-//            return container;
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return null;
-//        }
-//    }
-
 
     public static ArrayList<User> getUsersData(){
         if(connection == null) return null;
@@ -401,6 +376,7 @@ public final class DatabaseUtils {
     }
 
     public static void insertBook(String tableName, Book book){
+        String username = User.loggedInUser.Username.get();
         String ISBN = book.isbn.get();
         String title = book.title.get();
         String author = book.author.get();
@@ -410,15 +386,76 @@ public final class DatabaseUtils {
         int price = book.price.get();
         int lastPage = book.lastPage.get();
         LocalDateTime lastTimeread = book.lastTimeRead.get();
+
+        try {
+            if(!isInRecord(ISBN)){
+                PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO BOOK (ISBN, Title, Author, Publisher, TotalPage, Year, Price) VALUES (?,?,?,?,?,?,?)");
+                preparedStatement.setString(1, ISBN);
+                preparedStatement.setString(2, title);
+                preparedStatement.setString(3, author);
+                preparedStatement.setString(4, publisher);
+                preparedStatement.setInt(5, totalPage);
+                preparedStatement.setInt(6, year);
+                preparedStatement.setInt(7, price);
+                preparedStatement.executeUpdate();
+            }
+            PreparedStatement preparedStatement;
+            if(tableName.equals("BOOKMARK")){
+                preparedStatement = connection.prepareStatement("INSERT INTO "+tableName+" (Username, ISBN, LastTimeRead, LastPage) VALUES (?,?,?,?)");
+
+                preparedStatement.setString(1, username);
+                preparedStatement.setString(2, ISBN);
+                Timestamp timestamp = Timestamp.valueOf(lastTimeread);
+                preparedStatement.setTimestamp(3, timestamp);
+                preparedStatement.setInt(4, lastPage);
+            }else{
+                preparedStatement = connection.prepareStatement("INSERT INTO "+tableName+" (Username, ISBN) VALUES (?,?)");
+
+                preparedStatement.setString(1, username);
+                preparedStatement.setString(2, ISBN);
+            }
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            DialogUtils.showException(e);
+        }
     }
 
-    public static void manipulateTable(String query){
-        if(connection == null) return;
+    //currently just for bookmarks table
+    public static void updateBook(String ISBN, String propertyName, String newValue){
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            PreparedStatement preparedStatement;
+            String tableName = null;
+            for(String i : tablesName){
+                ArrayList<String> columnName = getColumn(i);
+                for(String j : columnName){
+                    if(j.equals(propertyName)){
+                        tableName = i;
+                        break;
+                    }
+                }
+                if(tableName!=null)break;
+            }
+            preparedStatement = connection.prepareStatement("UPDATE "+tableName+" A SET "+propertyName+" = ? WHERE Username=? AND A.ISBN=?;");
+            preparedStatement.setString(1, newValue);
+            preparedStatement.setString(2, User.loggedInUser.Username.get());
+            preparedStatement.setString(3, ISBN);
             preparedStatement.executeUpdate();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
+            DialogUtils.showException(e);
+        }
+    }
+
+    public static void deleteBook(String tableName, Book book){
+        String ISBN = book.isbn.get();
+
+        try {
+            PreparedStatement preparedStatement;
+            preparedStatement = connection.prepareStatement("DELETE FROM "+tableName+" A WHERE A.ISBN = ? AND A.Username = ?");
+            preparedStatement.setString(1, ISBN);
+            preparedStatement.setString(2, User.loggedInUser.Username.get());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            DialogUtils.showException(e);
         }
     }
 

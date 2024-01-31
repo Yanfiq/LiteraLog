@@ -7,7 +7,6 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
@@ -43,20 +42,11 @@
                   <Font name="Segoe UI Semibold" size="24.0" />
                </font>
             </Label>
-            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.rowIndex="1">
-               <children>
-                  <Label text="Keyword" HBox.hgrow="NEVER">
-                     <font>
-                        <Font name="Segoe UI Semibold" size="14.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="searchField" prefHeight="29.0" prefWidth="974.0">
-                     <font>
-                        <Font name="Segoe UI Semibold" size="14.0" />
-                     </font>
-                  </TextField>
-               </children>
-            </HBox>
+            <TextField fx:id="searchField" prefHeight="29.0" prefWidth="974.0" promptText="ISBN, Title, Author" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Segoe UI Semibold" size="14.0" />
+               </font>
+            </TextField>
             </children>
         </GridPane>
     </children>

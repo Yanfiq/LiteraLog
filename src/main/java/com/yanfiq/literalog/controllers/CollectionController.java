@@ -8,7 +8,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
 import java.util.ArrayList;
@@ -76,23 +75,21 @@ public class CollectionController {
 
             removeButton.setOnAction(event -> {
                 Book book = collectionTable.getItems().get(cell.getIndex());
-                DatabaseUtils.manipulateTable("DELETE FROM [BOOKMARKS] WHERE [ISBN] = " + book.isbn.get() + " AND [Username] = '" + User.loggedInUser.Username.get() + "';");
-                DatabaseUtils.manipulateTable("DELETE FROM [COLLECTION] WHERE [ISBN] = " + book.isbn.get() + " AND [Username] = '" + User.loggedInUser.Username.get() + "';");
-                DatabaseUtils.manipulateTable("DELETE FROM [BOOKS] WHERE [ISBN] = "+book.isbn.get());
+                DatabaseUtils.deleteBook("BOOKMARK", book);
+                DatabaseUtils.deleteBook("COLLECTION", book);
                 collectionTable.getItems().remove(book);
             });
             readButton.setOnAction(event -> {
                 Book book = collectionTable.getItems().get(cell.getIndex());
-                LocalDateTime localDateTime = LocalDateTime.now();
-                java.sql.Timestamp sqlTimestamp = java.sql.Timestamp.valueOf(localDateTime);
-                DatabaseUtils.manipulateTable("INSERT INTO [BOOKMARKS] VALUES "+String.format("('%s', '%s', '%s', %d)", User.loggedInUser.Username.get(), book.isbn.get(), sqlTimestamp.toString(), 0));
+                book.lastTimeRead.set(LocalDateTime.now());
+                    DatabaseUtils.insertBook("BOOKMARKS", book);
             });
             return cell;
         });
         actionColumn.prefWidthProperty().bind(collectionTable.widthProperty().divide(8));
 
         searchField.textProperty().addListener((observable, oldValue, newValue) -> {
-            ArrayList<Book> container = DatabaseUtils.getBooks("COLLECTION", User.loggedInUser.Username.get(), newValue);
+            ArrayList<Book> container = DatabaseUtils.getBooks("COLLECTION", newValue);
             ObservableList<Book> bookList = collectionTable.getItems();
             bookList.clear();
             for(Book book : container){
@@ -102,7 +99,7 @@ public class CollectionController {
         });
 
         //get data from database
-        ArrayList<Book> container = DatabaseUtils.getBooks("COLLECTION", User.loggedInUser.Username.get());
+        ArrayList<Book> container = DatabaseUtils.getBooks("COLLECTION");
         if(container != null){
             for(Book book : container){
                 ObservableList<Book> bookList = collectionTable.getItems();

@@ -30,8 +30,8 @@ public class DashboardController {
 
     @FXML
     public void initialize(){
-        ArrayList<Book> container_collection = DatabaseUtils.getBooks("COLLECTION", User.loggedInUser.Username.get());
-        ArrayList<Book> container_wishlist = DatabaseUtils.getBooks("WISHLIST", User.loggedInUser.Username.get());
+        ArrayList<Book> container_collection = DatabaseUtils.getBooks("COLLECTION");
+        ArrayList<Book> container_wishlist = DatabaseUtils.getBooks("WISHLIST");
 
         welcomeText.setText("Welcome to your heaven, " + User.loggedInUser.Username.get());
         stats_totalBookCollection.setText(Integer.toString(container_collection.size()));

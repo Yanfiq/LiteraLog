@@ -92,22 +92,21 @@ public class WishlistController {
                 String isbn = book.isbn.get();
                 wishlistTable.getItems().remove(book);
 
-                DatabaseUtils.manipulateTable("DELETE FROM [WISHLIST] WHERE [ISBN] = " + isbn + " AND [Username] = '" + User.loggedInUser.Username.get() + "';");
-                DatabaseUtils.manipulateTable("DELETE FROM [BOOKS] WHERE [ISBN] = " + isbn);
+                DatabaseUtils.deleteBook("WISHLIST", book);
             });
             buyButton.setOnAction(event -> {
                 Book book = wishlistTable.getItems().get(cell.getIndex());
                 String isbn = book.isbn.get();
                 wishlistTable.getItems().remove(book);
-                DatabaseUtils.manipulateTable("DELETE FROM [WISHLIST] WHERE [ISBN] = "+isbn + " AND [Username] = '" + User.loggedInUser.Username.get() + "';");
-                DatabaseUtils.manipulateTable("INSERT INTO [COLLECTION] VALUES ('" + User.loggedInUser.Username.get() + "', '" + isbn + "');");
+                DatabaseUtils.deleteBook("WISHLIST", book);
+                DatabaseUtils.insertBook("COLLECTION", book);
             });
             return cell;
         });
         actionColumn.prefWidthProperty().bind(wishlistTable.widthProperty().divide(8));
 
         //get data from database
-        ArrayList<Book> container = DatabaseUtils.getBooks("WISHLIST", User.loggedInUser.Username.get());
+        ArrayList<Book> container = DatabaseUtils.getBooks("WISHLIST");
         if(container != null){
             for(Book book : container){
                 ObservableList<Book> bookList = wishlistTable.getItems();
@@ -133,8 +132,8 @@ public class WishlistController {
         if(DatabaseUtils.isConnected.get()){
             String query_book = "INSERT INTO [BOOKS] VALUES "+String.format("('%s', '%s' ,'%s' ,%d ,'%s' ,%d ,%d)", isbn, title, author, totalPage, publisher, year, price);
             String query_wishlist = "INSERT INTO [WISHLIST] VALUES "+isbn;
-            DatabaseUtils.manipulateTable(query_book);
-            DatabaseUtils.manipulateTable(query_wishlist);
+//            DatabaseUtils.manipulateTable(query_book);
+//            DatabaseUtils.manipulateTable(query_wishlist);
         }
     }
 }

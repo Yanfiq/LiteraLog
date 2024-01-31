@@ -1,13 +1,21 @@
 package com.yanfiq.literalog.controllers;
 
 import com.yanfiq.literalog.Main;
+import com.yanfiq.literalog.models.Book;
 import com.yanfiq.literalog.models.User;
 import com.yanfiq.literalog.utils.DatabaseUtils;
 import com.yanfiq.literalog.utils.DialogUtils;
 import com.yanfiq.literalog.utils.FXMLUtils;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -20,6 +28,10 @@ public class LoginController {
     @FXML
     private PasswordField passwordField;
     private Stage setting = null;
+    @FXML
+    public void initialize(){
+
+    }
 
     @FXML
     private void onLoginButtonClick(){
@@ -66,7 +78,7 @@ public class LoginController {
             }
         }
         if(!usernameExist){
-            DatabaseUtils.manipulateTable("INSERT INTO [USER]");
+//            DatabaseUtils.manipulateTable("INSERT INTO [USER]");
         }
     }
 

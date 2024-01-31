@@ -8,23 +8,13 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
-import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
-import javafx.util.converter.IntegerStringConverter;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-
-import static javafx.scene.paint.Color.rgb;
 
 public class BookmarksController {
     @FXML
@@ -57,7 +47,6 @@ public class BookmarksController {
         authorColumn.prefWidthProperty().bind(bookmarksTable.widthProperty().divide(7));
         lastPageReadColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().lastPage.get()).asObject());
         lastPageReadColumn.prefWidthProperty().bind(bookmarksTable.widthProperty().divide(7));
-        //lastPageReadColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
         lastPageReadColumn.setCellFactory(column -> {
             return new TableCell<Book, Integer>() {
                 private final Spinner<Integer> spinner = new Spinner<>();
@@ -71,9 +60,9 @@ public class BookmarksController {
                         book.lastPage.set(newValue);
                         int lastTotalPage = User.loggedInUser.totalPagesRead.get();
                         User.loggedInUser.totalPagesRead.set((lastTotalPage-oldValue)+newValue);
-                        DatabaseUtils.manipulateTable("UPDATE [BOOKMARKS] SET [LastPage] = "+ newValue +" WHERE [ISBN] = " + book.isbn.get());
-                        DatabaseUtils.manipulateTable("UPDATE [USER] SET [TotalPagesRead] = "+((lastTotalPage-oldValue)+newValue)+";");
-                        DatabaseUtils.manipulateTable("UPDATE [BOOKMARKS] SET [LastTimeRead] = '" + sqlTimestamp + "' WHERE [ISBN] = "+book.isbn.get());
+//                        DatabaseUtils.manipulateTable("UPDATE [BOOKMARKS] SET [LastPage] = "+ newValue +" WHERE [ISBN] = " + book.isbn.get());
+//                        DatabaseUtils.manipulateTable("UPDATE [USER] SET [TotalPagesRead] = "+((lastTotalPage-oldValue)+newValue)+";");
+//                        DatabaseUtils.manipulateTable("UPDATE [BOOKMARKS] SET [LastTimeRead] = '" + sqlTimestamp + "' WHERE [ISBN] = "+book.isbn.get());
                     });
                 }
 
@@ -157,15 +146,14 @@ public class BookmarksController {
 
             removeButton.setOnAction(event -> {
                 Book book = bookmarksTable.getItems().get(cell.getIndex());
-                DatabaseUtils.manipulateTable("DELETE FROM [BOOKMARKS] WHERE [ISBN] = " + book.isbn.get() + " AND [Username] = '" + User.loggedInUser.Username.get() + "';");
-                DatabaseUtils.manipulateTable("DELETE FROM [COLLECTION] WHERE [ISBN] = " + book.isbn.get() + " AND [Username] = '" + User.loggedInUser.Username.get() + "';");
-                DatabaseUtils.manipulateTable("DELETE FROM [BOOKS] WHERE [ISBN] = " + book.isbn.get());
+                DatabaseUtils.deleteBook("BOOKMARK", book);
+                DatabaseUtils.deleteBook("COLLECTION", book);
                 bookmarksTable.getItems().remove(book);
             });
             unreadButton.setOnAction(event -> {
                 Book book = bookmarksTable.getItems().get(cell.getIndex());
                 book.lastPage.set(0);
-                DatabaseUtils.manipulateTable("DELETE FROM [BOOKMARKS] WHERE [ISBN] = " + book.isbn.get() + " AND [Username] = '" + User.loggedInUser.Username.get() + "';");
+                DatabaseUtils.deleteBook("BOOKMARK", book);
                 bookmarksTable.getItems().remove(book);
             });
             return cell;
@@ -173,7 +161,7 @@ public class BookmarksController {
         actionColumn.prefWidthProperty().bind(bookmarksTable.widthProperty().divide(7));
 
         searchField.textProperty().addListener((observable, oldValue, newValue) -> {
-            ArrayList<Book> container = DatabaseUtils.getBooks("BOOKMARK", User.loggedInUser.Username.get(), newValue);
+            ArrayList<Book> container = DatabaseUtils.getBooks("BOOKMARK", newValue);
             ObservableList<Book> bookList = bookmarksTable.getItems();
             bookList.clear();
             if(container != null){
@@ -185,7 +173,7 @@ public class BookmarksController {
         });
 
         //get data from database
-        ArrayList<Book> container = DatabaseUtils.getBooks("BOOKMARKS", User.loggedInUser.Username.get());
+        ArrayList<Book> container = DatabaseUtils.getBooks("BOOKMARKS");
         if(container != null){
             for(Book book : container){
                 ObservableList<Book> bookList = bookmarksTable.getItems();

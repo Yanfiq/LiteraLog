@@ -17,6 +17,7 @@ public class Main extends Application {
         Scene scene = new Scene(FXMLUtils.loadFXML("Login.fxml"), 1280, 720);
         scene.getStylesheets().add("com/yanfiq/literalog/css/ContainerStyles-dark.css");
         scene.getStylesheets().add("com/yanfiq/literalog/css/ControlStyles-dark.css");
+//        scene.getStylesheets().add("com/yanfiq/literalog/css/fluent-dark.css");
         stage.setTitle("LiteraLog");
         primaryStage = stage;
         stage.setScene(scene);

@@ -52,6 +52,9 @@
 .text-field, .password-field {
     -fx-background-color:  rgb(45, 45, 45);
     -fx-background-radius: 5;
+    -fx-border-color: rgb(154, 154, 154); 
+    -fx-border-width: 0 0 1 0;
+    -fx-border-radius: 5;
     -fx-text-fill:  rgb(255, 255, 255);
     -fx-font-family: "Segoe UI SemiBold";
     -fx-font-size: 14;
@@ -59,7 +62,10 @@
 
 .text-field:focused, .password-field:focused {
     -fx-background-color:  rgb(45, 45, 45);
-    -fx-border-color: #4cc2ff;
+    /* -fx-border-color: #4cc2ff; */
+    -fx-border-color: rgb(76, 194, 255); 
+    -fx-border-width: 0 0 1 0;
+    -fx-border-radius: 5;
     -fx-background-radius: 5;
     -fx-text-fill:  rgb(255, 255, 255);
     -fx-font-family: "Segoe UI SemiBold";
@@ -68,6 +74,10 @@
 
 .label {
     -fx-text-fill: rgb(255, 255, 255);
+}
+
+.text-input, .text-input:focused {
+    -fx-prompt-text-fill: derive(-fx-control-inner-background, -30%);
 }
 
 /* .combo-box {
