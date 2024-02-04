@@ -13,16 +13,7 @@ import java.io.IOException;
 public class Main extends Application {
     private static Stage primaryStage;
     @Override
-    public void start(Stage stage) throws IOException, InterruptedException {
-        Scene scene = new Scene(FXMLUtils.loadFXML("Login.fxml"), 1280, 720);
-        scene.getStylesheets().add("com/yanfiq/literalog/css/ContainerStyles-dark.css");
-        scene.getStylesheets().add("com/yanfiq/literalog/css/ControlStyles-dark.css");
-//        scene.getStylesheets().add("com/yanfiq/literalog/css/fluent-dark.css");
-        stage.setTitle("LiteraLog");
-        primaryStage = stage;
-        stage.setScene(scene);
-        stage.show();
-
+    public void start(Stage stage) {
         if(ConfigManager.isAutoConnectEnabled()){
             String dbEngine = ConfigManager.getDatabaseEngine();
             String serverName = ConfigManager.getServerName();
@@ -33,6 +24,15 @@ public class Main extends Application {
 
             DatabaseUtils.openConnection(dbEngine, serverName, instanceName, port, username, password);
         }
+
+        Scene scene = new Scene(FXMLUtils.loadFXML("Login.fxml"), 1280, 720);
+        scene.getStylesheets().add("com/yanfiq/literalog/css/ContainerStyles-dark.css");
+        scene.getStylesheets().add("com/yanfiq/literalog/css/ControlStyles-dark.css");
+//        scene.getStylesheets().add("com/yanfiq/literalog/css/fluent-dark.css");
+        stage.setTitle("LiteraLog");
+        primaryStage = stage;
+        stage.setScene(scene);
+        stage.show();
     }
 
     public static void main(String[] args) {
