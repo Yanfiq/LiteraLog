@@ -50,37 +50,36 @@ public class ConfigManager {
         }
     }
 
+    public static boolean isRememberMe(){ return Boolean.parseBoolean(properties.getProperty("usr.rememberMe")); }
+    public static String getLastLoginUsername(){ return properties.getProperty("usr.lastLoginUsername"); }
     public static String getDatabaseEngine() { return properties.getProperty("db.engine"); }
     public static String getServerName() {
         return properties.getProperty("db.serverName");
     }
-
     public static String getInstanceName() {
         return properties.getProperty("db.instanceName");
     }
-
     public static int getPort() {
         return Integer.parseInt(properties.getProperty("db.port"));
     }
-
     public static String getUsername() {
         return properties.getProperty("db.username");
     }
-
     public static String getPassword() {
         return properties.getProperty("db.password");
     }
+    public static Boolean isAutoConnectEnabled() { return Boolean.parseBoolean(properties.getProperty("db.autoConnect")); }
+    public static String getTheme(){ return properties.getProperty("ui.theme"); }
+    public static String getFontSize(){ return properties.getProperty("ui.fontSize"); }
 
-    public static Boolean isAutoConnectEnabled() {
-        return Boolean.parseBoolean(properties.getProperty("db.autoConnect"));
+    public static void setRememberMe(boolean bool){
+        properties.setProperty("usr.rememberMe", String.valueOf(bool));
+        saveProperties();
     }
-
-    public static String getTheme(){ return properties.getProperty("ui.theme");
+    public static void setLastLoginUsername(String username){
+        properties.setProperty("usr.lastLoginUsername", username);
+        saveProperties();
     }
-
-    public static String getFontSize(){ return properties.getProperty("ui.fontSize");
-    }
-
     public static void setDatabaseEngine(String dbEngine){
         properties.setProperty("db.engine", dbEngine);
         saveProperties();
@@ -121,8 +120,8 @@ public class ConfigManager {
         saveProperties();
     }
 
-    public static void setFontSize(int fontSize){
-        properties.setProperty("ui.fontSize", String.valueOf(fontSize));
+    public static void setFontSize(String fontSize){
+        properties.setProperty("ui.fontSize", fontSize);
         saveProperties();
     }
 
