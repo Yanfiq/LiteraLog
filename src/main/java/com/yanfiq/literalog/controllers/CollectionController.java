@@ -82,7 +82,7 @@ public class CollectionController {
             readButton.setOnAction(event -> {
                 Book book = collectionTable.getItems().get(cell.getIndex());
                 book.lastTimeRead.set(LocalDateTime.now());
-                    DatabaseUtils.insertBook("BOOKMARKS", book);
+                DatabaseUtils.insertBook("BOOKMARK", book);
             });
             return cell;
         });

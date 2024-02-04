@@ -25,18 +25,21 @@
          </columnConstraints>
          <rowConstraints>
             <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Button fx:id="dashboardButton" mnemonicParsing="false" onAction="#onDashboardButtonClick" styleClass="button-selection-not-chosen" GridPane.rowIndex="1">
+            <Button fx:id="dashboardButton" mnemonicParsing="false" onAction="#onDashboardButtonClick" styleClass="button-selection-not-chosen" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                <graphic>
                   <HBox alignment="CENTER_LEFT" prefHeight="41.0" prefWidth="193.0" spacing="12.0">
-                     <Label fx:id="dashboardButtonClickSign" style="-fx-background-color: rgb(52, 152, 219); -fx-background-radius: 100;" text=" " />
+                     <Label fx:id="dashboardButtonClickSign" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="0.0" style="-fx-background-color: rgb(76, 194, 255); -fx-background-radius: 100;" text=" ">
+                        <font>
+                           <Font name="Segoe UI Semibold" size="14.0" />
+                        </font></Label>
                      <Label text="" textFill="WHITE">
                         <font>
                            <Font name="Segoe MDL2 Assets" size="14.0" />
@@ -58,7 +61,10 @@
             <Button fx:id="collectionButton" mnemonicParsing="false" onAction="#onCollectionButtonClick" prefHeight="125.0" prefWidth="245.0" styleClass="button-selection-not-chosen" GridPane.rowIndex="3">
                <graphic>
                   <HBox alignment="CENTER_LEFT" spacing="12.0" style="-fx-background-color: transparent;">
-                     <Label fx:id="collectionButtonClickSign" style="-fx-background-color: rgb(52, 152, 219); -fx-background-radius: 100;" text=" " />
+                     <Label fx:id="collectionButtonClickSign" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="0.0" style="-fx-background-color: rgb(76, 194, 255); -fx-background-radius: 100;" text=" ">
+                        <font>
+                           <Font name="Segoe UI Semibold" size="14.0" />
+                        </font></Label>
                      <Label text="" textFill="WHITE">
                         <font>
                            <Font name="Segoe MDL2 Assets" size="14.0" />
@@ -80,7 +86,10 @@
             <Button fx:id="wishlistButton" mnemonicParsing="false" onAction="#onWishlistButtonClick" prefHeight="109.0" prefWidth="221.0" styleClass="button-selection-not-chosen" GridPane.rowIndex="2">
                <graphic>
                   <HBox alignment="CENTER_LEFT" spacing="12.0" style="-fx-background-color: transparent;">
-                     <Label fx:id="wishlistButtonClickSign" style="-fx-background-color: rgb(52, 152, 219); -fx-background-radius: 100;" text=" " />
+                     <Label fx:id="wishlistButtonClickSign" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="0.0" style="-fx-background-color: rgb(76, 194, 255); -fx-background-radius: 100;" text=" ">
+                        <font>
+                           <Font name="Segoe UI Semibold" size="14.0" />
+                        </font></Label>
                      <Label text="" textFill="WHITE">
                         <font>
                            <Font name="Segoe MDL2 Assets" size="14.0" />
@@ -102,7 +111,10 @@
             <Button fx:id="bookmarksButton" mnemonicParsing="false" onAction="#onBookmarksButtonClick" prefHeight="109.0" prefWidth="276.0" styleClass="button-selection-not-chosen" GridPane.rowIndex="4">
                <graphic>
                   <HBox alignment="CENTER_LEFT" spacing="12.0" style="-fx-background-color: transparent;">
-                     <Label fx:id="bookmarksButtonClickSign" style="-fx-background-color: rgb(52, 152, 219); -fx-background-radius: 100;" text=" " />
+                     <Label fx:id="bookmarksButtonClickSign" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="0.0" style="-fx-background-color: rgb(76, 194, 255); -fx-background-radius: 100;" text=" ">
+                        <font>
+                           <Font name="Segoe UI Semibold" size="14.0" />
+                        </font></Label>
                      <Label text="" textFill="WHITE">
                         <font>
                            <Font name="Segoe MDL2 Assets" size="14.0" />
@@ -124,7 +136,10 @@
             <Button fx:id="settingsButton" mnemonicParsing="false" onAction="#onSettingsButtonClick" prefHeight="141.0" prefWidth="165.0" styleClass="button-selection-not-chosen" GridPane.rowIndex="6">
                <graphic>
                   <HBox alignment="CENTER_LEFT" spacing="12.0" style="-fx-background-color: transparent;">
-                     <Label fx:id="settingsButtonClickSign" style="-fx-background-radius: 100;" text=" " />
+                     <Label fx:id="settingsButtonClickSign" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="0.0" style="-fx-background-color: rgb(76, 194, 255); -fx-background-radius: 100;" text=" ">
+                        <font>
+                           <Font name="Segoe UI Semibold" size="14.0" />
+                        </font></Label>
                      <Label text="" textFill="WHITE">
                         <font>
                            <Font name="Segoe MDL2 Assets" size="14.0" />

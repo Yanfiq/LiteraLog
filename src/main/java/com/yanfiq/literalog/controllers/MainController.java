@@ -1,7 +1,11 @@
 package com.yanfiq.literalog.controllers;
 
 import com.yanfiq.literalog.models.User;
+import com.yanfiq.literalog.utils.DialogUtils;
 import com.yanfiq.literalog.utils.FXMLUtils;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
@@ -14,6 +18,7 @@ import javafx.animation.FadeTransition;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.sql.Time;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -53,22 +58,16 @@ public class MainController {
         initializeButton(settingsButton, "Settings.fxml");
 
         try {
-            loadPage(User.isLoggedIn.get() ? "Dashboard.fxml" : "Settings.fxml");
-            setButtonChosen(User.isLoggedIn.get() ? dashboardButton : settingsButton);
+            loadPage("Dashboard.fxml");
+            setButtonChosen(dashboardButton);
         } catch (IOException e) {
-            e.printStackTrace();
+            DialogUtils.showException(e);
         }
     }
 
     private void initializeButton(Button button, String fxmlFileName) {
         button.setUserData(new SimpleBooleanProperty(false));
         buttonFXMLMap.put(button, fxmlFileName);
-
-        // Bind the button style
-        Label buttonClickSign = getButtonClickSign(button);
-        buttonClickSign.styleProperty().bind(Bindings.when((SimpleBooleanProperty) button.getUserData())
-                .then("-fx-background-color: rgb(76, 194, 255); -fx-background-radius: 4;")
-                .otherwise("-fx-background-color: transparent; -fx-background-radius: 4;"));
     }
 
     private Label getButtonClickSign(Button button) {
@@ -96,14 +95,21 @@ public class MainController {
         AnchorPane.setTopAnchor(node, 0.0);
         AnchorPane.setBottomAnchor(node, 0.0);
         content.getChildren().setAll(node);
+        Timeline timeline = new Timeline();
+        timeline.getKeyFrames().add(
+                new KeyFrame(Duration.millis(200), // Duration of the animation
+                        new KeyValue(node.translateYProperty(), 50),
+                        new KeyValue(node.opacityProperty(), 0)
+                )
+        );
+        timeline.setRate(-1);
+        timeline.playFrom(Duration.millis(200));
     }
 
     @FXML
     private void onButtonClick(Button button) throws IOException {
-        if(User.isLoggedIn.get()){
-            loadPage(buttonFXMLMap.get(button));
-            setButtonChosen(button);
-        }
+        loadPage(buttonFXMLMap.get(button));
+        setButtonChosen(button);
     }
 
     private void setButtonChosen(Button chosenButton) {
@@ -112,6 +118,25 @@ public class MainController {
             ((SimpleBooleanProperty) button.getUserData()).set(isChosen);
             button.getStyleClass().clear();
             button.getStyleClass().add(isChosen ? "button-selection-chosen" : "button-selection-not-chosen");
+            if(isChosen){
+                Label sign = getButtonClickSign(button);
+                Timeline timeline = new Timeline();
+                timeline.getKeyFrames().add(
+                        new KeyFrame(Duration.millis(200), // Duration of the animation
+                                new KeyValue(sign.prefHeightProperty(), button.heightProperty().get()*1/2.5)
+                        )
+                );
+                timeline.playFromStart();
+            }else{
+                Label sign = getButtonClickSign(button);
+                Timeline timeline = new Timeline();
+                timeline.getKeyFrames().add(
+                        new KeyFrame(Duration.millis(200), // Duration of the animation
+                                new KeyValue(sign.prefHeightProperty(), 0)
+                        )
+                );
+                timeline.playFromStart();
+            }
         });
     }
     @FXML

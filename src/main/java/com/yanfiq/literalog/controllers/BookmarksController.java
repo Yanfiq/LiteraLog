@@ -12,6 +12,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.HBox;
+
+import javax.xml.crypto.Data;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -55,14 +57,15 @@ public class BookmarksController {
                     spinner.setEditable(true);
                     spinner.valueProperty().addListener((observable, oldValue, newValue) -> {
                         Book book = getTableView().getItems().get(getIndex());
-                        LocalDateTime localDateTime = LocalDateTime.now();
-                        java.sql.Timestamp sqlTimestamp = java.sql.Timestamp.valueOf(localDateTime);
+                        oldValue = book.lastPage.get();
                         book.lastPage.set(newValue);
+                        book.lastTimeRead.set(LocalDateTime.now());
+
                         int lastTotalPage = User.loggedInUser.totalPagesRead.get();
                         User.loggedInUser.totalPagesRead.set((lastTotalPage-oldValue)+newValue);
-//                        DatabaseUtils.manipulateTable("UPDATE [BOOKMARKS] SET [LastPage] = "+ newValue +" WHERE [ISBN] = " + book.isbn.get());
-//                        DatabaseUtils.manipulateTable("UPDATE [USER] SET [TotalPagesRead] = "+((lastTotalPage-oldValue)+newValue)+";");
-//                        DatabaseUtils.manipulateTable("UPDATE [BOOKMARKS] SET [LastTimeRead] = '" + sqlTimestamp + "' WHERE [ISBN] = "+book.isbn.get());
+
+                        DatabaseUtils.updateBook(book.isbn.get(), book);
+                        DatabaseUtils.updateUser(User.loggedInUser.Username.get(), User.loggedInUser);
                     });
                 }
 
@@ -164,22 +167,16 @@ public class BookmarksController {
             ArrayList<Book> container = DatabaseUtils.getBooks("BOOKMARK", newValue);
             ObservableList<Book> bookList = bookmarksTable.getItems();
             bookList.clear();
-            if(container != null){
-                for(Book book : container){
-                    bookList.add(book);
-                }
-            }
+            bookList.addAll(container);
             bookmarksTable.setItems(bookList);
         });
 
         //get data from database
-        ArrayList<Book> container = DatabaseUtils.getBooks("BOOKMARKS");
-        if(container != null){
-            for(Book book : container){
-                ObservableList<Book> bookList = bookmarksTable.getItems();
-                bookList.add(book);
-                bookmarksTable.setItems(bookList);
-            }
+        ArrayList<Book> container = DatabaseUtils.getBooks("BOOKMARK");
+        for (Book book : container) {
+            ObservableList<Book> bookList = bookmarksTable.getItems();
+            bookList.add(book);
+            bookmarksTable.setItems(bookList);
         }
     }
 }

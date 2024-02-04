@@ -129,6 +129,7 @@ public class SettingsController {
     }
     @FXML
     private void onConnectButtonClick() {
+        connectionProgressIndicator.setStyle("-fx-accent: rgb(76, 194, 255);");
         connectionProgressIndicator.setProgress(ProgressBar.INDETERMINATE_PROGRESS);
         connectabilityLabel.setText("Establishing database connection");
         Task<Void> connectionTask = new Task<>() {
@@ -137,8 +138,6 @@ public class SettingsController {
                 try {
                     Connection connection = null;
                     String dbUrl = "jdbc:sqlserver://" + serverNameField.getText() + "\\" + instanceNameField.getText() + ":" + portField.getText() + ";databaseName=LiteraLog;Encrypt=true;trustServerCertificate=true";
-
-                    Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 
                     try {
                         connection = DriverManager.getConnection(dbUrl, usernameField.getText(), passwordField.getText());
@@ -152,8 +151,8 @@ public class SettingsController {
                             return null;
                         }
                     }
-                } catch (ClassNotFoundException e) {
-                    updateUI(false);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
                 }
 
                 return null;

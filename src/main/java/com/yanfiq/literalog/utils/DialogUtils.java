@@ -12,11 +12,11 @@ import java.util.Objects;
 public class DialogUtils {
     private DialogUtils(){}
 
-    public static void showAlert(Alert.AlertType type, String textContent, String textHeader){
+    public static void showAlert(Alert.AlertType type, String textTitle, String textHeader, String textContent){
         Alert alert = new Alert(type, textContent);
-        alert.setTitle(textHeader);
-        alert.setHeaderText(textContent);
-        //alert.setContentText("You can customize the appearance using CSS.");
+        alert.setTitle(textTitle);
+        alert.setHeaderText(textHeader);
+        alert.setContentText(textContent);
 
         // Apply the custom CSS
         DialogPane dialogPane = alert.getDialogPane();
