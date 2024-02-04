@@ -12,7 +12,6 @@ public class User {
     public SimpleIntegerProperty totalPagesRead = new SimpleIntegerProperty(0);
     public SimpleObjectProperty<LocalDateTime> accountCreated = new SimpleObjectProperty<>();
     public static User loggedInUser = new User(null, null, null, 0);
-    public static SimpleBooleanProperty isLoggedIn = new SimpleBooleanProperty(false);
 
     public User(String _username, String _password, LocalDateTime _accountCreated, int _totalPagesRead){
         this.Username.set(_username);

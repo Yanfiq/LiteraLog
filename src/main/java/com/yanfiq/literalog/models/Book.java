@@ -27,7 +27,7 @@ public class Book {
         this.year.set(year);
         this.price.set(price);
         this.lastPage.set(0);
-        this.lastTimeRead.set(LocalDateTime.now());
+        this.lastTimeRead.set(null);
 
         progress.bind(Bindings.createDoubleBinding(
                 () -> this.lastPage.doubleValue()/this.totalPage.doubleValue(),

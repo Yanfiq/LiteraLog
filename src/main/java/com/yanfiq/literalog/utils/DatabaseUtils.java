@@ -21,7 +21,6 @@ import org.apache.commons.pool2.impl.GenericObjectPool;
 
 public final class DatabaseUtils {
     private static String dbEngine, serverName, instanceName, username, password;
-
     private static final ArrayList<String> tablesName = new ArrayList<>(List.of("BOOK", "COLLECTION", "WISHLIST", "BOOKMARK"));
     private static int port;
     private static Connection connection = null;
