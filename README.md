@@ -3,7 +3,6 @@
 ## What?
 LiteraLog is a desktop application that is useful for recording personal book collections, recording reading progress, and recording book wishlist. 
 ### Screenshots
-![img.png](img.png)
 ![img_1.png](img_1.png)
 ![img_2.png](img_2.png)
 
